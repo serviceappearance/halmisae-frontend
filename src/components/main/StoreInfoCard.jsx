@@ -1,4 +1,15 @@
-export default function StoreInfoCard({ storeName }) {
+import "../font.css";
+import BookmarkIcon from "./BookmarkIcon";
+import NotificationIcon from "./NotificationIcon";
+import Comment from "./Card/Comment";
+import RatingAndDistance from "./Card/RatingAndDistance";
+import PriceDisplay from "../common/PriceDisplay";
+import TitleBoard from "./Card/TitleBoard";
+import { createContext, useContext } from "react";
+
+const StoreInfoTopContext = createContext({});
+const StoreInfoBottomContext = createContext({});
+export default function StoreInfoCard({ topPartValue, bottomPartValue }) {
   const cardStyle = {
     width: "287px",
     height: "162px",
@@ -6,45 +17,53 @@ export default function StoreInfoCard({ storeName }) {
     backgroundColor: "rgba(0, 0, 0, 0.20)",
     boxShadow: "0px 2px 4px 0px rgba(0, 0, 0, 0.25)",
   };
-  const simplePartStyle = {
+
+  return (
+    <div style={cardStyle}>
+      <StoreInfoTopContext.Provider value={topPartValue}>
+        <CardTopPart />
+      </StoreInfoTopContext.Provider>
+      <StoreInfoBottomContext.Provider value={bottomPartValue}>
+        <CardBottomPart />
+      </StoreInfoBottomContext.Provider>
+    </div>
+  );
+}
+
+const CardTopPart = () => {
+  const { storeName, Notification } = useContext(StoreInfoTopContext);
+  const topPartStyle = {
     width: "289px",
     height: "79px",
     borderRadius: "10px 10px 0px 0px",
+    position: "relative",
   };
-  const summaryPartStyle = {
+
+  return (
+    <div style={topPartStyle}>
+      <NotificationIcon text={Notification} />
+      <BookmarkIcon />
+      <TitleBoard text={storeName} />
+    </div>
+  );
+};
+
+const CardBottomPart = () => {
+  const bottomPartStyle = {
     width: "287px",
     height: "82px",
     borderRadius: "0px 0px 10px 10px",
     backgroundColor: "#FFF",
+    position: "relative",
   };
-  const titleBoardStyle = {
-    display: "flex",
-    width: "287px",
-    height: "51px",
-    padding: "3px 0px 3px 7px",
-    alignItems: "center",
-    gap: "11px",
-    flexShrink: "0",
-  };
-  const titleStyle = {
-    color: "#FFF8EC",
-    fontFamily: "Inter",
-    fontSize: "15px",
-    fontStyle: "normal",
-    fontWeight: "600",
-    lineHeight: "normal",
-  };
+  const { title, content, price, discounted, rating, distance } = useContext(
+    StoreInfoBottomContext
+  );
   return (
-    <div style={cardStyle}>
-      <div style={simplePartStyle}>
-        <div style={titleBoardStyle}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45">
-            <circle cx="22.5" cy="22.5" r="22.5" fill="white" />
-          </svg>
-          <div style={titleStyle}>{storeName}</div>
-        </div>
-      </div>
-      <div style={summaryPartStyle}></div>
+    <div style={bottomPartStyle}>
+      <Comment title={title} content={content} />
+      <PriceDisplay price={price} discounted={discounted} />
+      <RatingAndDistance rating={rating} distance={distance} />
     </div>
   );
-}
+};

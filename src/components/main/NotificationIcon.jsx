@@ -4,6 +4,9 @@ export default function NotificationIcon({ text }) {
     height: "16px",
     borderRadius: "12px",
     backgroundColor: "#F3F5F4",
+    position: "absolute",
+    top: "7px",
+    left: "7px",
   };
 
   const thisTextStyle = {
