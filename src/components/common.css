@@ -1,0 +1,36 @@
+.style-page {
+  width: 320px;
+  height: 568px;
+  border: 1px solid black;
+}
+
+.style-card-list {
+  width: 320px;
+  height: 446px;
+  gap: 15px;
+  display: grid;
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* chrome, safari에서의 스크롤바 스타일 */
+.style-card-list::-webkit-scrollbar {
+  width: 2px;
+  height: 5px;
+}
+
+.style-card-list::-webkit-scrollbar-thumb {
+  background: #cccccc;
+  border-radius: 6px;
+}
+
+.style-card-list::-webkit-scrollbar-thumb:hover {
+  background: #c2c2c2;
+}
+
+/* firefox에서의 스크롤바 스타일 */
+.style-card-list {
+  scrollbar-width: 2px;
+  scrollbar-color: #cccccc;
+}

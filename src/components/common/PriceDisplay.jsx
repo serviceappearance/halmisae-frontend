@@ -1,9 +1,8 @@
-export default function PriceDisplay({ price, discounted }) {
+export default function PriceDisplay({ price, discounted, position }) {
   const thisStyle = {
     width: "59px",
     height: "33px",
-    flexShrink: "0",
-    position: "absolute",
+    position: { position },
     right: "7px",
     bottom: "7px",
   };
