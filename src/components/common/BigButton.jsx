@@ -1,6 +1,4 @@
-export default function BigButton({ widthText }) {
-  const width = widthText.width;
-  const text = widthText.text;
+export default function BigButton({ width, text }) {
   const bigButtonStyle = {
     display: "flex",
     width: width,

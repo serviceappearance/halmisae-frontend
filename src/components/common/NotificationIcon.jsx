@@ -15,6 +15,7 @@ export default function NotificationIcon({ text }) {
     fontSize: "10px",
     fontWeight: "600",
   };
+
   return (
     <div style={thisStyle}>
       <div style={thisTextStyle}>{text}</div>

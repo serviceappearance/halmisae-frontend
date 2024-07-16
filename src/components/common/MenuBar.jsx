@@ -10,7 +10,6 @@ const MenuStyle = {
   height: "44px",
   alignItems: "center",
   backgroundColor: "#FFFDFD",
-  position: "fixed",
 };
 
 const barStyle = {
