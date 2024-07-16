@@ -51,7 +51,6 @@ const CardTopPart = () => {
     <div style={topPartStyle}>
       <NotificationIcon text={Notification} />
       <BookmarkIcon />
-      <TitleBoard text={storeName} />
     </div>
   );
 };
@@ -66,7 +65,7 @@ const CardBottomPart = () => {
       <PriceDisplay
         price={price}
         discounted={discounted}
-        position={"absolute"}
+        position={"relative"}
       />
       <RatingAndDistance rating={rating} distance={distance} />
     </div>
