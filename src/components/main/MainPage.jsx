@@ -7,13 +7,10 @@ import StoreInfoCard from "./StoreInfoCard";
 
 const storeInfo = {
   topPartValue: {
-    storeName: "가게이름",
     Notification: "재고없음",
   },
   bottomPartValue: {
-    title: "사장님 말씀",
-    content: "내용",
-    price: "10,000",
+    title: "가게명",
     discounted: "5,000",
     rating: "4.5",
     distance: "2km",
