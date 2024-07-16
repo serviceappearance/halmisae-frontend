@@ -34,3 +34,13 @@
   scrollbar-width: 2px;
   scrollbar-color: #cccccc;
 }
+
+.style-modal {
+  width: 320px;
+  height: 287px;
+  border-radius: 7px 7px 0px 0px;
+  background: #fff;
+  border: 1px solid black;
+  display: grid;
+  place-items: center;
+}
