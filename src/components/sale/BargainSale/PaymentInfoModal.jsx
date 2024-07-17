@@ -1,8 +1,9 @@
-import BigButton from "../../common/BigButton";
+import { useState } from "react";
 import { ReactComponent as ClockIcon } from "../../../assets/icons/clock-small.svg";
 import { ReactComponent as MinusIcon } from "../../../assets/icons/amount-minus.svg";
 import { ReactComponent as PlusIcon } from "../../../assets/icons/amount-plus.svg";
-import { useState } from "react";
+import BigButton from "../../common/BigButton";
+import TotalPrice from "../../common/TotalPrice";
 export default function PaymentInfoModal() {
   return (
     <div className="style-modal">
@@ -75,8 +76,4 @@ const AmountSetting = () => {
       <PlusIcon />
     </div>
   );
-};
-
-const TotalPrice = () => {
-  return <div></div>;
 };
