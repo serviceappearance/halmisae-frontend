@@ -10,6 +10,8 @@ const MenuStyle = {
   height: "44px",
   alignItems: "center",
   backgroundColor: "#FFFDFD",
+  position: "absolute",
+  bottom: "0",
 };
 
 const barStyle = {
@@ -34,7 +36,15 @@ export default function MenuBar() {
   return (
     <div style={MenuStyle}>
       {icons.map((icon, index) => (
-        <div style={barStyle}>{icon}</div>
+        <div
+          key={index}
+          style={barStyle}
+          onClick={() => {
+            console.log(`${index} clicked`);
+          }}
+        >
+          {icon}
+        </div>
       ))}
     </div>
   );

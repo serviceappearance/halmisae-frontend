@@ -1,7 +1,12 @@
+.container {
+  margin: 0 12px;
+}
+
 .style-page {
   width: 320px;
   height: 568px;
   border: 1px solid black;
+  position: relative;
 }
 
 .style-card-list {
