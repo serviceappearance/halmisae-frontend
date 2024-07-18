@@ -6,20 +6,21 @@ import TotalPrice from "../../common/TotalPrice";
 export default function ReservationInfoInput() {
   return (
     <div className="style-page">
-      <div className="font-menu-list-title" style={menulistTitleStyle}>
-        메뉴
-        <NoShowFoodToggle toggleEvent={null} />
-      </div>
+      <MenuTitleSection />
       <InputSection title={"이용시간"} subtitle={subtitles.useTime} />
       <InputSection title={"인원"} subtitle={subtitles.usePeople} />
       <MenuList menuInfo={menuInfo} />
-      <TotalPrice totalPrice={"15,000원"} />
-      <BigButton width={"287px"} text={"예약하기"} />
+      <TotalPrice label={"총 금액"} totalPrice={"15,000원"} />
+      <div style={{ margin: "0 16px" }}>
+        <BigButton width={"287px"} text={"예약하기"} />
+      </div>
     </div>
   );
 }
 
-const toggleEvnetFunction = () => {};
+const toggleEvnet = () => {
+  console.log("show no show menu");
+};
 
 const subtitles = {
   useTime: "120분",
@@ -45,7 +46,18 @@ const menuInfo = [
   },
 ];
 
-const NoShowFoodToggle = ({ toggleEvent }) => {
+const MenuTitleSection = () => {
+  return (
+    <div style={titleSectionStyle}>
+      <div className="font-menu-list-title" style={menuTitleStyle}>
+        메뉴
+      </div>
+      <NoShowFoodToggle toggleHandler={toggleEvnet} />
+    </div>
+  );
+};
+
+const NoShowFoodToggle = ({ toggleHandler }) => {
   const toggleStyle = {
     display: "flex",
     width: "51px",
@@ -55,12 +67,24 @@ const NoShowFoodToggle = ({ toggleEvent }) => {
     borderRadius: "10px",
     background: "#0A625C",
   };
-  return <div onClick={toggleEvent}>noShow 상품 보기</div>;
+  return (
+    <div className="font-toggle" style={toggleStyle} onClick={toggleHandler}>
+      noShow 상품 보기
+    </div>
+  );
 };
 
-const menulistTitleStyle = {
-  width: "77px",
-  height: "16px",
-  padding: "11px 0 11px 4px",
+const titleSectionStyle = {
+  display: "flex",
+  width: "287px",
+  height: "38px",
+  padding: "0 0 0 4px",
+  margin: "0 16px",
   alignItems: "center",
+  gap: "5px",
+};
+
+const menuTitleStyle = {
+  width: "25px",
+  height: "16px",
 };
