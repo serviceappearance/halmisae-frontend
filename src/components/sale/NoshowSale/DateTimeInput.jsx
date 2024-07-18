@@ -12,7 +12,7 @@ export default function DateTimeInput() {
   const weekDays = ["일", "월", "화", "수", "목", "금", "토"];
   const dateInfo = `${clickedYear}년 ${clickedMonth}월 ${clickedDate}일 (${weekDays[clickedDay]})`;
   return (
-    <div className="style-page">
+    <div className="style-page container">
       <div className="font-reserved-date" style={reservedDateStyle}>
         {dateInfo}
       </div>

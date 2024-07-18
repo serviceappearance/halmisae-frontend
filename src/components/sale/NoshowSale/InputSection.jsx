@@ -5,7 +5,6 @@ export default function InputSection({ title, subtitle }) {
     width: "287px",
     gridTemplateColumns: "1fr 1fr",
     placeItems: "center",
-    margin: "0 16px",
   };
   return (
     <div style={sectionStyle}>
