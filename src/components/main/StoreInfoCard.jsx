@@ -4,7 +4,6 @@ import NotificationIcon from "../common/NotificationIcon";
 import Comment from "./Card/Comment";
 import RatingAndDistance from "./Card/RatingAndDistance";
 import PriceDisplay from "../common/PriceDisplay";
-import TitleBoard from "../common/TitleBoard";
 import { createContext, useContext } from "react";
 
 const StoreInfoTopContext = createContext({});
@@ -31,7 +30,7 @@ const bottomPartStyle = {
   position: "relative",
 };
 
-export default function StoreInfoCard({ topPartValue, bottomPartValue }) {
+export default function StoreInfoCard({ id, topPartValue, bottomPartValue }) {
   return (
     <div style={cardStyle}>
       <StoreInfoTopContext.Provider value={topPartValue}>
@@ -45,7 +44,7 @@ export default function StoreInfoCard({ topPartValue, bottomPartValue }) {
 }
 
 const CardTopPart = () => {
-  const { storeName, Notification } = useContext(StoreInfoTopContext);
+  const { Notification } = useContext(StoreInfoTopContext);
 
   return (
     <div style={topPartStyle}>
