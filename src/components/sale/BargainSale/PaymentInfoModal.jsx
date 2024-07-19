@@ -11,6 +11,7 @@ export default function PaymentInfoModal() {
       <AmountSet />
       <TotalPrice />
       <div style={{ display: "grid", placeItems: "center" }}>
+        {/* toss payments 실행 */}
         <BigButton width={"297px"} text={"예약 결제"} />
       </div>
     </div>

@@ -1,5 +1,7 @@
 import BigButton from "../../common/BigButton";
 import { ReactComponent as BagIcon } from "../../../assets/icons/shopping-bag.svg";
+import { Link } from "react-router-dom";
+import PaymentInfoModal from "../BargainSale/PaymentInfoModal";
 export default function AlertModal() {
   return (
     <div className="style-modal">
@@ -19,8 +21,12 @@ export default function AlertModal() {
         <br />
       </div>
       <div style={buttonSectionStyle}>
-        <BigButton width={"297px"} text={"확인했습니다"} />
-        <BigButton width={"297px"} text={"이전 페이지로"} />
+        <Link to="">
+          <BigButton width={"297px"} text={"확인했습니다"} />
+        </Link>
+        <Link to="">
+          <BigButton width={"297px"} text={"이전 페이지로"} />
+        </Link>
       </div>
     </div>
   );

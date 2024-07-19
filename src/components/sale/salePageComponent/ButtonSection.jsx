@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import BigButton from "../../common/BigButton";
 
 const bargainSaleButtonProps = {
@@ -22,8 +23,18 @@ const buttonSectionStyle = {
 export default function ButtonSection() {
   return (
     <div style={buttonSectionStyle}>
-      <BigButton widthText={bargainSaleButtonProps} />
-      <BigButton widthText={reservationButtonProps} />
+      <Link to="">
+        <BigButton
+          width={bargainSaleButtonProps.width}
+          text={bargainSaleButtonProps.text}
+        />
+      </Link>
+      <Link to="/reserve">
+        <BigButton
+          width={reservationButtonProps.width}
+          text={reservationButtonProps.text}
+        />
+      </Link>
     </div>
   );
 }
