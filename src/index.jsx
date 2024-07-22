@@ -6,6 +6,12 @@ import ReservationCheckPage from "./components/reservationCheck/ReservationCheck
 import SalePage from "./components/sale/SalePage";
 import ReservationInputPage from "./components/sale/NoshowSale/ReservationInputPage";
 import InvoicePage from "./components/sale/NoshowSale/InvoicePage";
+import SaleConfirmPage from "./components/sale/BargainSale/SaleConfirmPage";
+import ConfirmPage from "./components/sale/NoshowSale/ConfirmPage";
+import TossWidget from "./components/sale/TossWidget";
+import BookmarkListPage from "./components/mypage/BookmarkListPage";
+import UserHistoryPage from "./components/mypage/UserHistoryPage";
+import RatingPage from "./components/mypage/RatingPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -19,6 +25,15 @@ root.render(
         <Route path="/store" element={<SalePage />}></Route>
         <Route path="/reserve" element={<ReservationInputPage />}></Route>
         <Route path="/reserve/show" element={<InvoicePage />}></Route>
+        <Route
+          path="/bargain-sale/complete"
+          element={<SaleConfirmPage />}
+        ></Route>
+        <Route path="/noshow-sale/complete" element={<ConfirmPage />}></Route>
+        <Route path="/bookmarks" element={<BookmarkListPage />}></Route>
+        <Route path="/history" element={<UserHistoryPage />}></Route>
+        <Route path="/rating" element={<RatingPage />}></Route>
+        <Route path="/toss-payments-widget" element={<TossWidget />}></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
