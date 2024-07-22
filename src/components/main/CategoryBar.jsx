@@ -1,14 +1,4 @@
 import FilterCategoryIcon from "../common/FilterCategoryIcon";
-const categoryBarStyle = {
-  display: "flex",
-  justifyContent: "center",
-  margin: "0 0 5px 0",
-};
-
-const categoryListStyle = {
-  display: "flex",
-  gap: "17px",
-};
 export default function CategoryBar({ category }) {
   return (
     <div style={categoryBarStyle}>
@@ -20,3 +10,14 @@ export default function CategoryBar({ category }) {
     </div>
   );
 }
+
+const categoryBarStyle = {
+  display: "flex",
+  justifyContent: "center",
+  margin: "0 0 5px 0",
+};
+
+const categoryListStyle = {
+  display: "flex",
+  gap: "17px",
+};

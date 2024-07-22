@@ -1,9 +1,10 @@
 import MenuBar from "../common/MenuBar";
 import PageHeader from "../common/PageHeader";
+import ReservationCard from "../reservationCheck/ReservationCard";
 
 export default function UserHistoryPage() {
   return (
-    <div>
+    <div className="style-page">
       <PageHeader text={"사용내역 및 별점"} />
       {reservationInfo.map((r, index) => (
         <ReservationCard key={index} imgSrc={r.imgSrc} info={r.info} />

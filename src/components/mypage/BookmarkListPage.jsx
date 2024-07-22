@@ -1,11 +1,12 @@
 import CategoryBar from "../main/CategoryBar";
 import StoreInfoCard from "../main/StoreInfoCard";
 import MenuBar from "../common/MenuBar";
+import PageHeader from "../common/PageHeader";
 export default function BookmarkListPage() {
   return (
     <div className="style-page">
-      <CategoryBar category={category} />
-      <div className="style-card-list">
+      <PageHeader text={"찜 목록"} />
+      <div className="style-card-list" style={{ margin: "10px 0 0 0" }}>
         {storeInfo.map((info, index) => (
           <StoreInfoCard
             key={index}
