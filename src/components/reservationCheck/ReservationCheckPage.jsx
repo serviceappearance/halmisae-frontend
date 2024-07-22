@@ -6,7 +6,12 @@ export default function ReservationCheckPage() {
     <div className="style-page">
       <PageHeader text={"나의 예약"} />
       {reservationInfo.map((r, index) => (
-        <ReservationCard key={index} imgSrc={r.imgSrc} info={r.info} />
+        <ReservationCard
+          key={index}
+          imgSrc={r.imgSrc}
+          info={r.info}
+          miniButtonHandler={onClickHandler}
+        />
       ))}
       <MenuBar />
     </div>
@@ -55,3 +60,13 @@ const reservationInfo = [
     },
   },
 ];
+
+/* eslint-disable no-restricted-globals */
+const onClickHandler = () => {
+  var result = confirm("예약을 취소 하시겠습니까?");
+  if (result) {
+    alert("예약을 취소했습니다");
+    // 예약 카드 삭제
+  }
+};
+/* eslint-disable no-restricted-globals */

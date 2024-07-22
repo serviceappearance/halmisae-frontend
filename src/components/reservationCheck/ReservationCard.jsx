@@ -3,8 +3,12 @@ import { ReactComponent as ClockIcon } from "../../assets/icons/clock-mini.svg";
 import { ReactComponent as UserIcon } from "../../assets/icons/user-mini.svg";
 import { ReactComponent as DollarIcon } from "../../assets/icons/dollar.svg";
 import MiniButton from "../common/MiniButton";
+import { Link } from "react-router-dom";
+import { createContext, useContext } from "react";
 
-export default function ReservationCard({ imgSrc, info }) {
+const buttonContext = createContext({});
+
+export default function ReservationCard({ imgSrc, info, miniButtonHandler }) {
   const cardStyle = {
     width: "320px",
     height: "78px",
@@ -16,7 +20,9 @@ export default function ReservationCard({ imgSrc, info }) {
   return (
     <div style={cardStyle}>
       <ImageSection imgSrc={null} />
-      <InfoSection info={info} />
+      <buttonContext.Provider value={miniButtonHandler}>
+        <InfoSection info={info} />
+      </buttonContext.Provider>
     </div>
   );
 }
@@ -50,9 +56,10 @@ const InfoSection = ({ info }) => {
 };
 
 const StoreInfoSection = ({ category, storeName, dateOrTime, buttonText }) => {
+  const { buttonHandler } = useContext(buttonContext);
   return (
     <div style={{ position: "relative" }}>
-      <MiniButton text={buttonText} />
+      <MiniButton text={buttonText} onClickHandler={buttonHandler} />
       <MiniNotificationIcon text={category} />
       <div
         className="font-body2"
@@ -109,5 +116,3 @@ const SimpleInfoBlock = ({ icon, value, suffix }) => {
 
 const simpleInfoIcons = [<ClockIcon />, <UserIcon />, <DollarIcon />];
 const simpleInfoSuffix = ["분", "명", "원"];
-const simpleInfo = ["120", "2", "10,000"];
-const reservationCategory = ["예약", "주문"];
