@@ -1,4 +1,4 @@
-export default function BigButton({ width, text }) {
+export default function BigButton({ width, text, onClick }) {
   const bigButtonStyle = {
     display: "flex",
     width: width,
@@ -9,7 +9,7 @@ export default function BigButton({ width, text }) {
     background: "#0A625C",
   };
   return (
-    <div style={bigButtonStyle}>
+    <div style={bigButtonStyle} onClick={onClick}>
       <div className="font-bigButton-text">{text}</div>
     </div>
   );
