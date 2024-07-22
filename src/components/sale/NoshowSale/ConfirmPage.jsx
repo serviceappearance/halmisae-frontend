@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ReactComponent as CheckCircleIcon } from "../../../assets/icons/check-circle.svg";
 import BigButton from "../../common/BigButton";
 export default function ConfirmPage() {
@@ -8,7 +9,9 @@ export default function ConfirmPage() {
     >
       <ContentSection />
       <div style={{ margin: "106px 0 4px 0" }}>
-        <BigButton width={"297px"} text={"메인페이지로"} />
+        <Link to="/">
+          <BigButton width={"297px"} text={"메인페이지로"} />
+        </Link>
       </div>
     </div>
   );

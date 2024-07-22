@@ -1,6 +1,24 @@
 import { Link } from "react-router-dom";
 import BigButton from "../../common/BigButton";
 
+export default function ButtonSection({ toggleModal }) {
+  return (
+    <div style={buttonSectionStyle}>
+      <BigButton
+        width={bargainSaleButtonProps.width}
+        text={bargainSaleButtonProps.text}
+        onClick={toggleModal}
+      />
+      <Link to="/reserve">
+        <BigButton
+          width={reservationButtonProps.width}
+          text={reservationButtonProps.text}
+        />
+      </Link>
+    </div>
+  );
+}
+
 const bargainSaleButtonProps = {
   width: "140px",
   text: "마감할인 구매",
@@ -19,22 +37,3 @@ const buttonSectionStyle = {
   alignItems: "center",
   gap: "9px",
 };
-
-export default function ButtonSection() {
-  return (
-    <div style={buttonSectionStyle}>
-      <Link to="">
-        <BigButton
-          width={bargainSaleButtonProps.width}
-          text={bargainSaleButtonProps.text}
-        />
-      </Link>
-      <Link to="/reserve">
-        <BigButton
-          width={reservationButtonProps.width}
-          text={reservationButtonProps.text}
-        />
-      </Link>
-    </div>
-  );
-}

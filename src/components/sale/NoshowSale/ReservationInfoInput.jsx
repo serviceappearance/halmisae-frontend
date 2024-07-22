@@ -13,7 +13,7 @@ export default function ReservationInfoInput() {
       <MenuList menuInfo={menuInfo} />
       <TotalPrice label={"총 금액"} totalPrice={"15,000원"} />
       <div style={{ margin: "0 16px" }}>
-        <Link to="">
+        <Link to="/reserve/show">
           <BigButton width={"287px"} text={"예약하기"} />
         </Link>
       </div>

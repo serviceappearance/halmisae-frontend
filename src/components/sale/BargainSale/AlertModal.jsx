@@ -2,9 +2,9 @@ import BigButton from "../../common/BigButton";
 import { ReactComponent as BagIcon } from "../../../assets/icons/shopping-bag.svg";
 import { Link } from "react-router-dom";
 import PaymentInfoModal from "../BargainSale/PaymentInfoModal";
-export default function AlertModal() {
+export default function AlertModal({ isOpen, toggleModal, onConfirm }) {
   return (
-    <div className="style-modal">
+    <div className={`style-modal ${isOpen ? "open" : ""}`}>
       <div style={alertTitleStyle} className="font-alert-title">
         예약 전 주의사항 알림
       </div>
@@ -21,11 +21,13 @@ export default function AlertModal() {
         <br />
       </div>
       <div style={buttonSectionStyle}>
+        <BigButton width={"297px"} text={"확인했습니다"} onClick={onConfirm} />
         <Link to="">
-          <BigButton width={"297px"} text={"확인했습니다"} />
-        </Link>
-        <Link to="">
-          <BigButton width={"297px"} text={"이전 페이지로"} />
+          <BigButton
+            width={"297px"}
+            text={"이전 페이지로"}
+            onClick={toggleModal}
+          />
         </Link>
       </div>
     </div>

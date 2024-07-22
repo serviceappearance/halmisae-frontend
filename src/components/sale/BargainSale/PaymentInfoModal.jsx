@@ -6,7 +6,7 @@ import BigButton from "../../common/BigButton";
 import TotalPrice from "../../common/TotalPrice";
 export default function PaymentInfoModal() {
   return (
-    <div className="style-modal">
+    <div className="style-modal slide-in">
       <StoreToPay storeName={"가게명"} pickUpTime={"20:00 - 20:30"} />
       <AmountSet />
       <TotalPrice />
