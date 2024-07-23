@@ -14,6 +14,7 @@ export default function SalePage() {
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+    setCurrentModal("alert");
   };
 
   const handleConfirm = () => {
@@ -21,7 +22,13 @@ export default function SalePage() {
   };
 
   return (
-    <div className="style-page">
+    <div
+      className="style-page"
+      style={{
+        display: "grid",
+        gridTemplateRows: "105px 124px 40px 40px ",
+      }}
+    >
       <SignBoard />
       <SaleInfoSection />
       <AdditionalSection icon={<MapPinIcon />} address={"가게 주소"} />
@@ -38,7 +45,15 @@ export default function SalePage() {
           toggleModal={toggleModal}
         />
       )}
-      {currentModal === "payment" && <PaymentInfoModal />}
+      {currentModal === "payment" && (
+        <PaymentInfoModal
+          isOpen={isModalOpen}
+          toggleModal={toggleModal}
+          price={saleInfo.price}
+        />
+      )}
     </div>
   );
 }
+
+const saleInfo = [{ fullName: "", price: "5000" }];

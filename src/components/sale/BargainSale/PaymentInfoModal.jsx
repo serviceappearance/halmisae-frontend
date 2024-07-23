@@ -4,17 +4,35 @@ import { ReactComponent as MinusIcon } from "../../../assets/icons/amount-minus.
 import { ReactComponent as PlusIcon } from "../../../assets/icons/amount-plus.svg";
 import BigButton from "../../common/BigButton";
 import TotalPrice from "../../common/TotalPrice";
-export default function PaymentInfoModal() {
+export default function PaymentInfoModal({ isOpen, toggleModal, price }) {
+  const [amount, setAmount] = useState(0);
+
+  const minus = () => {
+    if (amount > 0) {
+      setAmount(amount - 1);
+    }
+  };
+
+  const plus = () => {
+    setAmount(amount + 1);
+  };
+
+  const totalPrice = amount * price;
   return (
-    <div className="style-modal slide-in">
-      <StoreToPay storeName={"가게명"} pickUpTime={"20:00 - 20:30"} />
-      <AmountSet />
-      <TotalPrice />
-      <div style={{ display: "grid", placeItems: "center" }}>
-        {/* toss payments 실행 */}
-        <BigButton width={"297px"} text={"예약 결제"} />
+    <>
+      <div
+        className={`overlay ${isOpen ? "open" : ""}`}
+        onClick={toggleModal}
+      ></div>
+      <div className={`style-modal ${isOpen ? "open slide-in" : ""}`}>
+        <StoreToPay storeName={"가게명"} pickUpTime={"20:00 - 20:30"} />
+        <AmountSet amount={amount} minus={minus} plus={plus} />
+        <TotalPrice label={"주문금액"} totalPrice={totalPrice} />
+        <div style={{ display: "grid", placeItems: "center" }}>
+          <BigButton width={"297px"} text={"예약 결제"} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -37,7 +55,7 @@ const StoreToPay = ({ storeName, pickUpTime }) => {
   );
 };
 
-const AmountSet = () => {
+const AmountSet = ({ amount, minus, plus }) => {
   const thisStyle = {
     width: "275px",
     height: "142px",
@@ -51,7 +69,7 @@ const AmountSet = () => {
   return (
     <div style={thisStyle}>
       <div className="font-alert-content">수량 설정</div>
-      <AmountSetting />
+      <AmountSetting amount={amount} minus={minus} plus={plus} />
       <div className="font-alert-detail">
         예약은 할미새의 약관에 동의하는 것으로 간주합니다
       </div>
@@ -60,8 +78,7 @@ const AmountSet = () => {
   );
 };
 
-const AmountSetting = () => {
-  const [amount, setAmount] = useState(0);
+const AmountSetting = ({ amount, minus, plus }) => {
   const thisStyle = {
     display: "flex",
     width: "131px",
@@ -70,14 +87,7 @@ const AmountSetting = () => {
     margin: "22px 0 22px 0",
     alignItems: "center",
   };
-  const minus = () => {
-    if (amount > 0) {
-      setAmount(amount - 1);
-    }
-  };
-  const plus = () => {
-    setAmount(amount + 1);
-  };
+
   return (
     <div style={thisStyle}>
       <div onClick={minus}>

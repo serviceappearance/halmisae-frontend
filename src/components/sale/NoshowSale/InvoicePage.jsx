@@ -101,8 +101,8 @@ const MenuInfoBlock = ({ menuName, quantity, amount }) => {
 const infoDetailLabel = ["가게명", "예약일시", "이용시간", "예약인원"];
 const infoDetailValue = ["가게이름", "2024. 10.08  10:00", "120분", "2명"];
 const menuInfo = [
-  { name: "메뉴1", quantity: 1, ammount: "10000" },
-  { name: "메뉴1", quantity: 1, ammount: "10000" },
-  { name: "메뉴1", quantity: 1, ammount: "10000" },
-  { name: "메뉴1", quantity: 1, ammount: "10000" },
+  { name: "메뉴1", quantity: 1, amount: "10000" },
+  { name: "메뉴1", quantity: 1, amount: "10000" },
+  { name: "메뉴1", quantity: 1, amount: "10000" },
+  { name: "메뉴1", quantity: 1, amount: "10000" },
 ];

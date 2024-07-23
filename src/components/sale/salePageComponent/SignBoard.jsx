@@ -14,7 +14,7 @@ export default function SignBoard() {
   return (
     <div style={signBoardStyle}>
       <MoveToBackButton />
-      <BookmarkIcon />
+      {/* <BookmarkIcon /> */}
       <TitleBoard text={"가게이름"} />
     </div>
   );

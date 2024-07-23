@@ -6,16 +6,21 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function ReservationInfoInput() {
-  const [menuInfo, setMenuInfo] = useState([
+  const menuData = [
     { menuName: "메뉴01", price: 10000, count: 0 },
     { menuName: "메뉴02", price: 10000, count: 0 },
     { menuName: "메뉴03", price: 10000, count: 0 },
     { menuName: "메뉴04", price: 10000, count: 0 },
-  ]);
+  ];
+
+  const [menuInfo, setMenuInfo] = useState(menuData);
   const handleCountChange = (index, count) => {
     setMenuInfo((prevMenuInfo) =>
       prevMenuInfo.map((menu, i) => (i === index ? { ...menu, count } : menu))
     );
+  };
+  const CountChangeNull = () => {
+    console.log("no count change");
   };
   return (
     <div className="style-page">
@@ -24,8 +29,14 @@ export default function ReservationInfoInput() {
         title={"이용시간"}
         subtitle={subtitles.useTime}
         point={10}
+        onCountChange={CountChangeNull}
       />
-      <InputSection title={"인원"} subtitle={subtitles.usePeople} point={1} />
+      <InputSection
+        title={"인원"}
+        subtitle={subtitles.usePeople}
+        point={1}
+        onCountChange={CountChangeNull}
+      />
       <MenuList
         menuInfo={menuInfo}
         point={1}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TotalPrice from "../../common/TotalPrice";
+import SumPrice from "../salePageComponent/SumPrice";
 import MenuSection from "./MenuSection";
 export default function MenuList({ menuInfo, point, onCountChange }) {
   return (
@@ -15,7 +15,7 @@ export default function MenuList({ menuInfo, point, onCountChange }) {
           />
         ))}
       </div>
-      <TotalPrice label={"총 금액"} menuInfo={menuInfo} />
+      <SumPrice label={"총 금액"} menuInfo={menuInfo} />
     </div>
   );
 }

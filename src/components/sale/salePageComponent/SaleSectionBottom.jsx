@@ -2,7 +2,7 @@ import ButtonSection from "./ButtonSection";
 export default function SaleSectionBottom({ rating, toggleModal }) {
   return (
     <div style={bottomSectionStyle}>
-      <div style={customerRatingStyle}>
+      {/* <div style={customerRatingStyle}>
         <div
           className="font-customer-rating-label"
           style={{ marginBottom: "13px" }}
@@ -10,7 +10,7 @@ export default function SaleSectionBottom({ rating, toggleModal }) {
           이용자 평가 점수
         </div>
         <div className="font-customer-rating">{rating} / 5.0</div>
-      </div>
+      </div> */}
       <ButtonSection toggleModal={toggleModal} />
     </div>
   );
@@ -18,7 +18,7 @@ export default function SaleSectionBottom({ rating, toggleModal }) {
 
 const bottomSectionStyle = {
   width: "320px",
-  padding: "27px 0px 72px 0px",
+  margin: "20px 0 0 0",
 };
 const customerRatingStyle = {
   width: "320px",
