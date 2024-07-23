@@ -1,16 +1,21 @@
+import { useState } from "react";
+import TotalPrice from "../../common/TotalPrice";
 import MenuSection from "./MenuSection";
-export default function MenuList({ menuInfo }) {
+export default function MenuList({ menuInfo, point, onCountChange }) {
   return (
-    <div style={thisStyle}>
-      {menuInfo.map((menu, index) => (
-        <MenuSection key={index} menuName={menu.menuName} price={menu.price} />
-      ))}
+    <div className="style-menulist">
+      <div>
+        {menuInfo.map((menu, index) => (
+          <MenuSection
+            key={index}
+            menuName={menu.menuName}
+            price={menu.price}
+            point={point}
+            onCountChange={(count) => onCountChange(index, count)}
+          />
+        ))}
+      </div>
+      <TotalPrice label={"총 금액"} menuInfo={menuInfo} />
     </div>
   );
 }
-
-const thisStyle = {
-  display: "grid",
-  gap: "10px",
-  margin: "0 16px 6px 16px",
-};

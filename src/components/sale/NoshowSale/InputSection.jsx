@@ -1,5 +1,5 @@
 import CountPill from "./CountPill";
-export default function InputSection({ title, subtitle }) {
+export default function InputSection({ title, subtitle, point }) {
   const sectionStyle = {
     display: "grid",
     width: "287px",
@@ -10,7 +10,7 @@ export default function InputSection({ title, subtitle }) {
   return (
     <div style={sectionStyle}>
       <LabelSection title={title} subtitle={subtitle} />
-      <CountPillSection />
+      <CountPillSection point={point} />
     </div>
   );
 }
@@ -28,7 +28,7 @@ const LabelSection = ({ title, subtitle }) => {
   );
 };
 
-function CountPillSection() {
+function CountPillSection({ point }) {
   const sectionStyle = {
     display: "flex",
     width: "143px",
@@ -38,7 +38,7 @@ function CountPillSection() {
   };
   return (
     <div style={sectionStyle}>
-      <CountPill />
+      <CountPill point={point} />
     </div>
   );
 }

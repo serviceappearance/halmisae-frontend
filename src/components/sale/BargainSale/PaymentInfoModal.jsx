@@ -70,11 +70,23 @@ const AmountSetting = () => {
     margin: "22px 0 22px 0",
     alignItems: "center",
   };
+  const minus = () => {
+    if (amount > 0) {
+      setAmount(amount - 1);
+    }
+  };
+  const plus = () => {
+    setAmount(amount + 1);
+  };
   return (
     <div style={thisStyle}>
-      <MinusIcon />
+      <div onClick={minus}>
+        <MinusIcon />
+      </div>
       <div className="font-amount">{amount}</div>
-      <PlusIcon />
+      <div onClick={plus}>
+        <PlusIcon />
+      </div>
     </div>
   );
 };

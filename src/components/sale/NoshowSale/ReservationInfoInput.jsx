@@ -2,19 +2,38 @@ import InputSection from "./InputSection";
 import BigButton from "../../common/BigButton";
 import MenuList from "./MenuList";
 import TotalPrice from "../../common/TotalPrice";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function ReservationInfoInput() {
+  const [menuInfo, setMenuInfo] = useState([
+    { menuName: "메뉴01", price: 10000, count: 0 },
+    { menuName: "메뉴02", price: 10000, count: 0 },
+    { menuName: "메뉴03", price: 10000, count: 0 },
+    { menuName: "메뉴04", price: 10000, count: 0 },
+  ]);
+  const handleCountChange = (index, count) => {
+    setMenuInfo((prevMenuInfo) =>
+      prevMenuInfo.map((menu, i) => (i === index ? { ...menu, count } : menu))
+    );
+  };
   return (
     <div className="style-page">
       <MenuTitleSection />
-      <InputSection title={"이용시간"} subtitle={subtitles.useTime} />
-      <InputSection title={"인원"} subtitle={subtitles.usePeople} />
-      <MenuList menuInfo={menuInfo} />
-      <TotalPrice label={"총 금액"} totalPrice={"15,000원"} />
+      <InputSection
+        title={"이용시간"}
+        subtitle={subtitles.useTime}
+        point={10}
+      />
+      <InputSection title={"인원"} subtitle={subtitles.usePeople} point={1} />
+      <MenuList
+        menuInfo={menuInfo}
+        point={1}
+        onCountChange={handleCountChange}
+      />
       <div style={{ margin: "0 16px" }}>
         <Link to="/reserve/show">
-          <BigButton width={"287px"} text={"예약하기"} />
+          <BigButton width={"287px"} text={"예약하기"} onClick={null} />
         </Link>
       </div>
     </div>
@@ -30,32 +49,12 @@ const subtitles = {
   usePeople: "1명",
 };
 
-const menuInfo = [
-  {
-    menuName: "메뉴01",
-    price: "10,000원",
-  },
-  {
-    menuName: "메뉴02",
-    price: "10,000원",
-  },
-  {
-    menuName: "메뉴03",
-    price: "10,000원",
-  },
-  {
-    menuName: "메뉴04",
-    price: "10,000원",
-  },
-];
-
 const MenuTitleSection = () => {
   return (
     <div style={titleSectionStyle}>
       <div className="font-menu-list-title" style={menuTitleStyle}>
         메뉴
       </div>
-      <NoShowFoodToggle toggleHandler={toggleEvnet} />
     </div>
   );
 };

@@ -11,20 +11,45 @@ export default function DateTimeInput() {
   const clickedDay = value.getDay();
   const weekDays = ["일", "월", "화", "수", "목", "금", "토"];
   const dateInfo = `${clickedYear}년 ${clickedMonth}월 ${clickedDate}일 (${weekDays[clickedDay]})`;
+  const disableSpecificDates = ({ date, view }) => {
+    // view가 month인 경우에만 날짜를 비활성화
+    if (view === "month") {
+      const disabledDates = [
+        new Date(2024, 6, 24), // 2024년 7월 24일
+      ];
+      return disabledDates.some(
+        (disabledDate) =>
+          date.getFullYear() === disabledDate.getFullYear() &&
+          date.getMonth() === disabledDate.getMonth() &&
+          date.getDate() === disabledDate.getDate()
+      );
+    }
+    return false;
+  };
   return (
     <div className="style-page">
       <div className="font-reserved-date" style={reservedDateStyle}>
         {dateInfo}
       </div>
-      <Calender onChange={onChange} value={value} calendarType="gregory" />
-      <div style={timeBlockSectionStyle}>
-        {timeList.map((time, index) => (
-          <TimeBlock key={index} time={time} />
-        ))}
-      </div>
+      <Calender
+        onChange={onChange}
+        value={value}
+        tileDisabled={disableSpecificDates}
+        calendarType="gregory"
+      />
     </div>
   );
 }
+
+const TimeBlockSection = () => {
+  return (
+    <div style={timeBlockSectionStyle}>
+      {timeList.map((time, index) => (
+        <TimeBlock key={index} time={time} />
+      ))}
+    </div>
+  );
+};
 
 const reservedDateStyle = {
   margin: "15px 0 15px 0 ",

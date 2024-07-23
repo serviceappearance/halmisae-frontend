@@ -9,27 +9,6 @@ import { createContext, useContext } from "react";
 const StoreInfoTopContext = createContext({});
 const StoreInfoBottomContext = createContext({});
 
-const cardStyle = {
-  width: "287px",
-  height: "162px",
-  borderRadius: "10px",
-  backgroundColor: "rgba(0, 0, 0, 0.20)",
-  boxShadow: "0px 2px 4px 0px rgba(0, 0, 0, 0.25)",
-};
-const topPartStyle = {
-  width: "289px",
-  height: "79px",
-  borderRadius: "10px 10px 0px 0px",
-  position: "relative",
-};
-const bottomPartStyle = {
-  width: "287px",
-  height: "82px",
-  borderRadius: "0px 0px 10px 10px",
-  backgroundColor: "#FFF",
-  position: "relative",
-};
-
 export default function StoreInfoCard({ id, topPartValue, bottomPartValue }) {
   return (
     <div style={cardStyle}>
@@ -69,4 +48,25 @@ const CardBottomPart = () => {
       <RatingAndDistance rating={rating} distance={distance} />
     </div>
   );
+};
+
+const cardStyle = {
+  width: "287px",
+  height: "162px",
+  borderRadius: "10px",
+  backgroundColor: "rgba(0, 0, 0, 0.20)",
+  boxShadow: "0px 2px 4px 0px rgba(0, 0, 0, 0.25)",
+};
+const topPartStyle = {
+  width: "289px",
+  height: "79px",
+  borderRadius: "10px 10px 0px 0px",
+  position: "relative",
+};
+const bottomPartStyle = {
+  width: "287px",
+  height: "82px",
+  borderRadius: "0px 0px 10px 10px",
+  backgroundColor: "#FFF",
+  position: "relative",
 };
