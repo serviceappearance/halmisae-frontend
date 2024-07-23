@@ -8,7 +8,6 @@ import ReservationInputPage from "./components/sale/NoshowSale/ReservationInputP
 import InvoicePage from "./components/sale/NoshowSale/InvoicePage";
 import SaleConfirmPage from "./components/sale/BargainSale/SaleConfirmPage";
 import ConfirmPage from "./components/sale/NoshowSale/ConfirmPage";
-import TossWidget from "./components/sale/TossWidget";
 import BookmarkListPage from "./components/mypage/BookmarkListPage";
 import UserHistoryPage from "./components/mypage/UserHistoryPage";
 import RatingPage from "./components/mypage/RatingPage";
@@ -33,7 +32,6 @@ root.render(
         <Route path="/bookmarks" element={<BookmarkListPage />}></Route>
         <Route path="/history" element={<UserHistoryPage />}></Route>
         <Route path="/rating" element={<RatingPage />}></Route>
-        <Route path="/toss-payments-widget" element={<TossWidget />}></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

@@ -1,7 +1,11 @@
-export default function TotalPrice({ label, totalPrice }) {
+export default function TotalPrice({ label, totalPrice, menuInfo }) {
+  const totalPrice01 = menuInfo.reduce((sum, menu) => {
+    return sum + menu.price * (menu.count || 0);
+  }, 0);
   return (
     <div className="font-payment" style={totalPriceStyle}>
       <div>{label}</div>
+      <div>{totalPrice01}</div>
       <div>{totalPrice}</div>
     </div>
   );
