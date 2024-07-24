@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 export default function ReservationInfoInput({ storeId }) {
   const [menuInfo, setMenuInfo] = useState([]);
   const [usageTime, setUsageTime] = useState(0);
+  const [usePeople, setUsePeople] = useState(1);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,10 +42,19 @@ export default function ReservationInfoInput({ storeId }) {
     console.log("no count change");
   };
 
+  const handleUsageTimeChange = (time) => {
+    setUsageTime(time);
+  };
+
+  const handlePeopleChange = (people) => {
+    setUsePeople(people);
+  };
+
   const handleReservation = () => {
     const reservationData = {
       menuInfo,
       usageTime,
+      usePeople,
     };
     navigate(`/reserve/show?storeId=${storeId}`, { state: reservationData });
   };
@@ -56,14 +66,14 @@ export default function ReservationInfoInput({ storeId }) {
         title={"이용시간"}
         subtitle={subtitles.useTime}
         point={10}
-        onCountChange={CountChangeNull}
+        onCountChange={handleUsageTimeChange}
         value={usageTime}
       />
       <InputSection
         title={"인원"}
         subtitle={subtitles.usePeople}
         point={1}
-        onCountChange={CountChangeNull}
+        onCountChange={handlePeopleChange}
       />
       <MenuList
         menuInfo={menuInfo}

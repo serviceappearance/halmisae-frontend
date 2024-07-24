@@ -71,6 +71,7 @@ export default function SalePage() {
       style={{
         display: "grid",
         gridTemplateRows: "105px 124px 40px 40px ",
+        position: "relative",
       }}
     >
       <SignBoard storeName={saleInfo.storeName} />
@@ -81,8 +82,8 @@ export default function SalePage() {
         picking={pickingTimeFormatted}
         price={saleInfo.closingPrice}
       />
-      <AdditionalSection icon={<MapPinIcon />} address={saleInfo.address} />
-      <AdditionalSection icon={null} address={"재료 및 알레르기 성분 정보"} />
+      {/* <AdditionalSection icon={<MapPinIcon />} address={saleInfo.address} />
+      <AdditionalSection icon={null} address={"재료 및 알레르기 성분 정보"} /> */}
       <SaleSectionBottom
         rating={"4.5"}
         toggleModal={toggleModal}

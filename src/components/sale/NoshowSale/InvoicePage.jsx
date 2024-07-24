@@ -5,9 +5,10 @@ import SumPrice from "../salePageComponent/SumPrice";
 export default function InvoicePage() {
   const location = useLocation();
   const { storeId } = useParams();
-  const { menuInfo, usageTime } = location.state || {
+  const { menuInfo, usageTime, usePeople } = location.state || {
     menuInfo: [],
     usageTime: 0,
+    usePeople: 1,
   };
 
   const invoiceStyle = {
@@ -19,13 +20,17 @@ export default function InvoicePage() {
       <div>
         <MoveToBackButton />
       </div>
-      <ReservationInfo menuInfo={menuInfo} usageTime={usageTime} />
+      <ReservationInfo
+        menuInfo={menuInfo}
+        usageTime={usageTime}
+        usePeople={usePeople}
+      />
       <BigButton width={"297px"} text={"결제하기"} />
     </div>
   );
 }
 
-const ReservationInfo = ({ menuInfo, usageTime }) => {
+const ReservationInfo = ({ menuInfo, usageTime, usePeople }) => {
   const infoSectionStyle = {
     width: "296px",
     height: "434px",
@@ -45,7 +50,11 @@ const ReservationInfo = ({ menuInfo, usageTime }) => {
       <div className="font-body2" style={titleStyle}>
         예약확인
       </div>
-      <InfoDetail menuInfo={menuInfo} usageTime={usageTime} />
+      <InfoDetail
+        menuInfo={menuInfo}
+        usageTime={usageTime}
+        usePeople={usePeople}
+      />
       <div style={{ margin: "169px 0 0 0" }}>
         <SumPrice label={"총 금액"} menuInfo={menuInfo} />
         <SumPrice label={"예약금액"} menuInfo={menuInfo} />
@@ -54,14 +63,19 @@ const ReservationInfo = ({ menuInfo, usageTime }) => {
   );
 };
 
-const InfoDetail = ({ menuInfo, usageTime }) => {
+const InfoDetail = ({ menuInfo, usageTime, usePeople }) => {
   const detailSectionStyle = {
     display: "grid",
     gap: "7px",
     margin: "9px 7px 0 7px",
   };
 
-  const infoDetailValue = ["가게이름", "2024. 10.08", `${usageTime}분`, "2명"];
+  const infoDetailValue = [
+    "가게이름",
+    "2024. 10.08",
+    `${usageTime}분`,
+    `${usePeople}명`,
+  ];
   return (
     <div style={detailSectionStyle}>
       {infoDetailLabel.map((label, index) => (

@@ -18,7 +18,9 @@ export default function SaleSectionBottom({ rating, toggleModal, storeId }) {
 
 const bottomSectionStyle = {
   width: "320px",
-  margin: "20px 0 0 0",
+  // margin: "70px 0 0 0",
+  position: "absolute",
+  bottom: 0,
 };
 const customerRatingStyle = {
   width: "320px",
