@@ -2,9 +2,9 @@ import { useState } from "react";
 import { ReactComponent as MinusIcon } from "../../../assets/icons/amount-minus-small.svg";
 import { ReactComponent as PlusIcon } from "../../../assets/icons/amount-plus-small.svg";
 
-export default function CountPill({ point, onCountChange }) {
+export default function CountPill({ point, onCountChange, value }) {
   const [count, setCount] = useState(0);
-
+  const limit = value != null ? value : 10000;
   const minus = () => {
     if (count > 0) {
       const newCount = count - point;
@@ -14,9 +14,11 @@ export default function CountPill({ point, onCountChange }) {
   };
 
   const plus = () => {
-    const newCount = count + point;
-    setCount(newCount);
-    onCountChange(newCount);
+    if (count < limit) {
+      const newCount = count + point;
+      setCount(newCount);
+      onCountChange(newCount);
+    }
   };
 
   return (

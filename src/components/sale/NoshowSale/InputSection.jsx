@@ -4,6 +4,7 @@ export default function InputSection({
   subtitle,
   point,
   onCountChange,
+  value,
 }) {
   const sectionStyle = {
     display: "grid",
@@ -15,7 +16,11 @@ export default function InputSection({
   return (
     <div style={sectionStyle}>
       <LabelSection title={title} subtitle={subtitle} />
-      <CountPillSection point={point} onCountChange={onCountChange} />
+      <CountPillSection
+        point={point}
+        onCountChange={onCountChange}
+        value={value}
+      />
     </div>
   );
 }
@@ -33,7 +38,7 @@ const LabelSection = ({ title, subtitle }) => {
   );
 };
 
-function CountPillSection({ point, onCountChange }) {
+function CountPillSection({ point, onCountChange, value }) {
   const sectionStyle = {
     display: "flex",
     width: "143px",
@@ -43,7 +48,7 @@ function CountPillSection({ point, onCountChange }) {
   };
   return (
     <div style={sectionStyle}>
-      <CountPill point={point} onCountChange={onCountChange} />
+      <CountPill point={point} onCountChange={onCountChange} value={value} />
     </div>
   );
 }

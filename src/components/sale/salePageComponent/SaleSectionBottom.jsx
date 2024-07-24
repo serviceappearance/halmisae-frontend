@@ -1,5 +1,5 @@
 import ButtonSection from "./ButtonSection";
-export default function SaleSectionBottom({ rating, toggleModal }) {
+export default function SaleSectionBottom({ rating, toggleModal, storeId }) {
   return (
     <div style={bottomSectionStyle}>
       {/* <div style={customerRatingStyle}>
@@ -11,7 +11,7 @@ export default function SaleSectionBottom({ rating, toggleModal }) {
         </div>
         <div className="font-customer-rating">{rating} / 5.0</div>
       </div> */}
-      <ButtonSection toggleModal={toggleModal} />
+      <ButtonSection toggleModal={toggleModal} storeId={storeId} />
     </div>
   );
 }

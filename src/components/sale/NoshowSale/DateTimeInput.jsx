@@ -1,31 +1,51 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TimeBlock from "./TimeBlock";
 import Calender from "react-calendar";
 import "../../Calendar.css";
+import axios from "axios";
 
-export default function DateTimeInput() {
+export default function DateTimeInput({ storeId }) {
   const [value, onChange] = useState(new Date());
+  const [storeHolidays, setStoreHolidays] = useState([]);
+
   const clickedYear = value.getFullYear();
   const clickedMonth = value.getMonth() + 1;
   const clickedDate = value.getDate();
   const clickedDay = value.getDay();
   const weekDays = ["일", "월", "화", "수", "목", "금", "토"];
   const dateInfo = `${clickedYear}년 ${clickedMonth}월 ${clickedDate}일 (${weekDays[clickedDay]})`;
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:8080/v1/api/user/main/detail/reservation?storeNumber=${storeId}`
+      )
+      .then((response) => {
+        setStoreHolidays(response.data.storeHoliday);
+      })
+      .catch((error) => {
+        console.error("Error fetching store holidays:", error);
+      });
+  }, []);
   const disableSpecificDates = ({ date, view }) => {
-    // view가 month인 경우에만 날짜를 비활성화
     if (view === "month") {
-      const disabledDates = [
-        new Date(2024, 6, 24), // 2024년 7월 24일
-      ];
-      return disabledDates.some(
-        (disabledDate) =>
-          date.getFullYear() === disabledDate.getFullYear() &&
-          date.getMonth() === disabledDate.getMonth() &&
-          date.getDate() === disabledDate.getDate()
+      const dayMap = {
+        SUN: 0,
+        MON: 1,
+        TUE: 2,
+        WED: 3,
+        THU: 4,
+        FRI: 5,
+        SAT: 6,
+      };
+
+      return storeHolidays.includes(
+        Object.keys(dayMap).find((key) => dayMap[key] === date.getDay())
       );
     }
     return false;
   };
+
   return (
     <div className="style-page">
       <div className="font-reserved-date" style={reservedDateStyle}>

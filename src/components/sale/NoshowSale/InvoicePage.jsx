@@ -1,19 +1,31 @@
+import { useLocation, useParams } from "react-router-dom";
 import BigButton from "../../common/BigButton";
-import TotalPrice from "../../common/TotalPrice";
+import MoveToBackButton from "../../common/MoveToBackButton";
+import SumPrice from "../salePageComponent/SumPrice";
 export default function InvoicePage() {
+  const location = useLocation();
+  const { storeId } = useParams();
+  const { menuInfo, usageTime } = location.state || {
+    menuInfo: [],
+    usageTime: 0,
+  };
+
   const invoiceStyle = {
     display: "grid",
     justifyContent: "center",
   };
   return (
     <div style={invoiceStyle} className="style-page">
-      <ReservationInfo />
+      <div>
+        <MoveToBackButton />
+      </div>
+      <ReservationInfo menuInfo={menuInfo} usageTime={usageTime} />
       <BigButton width={"297px"} text={"결제하기"} />
     </div>
   );
 }
 
-const ReservationInfo = () => {
+const ReservationInfo = ({ menuInfo, usageTime }) => {
   const infoSectionStyle = {
     width: "296px",
     height: "434px",
@@ -33,21 +45,23 @@ const ReservationInfo = () => {
       <div className="font-body2" style={titleStyle}>
         예약확인
       </div>
-      <InfoDetail />
+      <InfoDetail menuInfo={menuInfo} usageTime={usageTime} />
       <div style={{ margin: "169px 0 0 0" }}>
-        <TotalPrice label={"총 금액"} totalPrice={"15,000"} />
-        <TotalPrice label={"예약금액"} totalPrice={"10,000"} />
+        <SumPrice label={"총 금액"} menuInfo={menuInfo} />
+        <SumPrice label={"예약금액"} menuInfo={menuInfo} />
       </div>
     </div>
   );
 };
 
-const InfoDetail = () => {
+const InfoDetail = ({ menuInfo, usageTime }) => {
   const detailSectionStyle = {
     display: "grid",
     gap: "7px",
     margin: "9px 7px 0 7px",
   };
+
+  const infoDetailValue = ["가게이름", "2024. 10.08", `${usageTime}분`, "2명"];
   return (
     <div style={detailSectionStyle}>
       {infoDetailLabel.map((label, index) => (
@@ -57,9 +71,9 @@ const InfoDetail = () => {
       {menuInfo.map((info, index) => (
         <MenuInfoBlock
           key={index}
-          menuName={info.name}
-          quantity={info.quantity}
-          amount={info.amount}
+          menuName={info.menuName}
+          quantity={info.count}
+          amount={info.price * info.count}
         />
       ))}
     </div>
@@ -98,11 +112,11 @@ const MenuInfoBlock = ({ menuName, quantity, amount }) => {
   );
 };
 
-const infoDetailLabel = ["가게명", "예약일시", "이용시간", "예약인원"];
-const infoDetailValue = ["가게이름", "2024. 10.08  10:00", "120분", "2명"];
-const menuInfo = [
-  { name: "메뉴1", quantity: 1, amount: "10000" },
-  { name: "메뉴1", quantity: 1, amount: "10000" },
-  { name: "메뉴1", quantity: 1, amount: "10000" },
-  { name: "메뉴1", quantity: 1, amount: "10000" },
-];
+const infoDetailLabel = ["가게명", "예약날짜", "이용시간", "예약인원"];
+
+// const menuInfo = [
+//   { name: "메뉴1", quantity: 1, amount: "10000" },
+//   { name: "메뉴1", quantity: 1, amount: "10000" },
+//   { name: "메뉴1", quantity: 1, amount: "10000" },
+//   { name: "메뉴1", quantity: 1, amount: "10000" },
+// ];

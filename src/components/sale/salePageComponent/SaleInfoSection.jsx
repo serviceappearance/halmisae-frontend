@@ -3,22 +3,21 @@ import { ReactComponent as MapPinIcon } from "../../../assets/icons/map-pin.svg"
 import { ReactComponent as StarIcon } from "../../../assets/icons/star.svg";
 import { ReactComponent as ClockIcon } from "../../../assets/icons/clock-small.svg";
 import SaleSubArea from "./SaleSubArea";
-export default function SaleInfoSection() {
+export default function SaleInfoSection({
+  storeName,
+  opening,
+  breaking,
+  picking,
+  price,
+}) {
   return (
     <div style={thisStyle} className="font-sale-info">
       <div>
-        <SaleSubArea
-          icon={<MapPinIcon />}
-          text={"가게 풀 네임 두 줄까지 입력 가능"}
-          alert={null}
-        />
+        <SaleSubArea icon={<MapPinIcon />} text={storeName} alert={null} />
         {/* <SaleSubArea icon={<StarIcon />} text={"4.5"} alert={null} /> */}
-        <SaleSubArea icon={<ClockIcon />} text={"영업시간: 20:00 - 20:30"} />
-        <SaleSubArea icon={<ClockIcon />} text={"휴게시간: 20:00 - 20:30"} />
-        <SaleSubArea
-          icon={<ClockIcon />}
-          text={"픽업가능시간: 20:00 - 20:30"}
-        />
+        <SaleSubArea icon={<ClockIcon />} text={`영업시간: ${opening}`} />
+        <SaleSubArea icon={<ClockIcon />} text={`휴게시간: ${breaking}`} />
+        <SaleSubArea icon={<ClockIcon />} text={`픽업가능시간: ${picking}`} />
       </div>
       <div
         style={{
@@ -26,7 +25,7 @@ export default function SaleInfoSection() {
           position: "relative",
         }}
       >
-        <PriceDisplay price={"10,000"} discounted={"5,000"} />
+        <PriceDisplay price={"10,000"} discounted={price} />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import BigButton from "../../common/BigButton";
 
-export default function ButtonSection({ toggleModal }) {
+export default function ButtonSection({ toggleModal, storeId }) {
   return (
     <div style={buttonSectionStyle}>
       <BigButton
@@ -9,7 +9,7 @@ export default function ButtonSection({ toggleModal }) {
         text={bargainSaleButtonProps.text}
         onClick={toggleModal}
       />
-      <Link to="/reserve">
+      <Link to={`/reserve?storeId=${storeId}`}>
         <BigButton
           width={reservationButtonProps.width}
           text={reservationButtonProps.text}

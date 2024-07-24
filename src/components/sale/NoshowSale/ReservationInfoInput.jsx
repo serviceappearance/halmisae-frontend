@@ -2,18 +2,36 @@ import InputSection from "./InputSection";
 import BigButton from "../../common/BigButton";
 import MenuList from "./MenuList";
 import TotalPrice from "../../common/TotalPrice";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-export default function ReservationInfoInput() {
-  const menuData = [
-    { menuName: "메뉴01", price: 10000, count: 0 },
-    { menuName: "메뉴02", price: 10000, count: 0 },
-    { menuName: "메뉴03", price: 10000, count: 0 },
-    { menuName: "메뉴04", price: 10000, count: 0 },
-  ];
+export default function ReservationInfoInput({ storeId }) {
+  const [menuInfo, setMenuInfo] = useState([]);
+  const [usageTime, setUsageTime] = useState(0);
+  const navigate = useNavigate();
 
-  const [menuInfo, setMenuInfo] = useState(menuData);
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:8080/v1/api/user/main/detail/reservation?storeNumber=${storeId}`
+      )
+      .then((response) => {
+        const data = response.data;
+        setMenuInfo(
+          data.menu.map((item) => ({
+            menuName: item.menuName,
+            price: item.price,
+            count: 0,
+          }))
+        );
+        setUsageTime(data.usageTime);
+      })
+      .catch((error) => {
+        console.error("데이터를 가져오는 중 오류 발생:", error);
+      });
+  }, []);
+
   const handleCountChange = (index, count) => {
     setMenuInfo((prevMenuInfo) =>
       prevMenuInfo.map((menu, i) => (i === index ? { ...menu, count } : menu))
@@ -22,6 +40,15 @@ export default function ReservationInfoInput() {
   const CountChangeNull = () => {
     console.log("no count change");
   };
+
+  const handleReservation = () => {
+    const reservationData = {
+      menuInfo,
+      usageTime,
+    };
+    navigate(`/reserve/show?storeId=${storeId}`, { state: reservationData });
+  };
+
   return (
     <div className="style-page">
       <MenuTitleSection />
@@ -30,6 +57,7 @@ export default function ReservationInfoInput() {
         subtitle={subtitles.useTime}
         point={10}
         onCountChange={CountChangeNull}
+        value={usageTime}
       />
       <InputSection
         title={"인원"}
@@ -43,9 +71,9 @@ export default function ReservationInfoInput() {
         onCountChange={handleCountChange}
       />
       <div style={{ margin: "0 16px" }}>
-        <Link to="/reserve/show">
+        <div onClick={handleReservation}>
           <BigButton width={"287px"} text={"예약하기"} onClick={null} />
-        </Link>
+        </div>
       </div>
     </div>
   );
