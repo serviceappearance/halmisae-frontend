@@ -20,7 +20,14 @@ export default function SaleInfoSection() {
           text={"픽업가능시간: 20:00 - 20:30"}
         />
       </div>
-      <PriceDisplay price={"10,000"} discounted={"5,000"} />
+      <div
+        style={{
+          height: "42px",
+          position: "relative",
+        }}
+      >
+        <PriceDisplay price={"10,000"} discounted={"5,000"} />
+      </div>
     </div>
   );
 }
