@@ -1,17 +1,21 @@
+import { useNavigate } from "react-router-dom";
+import { ReactComponent as BackIcon } from "../../assets/icons/move-to-back.svg";
+
 export default function MoveToBackButton() {
-  const thisStyle = {
-    position: "absolute",
-    top: "7px",
-    left: "7px",
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate(-1);
   };
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="21"
-      height="21"
-      style={thisStyle}
-    >
-      <circle cx="10.5" cy="10.5" r="10.5" fill="black" fill-opacity="0.4" />
-    </svg>
+    <div style={thisStyle} onClick={handleBack}>
+      <BackIcon />
+    </div>
   );
 }
+
+const thisStyle = {
+  position: "absolute",
+  top: "7px",
+  left: "7px",
+};

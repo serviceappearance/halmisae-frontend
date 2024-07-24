@@ -1,5 +1,5 @@
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-small.svg";
-export default function SearchBar() {
+export default function SearchBar({ onSearch }) {
   const searchBarStyle = {
     display: "flex",
     width: "299px",
@@ -16,6 +16,10 @@ export default function SearchBar() {
     height: "20px",
     border: "none",
   };
+
+  const handleChange = (event) => {
+    onSearch(event.target.value);
+  };
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div style={searchBarStyle}>
@@ -25,6 +29,7 @@ export default function SearchBar() {
           style={inputStyle}
           className="font-search-input"
           placeholder="가게이름 검색"
+          onChange={handleChange}
         />
       </div>
     </div>

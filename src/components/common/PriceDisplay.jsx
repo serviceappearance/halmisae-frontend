@@ -8,7 +8,7 @@ export default function PriceDisplay({ price, discounted }) {
   };
   return (
     <div style={thisStyle}>
-      <div className="font-price">할인가</div>
+      <div className="font-price">가격</div>
       <div className="font-price-discounted">{discounted}</div>
     </div>
   );

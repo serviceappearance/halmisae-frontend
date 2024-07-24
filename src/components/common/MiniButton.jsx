@@ -1,4 +1,4 @@
-export default function MiniButton({ text, onClickHandler }) {
+export default function MiniButton({ text, onCancel }) {
   const buttonStyle = {
     display: "flex",
     width: "fit-content",
@@ -11,9 +11,10 @@ export default function MiniButton({ text, onClickHandler }) {
     position: "absolute",
     right: "15.5px",
     top: "9.5px",
+    cursor: "pointer",
   };
   return (
-    <div className="font-caption" style={buttonStyle} onClick={onClickHandler}>
+    <div className="font-caption" style={buttonStyle} onClick={onCancel}>
       {text}
     </div>
   );
