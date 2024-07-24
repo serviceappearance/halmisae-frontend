@@ -21,7 +21,7 @@ root.render(
         <Route path="/" element={<MainPage />}></Route>
         <Route path="/reservation" element={<ReservationCheckPage />}></Route>
         <Route path="/mypage" element={<MyPage />}></Route>
-        <Route path="/store" element={<SalePage />}></Route>
+        <Route path="/store/:storeId" element={<SalePage />}></Route>
         <Route path="/reserve" element={<ReservationInputPage />}></Route>
         <Route path="/reserve/show" element={<InvoicePage />}></Route>
         <Route
