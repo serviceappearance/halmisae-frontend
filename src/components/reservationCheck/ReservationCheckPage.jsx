@@ -1,16 +1,38 @@
 import ReservationCard from "./ReservationCard";
 import PageHeader from "../common/PageHeader";
 import MenuBar from "../common/MenuBar";
+import { useState } from "react";
+import axios from "axios";
+
 export default function ReservationCheckPage() {
+  const [reservations, setReservations] = useState(reservationInfo);
+  const [error, setError] = useState(null); // 에러 상태 추가
+
+  const handleCancel = async (index) => {
+    const reservationToCancel = reservations[index];
+
+    try {
+      await axios.post(`서버주소/${reservationToCancel.id}`);
+
+      // 상태 업데이트
+      setReservations((prevReservations) =>
+        prevReservations.filter((_, i) => i !== index)
+      );
+    } catch (error) {
+      console.error("Failed to cancel reservation:", error);
+      alert("예약 취소에 실패했습니다. 다시 시도해 주세요.");
+    }
+  };
   return (
     <div className="style-page">
       <PageHeader text={"나의 예약"} />
-      {reservationInfo.map((r, index) => (
+      {/* 에러 메시지 표시 */}
+      {reservations.map((r, index) => (
         <ReservationCard
           key={index}
           imgSrc={r.imgSrc}
           info={r.info}
-          miniButtonHandler={onClickHandler}
+          onCancel={() => handleCancel(index)}
         />
       ))}
       <MenuBar />

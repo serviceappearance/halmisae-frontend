@@ -6,9 +6,7 @@ import MiniButton from "../common/MiniButton";
 import { Link } from "react-router-dom";
 import { createContext, useContext } from "react";
 
-const buttonContext = createContext({});
-
-export default function ReservationCard({ imgSrc, info, miniButtonHandler }) {
+export default function ReservationCard({ imgSrc, info, onCancel }) {
   const cardStyle = {
     width: "320px",
     height: "78px",
@@ -20,9 +18,7 @@ export default function ReservationCard({ imgSrc, info, miniButtonHandler }) {
   return (
     <div style={cardStyle}>
       <ImageSection imgSrc={null} />
-      <buttonContext.Provider value={miniButtonHandler}>
-        <InfoSection info={info} />
-      </buttonContext.Provider>
+      <InfoSection info={info} onCancel={onCancel} />
     </div>
   );
 }
@@ -37,7 +33,7 @@ const ImageSection = ({ imgSrc }) => {
   );
 };
 
-const InfoSection = ({ info }) => {
+const InfoSection = ({ info, onCancel }) => {
   const sectionStyle = {
     display: "grid",
     gridTemplateRows: "53px 25px",
@@ -49,17 +45,23 @@ const InfoSection = ({ info }) => {
         storeName={info.storeName}
         dateOrTime={info.dateOrTime}
         buttonText={info.buttonText}
+        onCancel={onCancel}
       />
       <SimpleInfoSection simpleInfo={info.simpleInfo} />
     </div>
   );
 };
 
-const StoreInfoSection = ({ category, storeName, dateOrTime, buttonText }) => {
-  const { buttonHandler } = useContext(buttonContext);
+const StoreInfoSection = ({
+  category,
+  storeName,
+  dateOrTime,
+  buttonText,
+  onCancel,
+}) => {
   return (
     <div style={{ position: "relative" }}>
-      <MiniButton text={buttonText} onClickHandler={buttonHandler} />
+      <MiniButton text={buttonText} onCancel={onCancel} />
       <MiniNotificationIcon text={category} />
       <div
         className="font-body2"
