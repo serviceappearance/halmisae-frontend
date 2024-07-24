@@ -11,11 +11,10 @@ export default function MyPage() {
     <div className="style-page">
       <PageHeader text={"마이페이지"} />
       {sectionValue.map((value, index) => (
-        <Link to={`${value.path}`}>
+        <Link key={index} to={`${value.path}`}>
           <PageSection key={index} icon={value.icon} text={value.text} />
         </Link>
       ))}
-      <PageSection />
       <MenuBar />
     </div>
   );
@@ -50,21 +49,21 @@ const PageSection = ({ icon, text }) => {
 };
 
 const sectionValue = [
-  {
-    icon: <BookmarkIcon />,
-    text: "찜 목록",
-    path: "/bookmarks",
-  },
+  // {
+  //   icon: <BookmarkIcon />,
+  //   text: "찜 목록",
+  //   path: "/bookmarks",
+  // },
   {
     icon: <StarIcon />,
     text: "사용내역 및 별점",
     path: "/history",
   },
-  {
-    icon: <UserIcon />,
-    text: "회원정보 수정",
-    path: "/account-info",
-  },
+  // {
+  //   icon: <UserIcon />,
+  //   text: "회원정보 수정",
+  //   path: "/account-info",
+  // },
   {
     icon: <LogoutIcon />,
     text: "로그아웃",
