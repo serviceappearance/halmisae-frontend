@@ -5,6 +5,33 @@ import MenuBar from "../common/MenuBar";
 import SearchBar from "../common/SearchBar";
 import CategoryBar from "./CategoryBar";
 import StoreInfoCard from "./StoreInfoCard";
+import { useState } from "react";
+
+export default function MainPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredStoreInfo = storeInfo.filter((info) =>
+    info.bottomPartValue.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  return (
+    <div className="style-page">
+      <SearchBar onSearch={setSearchQuery} />
+      {/* <CategoryBar category={category} /> */}
+      <div className="style-card-list">
+        {filteredStoreInfo.map((info) => (
+          <Link key={info.storeId} to="/store">
+            <StoreInfoCard
+              id={info.storeId}
+              topPartValue={info.topPartValue}
+              bottomPartValue={info.bottomPartValue}
+            />
+          </Link>
+        ))}
+      </div>
+      <MenuBar />
+    </div>
+  );
+}
 
 const storeInfo = [
   {
@@ -25,7 +52,7 @@ const storeInfo = [
       Notification: "재고없음",
     },
     bottomPartValue: {
-      title: "가게명",
+      title: "가게명1",
       discounted: "5,000",
       rating: "4.5",
       distance: "2km",
@@ -58,25 +85,3 @@ const storeInfo = [
 ];
 
 const category = ["전체", "noShow", "마감할인", "찜"];
-
-export default function MainPage() {
-  return (
-    <div className="style-page">
-      <SearchBar />
-      <CategoryBar category={category} />
-      <div className="style-card-list">
-        {storeInfo.map((info, index) => (
-          <Link to="/store">
-            <StoreInfoCard
-              key={index}
-              id={info.storeId}
-              topPartValue={info.topPartValue}
-              bottomPartValue={info.bottomPartValue}
-            />
-          </Link>
-        ))}
-      </div>
-      <MenuBar />
-    </div>
-  );
-}

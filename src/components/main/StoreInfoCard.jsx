@@ -28,13 +28,13 @@ const CardTopPart = () => {
   return (
     <div style={topPartStyle}>
       <NotificationIcon text={Notification} />
-      <BookmarkIcon />
+      {/* <BookmarkIcon /> */}
     </div>
   );
 };
 
 const CardBottomPart = () => {
-  const { title, content, price, discounted, rating, distance } = useContext(
+  const { title, content, price, discounted } = useContext(
     StoreInfoBottomContext
   );
   return (
@@ -45,7 +45,7 @@ const CardBottomPart = () => {
         discounted={discounted}
         position={"relative"}
       />
-      <RatingAndDistance rating={rating} distance={distance} />
+      {/* <RatingAndDistance rating={rating} distance={distance} /> */}
     </div>
   );
 };
