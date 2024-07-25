@@ -46,7 +46,7 @@ const CardTopPart = () => {
 };
 
 const CardBottomPart = () => {
-  const { title, content, price, discounted } = useContext(
+  const { title, content, price, discounted, address } = useContext(
     StoreInfoBottomContext
   );
   return (
@@ -58,6 +58,7 @@ const CardBottomPart = () => {
         position={"relative"}
       />
       {/* <RatingAndDistance rating={rating} distance={distance} /> */}
+      <RatingAndDistance address={address} />
     </div>
   );
 };

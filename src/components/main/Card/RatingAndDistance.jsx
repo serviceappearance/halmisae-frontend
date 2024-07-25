@@ -1,4 +1,4 @@
-export default function RatingAndDistance({ rating, distance }) {
+export default function RatingAndDistance({ rating, distance, address }) {
   const thisStyle = {
     display: "flex",
     alignItems: "center",
@@ -9,9 +9,10 @@ export default function RatingAndDistance({ rating, distance }) {
   };
   return (
     <div className="font-Rating" style={thisStyle}>
-      <div>star</div>
+      {/* <div>star</div>
       <div>{rating}</div>
-      <div>{distance}</div>
+      <div>{distance}</div> */}
+      <div className="font-body2">{address}</div>
     </div>
   );
 }
