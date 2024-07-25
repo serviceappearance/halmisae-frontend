@@ -74,7 +74,12 @@ export default function SalePage() {
         position: "relative",
       }}
     >
-      <SignBoard storeName={saleInfo.storeName} />
+      <SignBoard
+        storeName={saleInfo.storeName}
+        imgUrl={
+          "https://cdn.pixabay.com/photo/2018/05/25/18/04/nature-3429700_1280.jpg"
+        } // info.imgUrl로 교체
+      />
       <SaleInfoSection
         storeName={saleInfo.storeName}
         opening={`${saleInfo.openTime} - ${saleInfo.closeTime}`}
@@ -88,6 +93,7 @@ export default function SalePage() {
         rating={"4.5"}
         toggleModal={toggleModal}
         storeId={storeId}
+        storeName={saleInfo.storeName}
       />
       <div
         className={`overlay ${isModalOpen ? "open" : ""}`}
@@ -105,21 +111,12 @@ export default function SalePage() {
           isOpen={isModalOpen}
           toggleModal={toggleModal}
           price={saleInfo.closingPrice}
+          storeName={saleInfo.storeName}
+          picking={pickingTimeFormatted}
+          storeNumber={saleInfo.storeNumber}
+          foodLimit={saleInfo.closingFoodCount}
         />
       )}
     </div>
   );
 }
-
-const saleInfo = [
-  {
-    storeName: "가게이름",
-    open: "",
-    close: "",
-    breakStart: "",
-    breakEnd: "",
-    pickingTime: "",
-    price: "5000",
-    address: "",
-  },
-];

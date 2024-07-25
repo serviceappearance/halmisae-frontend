@@ -12,7 +12,7 @@ export default function SumPrice({ label, menuInfo }) {
 
 const sumPriceStyle = {
   display: "flex",
-  width: "291px",
+  width: "285px",
   height: "38px",
   margin: "0 0 6px 0",
   justifyContent: "space-between",

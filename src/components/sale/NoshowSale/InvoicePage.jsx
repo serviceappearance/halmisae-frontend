@@ -1,20 +1,74 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import BigButton from "../../common/BigButton";
 import MoveToBackButton from "../../common/MoveToBackButton";
 import SumPrice from "../salePageComponent/SumPrice";
+import queryString from "query-string";
+import axios from "axios";
+
 export default function InvoicePage() {
   const location = useLocation();
-  const { storeId } = useParams();
-  const { menuInfo, usageTime, usePeople } = location.state || {
-    menuInfo: [],
-    usageTime: 0,
-    usePeople: 1,
-  };
+  const { storeId } = queryString.parse(location.search);
+  const { menuInfo, usageTime, usePeople, storeName, selectedDate } =
+    location.state || {
+      menuInfo: [],
+      usageTime: 0,
+      usePeople: 1,
+      storeName: "",
+      selectedDate: new Date(),
+    };
 
   const invoiceStyle = {
     display: "grid",
     justifyContent: "center",
   };
+
+  const convertToISOString = (date) => {
+    const timezoneOffset = date.getTimezoneOffset() * 60000;
+    const localISOTime = new Date(date - timezoneOffset)
+      .toISOString()
+      .slice(0, -1);
+    return localISOTime + "Z";
+  };
+
+  console.log(
+    menuInfo.map((menu) => ({
+      menuNumber: menu.menuNumber,
+      quantity: menu.count,
+    }))
+  );
+  const handlePayment = () => {
+    const requestData = {
+      email: "user1@naver.com",
+      storeNumber: storeId,
+      visitTime: convertToISOString(selectedDate),
+      useTime: usageTime,
+      people: usePeople,
+      totalPrice: menuInfo.reduce(
+        (total, menu) => total + menu.price * menu.count,
+        0
+      ),
+      orderType: "RESERVATION",
+      reserveMenu: menuInfo.map((menu) => ({
+        menuNumber: menu.menuNumber,
+        quantity: menu.count,
+      })),
+    };
+
+    axios
+      .post(
+        "http://localhost:8080/v1/api/user/main/detail/reservation",
+        requestData
+      )
+      .then((response) => {
+        console.log(response.data);
+        console.log("예약 성공");
+      })
+      .catch((error) => {
+        console.error(error);
+        console.log("예약 실패");
+      });
+  };
+
   return (
     <div style={invoiceStyle} className="style-page">
       <div>
@@ -24,13 +78,21 @@ export default function InvoicePage() {
         menuInfo={menuInfo}
         usageTime={usageTime}
         usePeople={usePeople}
+        storeName={storeName}
+        selectedDate={selectedDate}
       />
-      <BigButton width={"297px"} text={"결제하기"} />
+      <BigButton width={"297px"} text={"결제하기"} onClick={handlePayment} />
     </div>
   );
 }
 
-const ReservationInfo = ({ menuInfo, usageTime, usePeople }) => {
+const ReservationInfo = ({
+  menuInfo,
+  usageTime,
+  usePeople,
+  storeName,
+  selectedDate,
+}) => {
   const infoSectionStyle = {
     width: "296px",
     height: "434px",
@@ -54,6 +116,8 @@ const ReservationInfo = ({ menuInfo, usageTime, usePeople }) => {
         menuInfo={menuInfo}
         usageTime={usageTime}
         usePeople={usePeople}
+        storeName={storeName}
+        selectedDate={selectedDate}
       />
       <div style={{ margin: "169px 0 0 0" }}>
         <SumPrice label={"총 금액"} menuInfo={menuInfo} />
@@ -63,7 +127,13 @@ const ReservationInfo = ({ menuInfo, usageTime, usePeople }) => {
   );
 };
 
-const InfoDetail = ({ menuInfo, usageTime, usePeople }) => {
+const InfoDetail = ({
+  menuInfo,
+  usageTime,
+  usePeople,
+  storeName,
+  selectedDate,
+}) => {
   const detailSectionStyle = {
     display: "grid",
     gap: "7px",
@@ -71,8 +141,8 @@ const InfoDetail = ({ menuInfo, usageTime, usePeople }) => {
   };
 
   const infoDetailValue = [
-    "가게이름",
-    "2024. 10.08",
+    `${storeName}`,
+    `${selectedDate.toLocaleDateString()}`,
     `${usageTime}분`,
     `${usePeople}명`,
   ];

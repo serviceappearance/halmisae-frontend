@@ -4,7 +4,7 @@ import Calender from "react-calendar";
 import "../../Calendar.css";
 import axios from "axios";
 
-export default function DateTimeInput({ storeId }) {
+export default function DateTimeInput({ storeId, onDateChange }) {
   const [value, onChange] = useState(new Date());
   const [storeHolidays, setStoreHolidays] = useState([]);
 
@@ -14,6 +14,10 @@ export default function DateTimeInput({ storeId }) {
   const clickedDay = value.getDay();
   const weekDays = ["일", "월", "화", "수", "목", "금", "토"];
   const dateInfo = `${clickedYear}년 ${clickedMonth}월 ${clickedDate}일 (${weekDays[clickedDay]})`;
+
+  useEffect(() => {
+    onDateChange(value); // 날짜 변경 시 부모 컴포넌트로 변경 사항 전달
+  }, [value, onDateChange]);
 
   useEffect(() => {
     axios
@@ -27,6 +31,7 @@ export default function DateTimeInput({ storeId }) {
         console.error("Error fetching store holidays:", error);
       });
   }, []);
+
   const disableSpecificDates = ({ date, view }) => {
     if (view === "month") {
       const dayMap = {
@@ -47,7 +52,7 @@ export default function DateTimeInput({ storeId }) {
   };
 
   return (
-    <div className="style-page">
+    <div className="style-page-scrolled">
       <div className="font-reserved-date" style={reservedDateStyle}>
         {dateInfo}
       </div>

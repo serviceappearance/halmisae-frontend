@@ -1,7 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BigButton from "../../common/BigButton";
 
-export default function ButtonSection({ toggleModal, storeId }) {
+export default function ButtonSection({ toggleModal, storeId, storeName }) {
+  const navigate = useNavigate();
+  const handleReservationClick = () => {
+    navigate(`/reserve`, { state: { storeId, storeName } });
+  };
+
   return (
     <div style={buttonSectionStyle}>
       <BigButton
@@ -9,12 +14,11 @@ export default function ButtonSection({ toggleModal, storeId }) {
         text={bargainSaleButtonProps.text}
         onClick={toggleModal}
       />
-      <Link to={`/reserve?storeId=${storeId}`}>
-        <BigButton
-          width={reservationButtonProps.width}
-          text={reservationButtonProps.text}
-        />
-      </Link>
+      <BigButton
+        width={reservationButtonProps.width}
+        text={reservationButtonProps.text}
+        onClick={handleReservationClick}
+      />
     </div>
   );
 }

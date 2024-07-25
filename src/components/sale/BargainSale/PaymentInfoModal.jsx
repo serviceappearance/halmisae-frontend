@@ -4,7 +4,17 @@ import { ReactComponent as MinusIcon } from "../../../assets/icons/amount-minus.
 import { ReactComponent as PlusIcon } from "../../../assets/icons/amount-plus.svg";
 import BigButton from "../../common/BigButton";
 import TotalPrice from "../../common/TotalPrice";
-export default function PaymentInfoModal({ isOpen, toggleModal, price }) {
+import axios from "axios";
+
+export default function PaymentInfoModal({
+  isOpen,
+  toggleModal,
+  price,
+  storeName,
+  picking,
+  storeNumber,
+  foodLimit,
+}) {
   const [amount, setAmount] = useState(0);
 
   const minus = () => {
@@ -14,10 +24,31 @@ export default function PaymentInfoModal({ isOpen, toggleModal, price }) {
   };
 
   const plus = () => {
-    setAmount(amount + 1);
+    if (amount < foodLimit) {
+      setAmount(amount + 1);
+    }
   };
 
   const totalPrice = amount * price;
+  const email = "email";
+  const handleReservation = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/v1/api/user/main/detail/closingOrder",
+        {
+          quantity: amount,
+          totalPrice: totalPrice,
+          email: email,
+          storeNumber: storeNumber,
+        }
+      );
+      console.log("예약 결제가 성공적으로 완료되었습니다:", response.data);
+      // 성공적으로 요청이 완료되면 모달을 닫거나 추가 작업을 수행할 수 있습니다.
+    } catch (error) {
+      console.error("예약 결제 중 오류가 발생했습니다:", error);
+    }
+  };
+
   return (
     <>
       <div
@@ -25,11 +56,15 @@ export default function PaymentInfoModal({ isOpen, toggleModal, price }) {
         onClick={toggleModal}
       ></div>
       <div className={`style-modal ${isOpen ? "open slide-in" : ""}`}>
-        <StoreToPay storeName={"가게명"} pickUpTime={"20:00 - 20:30"} />
+        <StoreToPay storeName={storeName} pickUpTime={picking} />
         <AmountSet amount={amount} minus={minus} plus={plus} />
         <TotalPrice label={"주문금액"} totalPrice={totalPrice} />
         <div style={{ display: "grid", placeItems: "center" }}>
-          <BigButton width={"297px"} text={"예약 결제"} />
+          <BigButton
+            width={"297px"}
+            text={"예약 결제"}
+            onClick={handleReservation}
+          />
         </div>
       </div>
     </>
@@ -58,8 +93,8 @@ const StoreToPay = ({ storeName, pickUpTime }) => {
 const AmountSet = ({ amount, minus, plus }) => {
   const thisStyle = {
     width: "275px",
-    height: "142px",
-    padding: "11px 0 11px 0",
+    height: "120px",
+    padding: "5px 0",
     display: "grid",
     placeItems: "center",
     borderTop: "0.1px solid rgba(0, 0, 0, 0.22)",
@@ -84,7 +119,7 @@ const AmountSetting = ({ amount, minus, plus }) => {
     width: "131px",
     height: "37px",
     gap: "17px",
-    margin: "22px 0 22px 0",
+    margin: "5px  0",
     alignItems: "center",
   };
 

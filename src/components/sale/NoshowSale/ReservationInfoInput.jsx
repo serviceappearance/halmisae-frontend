@@ -6,7 +6,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function ReservationInfoInput({ storeId }) {
+export default function ReservationInfoInput({
+  storeId,
+  storeName,
+  selectedDate,
+}) {
   const [menuInfo, setMenuInfo] = useState([]);
   const [usageTime, setUsageTime] = useState(0);
   const [usePeople, setUsePeople] = useState(1);
@@ -21,6 +25,7 @@ export default function ReservationInfoInput({ storeId }) {
         const data = response.data;
         setMenuInfo(
           data.menu.map((item) => ({
+            menuNumber: item.menuNumber,
             menuName: item.menuName,
             price: item.price,
             count: 0,
@@ -55,12 +60,14 @@ export default function ReservationInfoInput({ storeId }) {
       menuInfo,
       usageTime,
       usePeople,
+      storeName,
+      selectedDate,
     };
     navigate(`/reserve/show?storeId=${storeId}`, { state: reservationData });
   };
 
   return (
-    <div className="style-page">
+    <div className="style-page-scrolled">
       <MenuTitleSection />
       <InputSection
         title={"이용시간"}

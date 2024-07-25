@@ -2,18 +2,23 @@ import { useLocation } from "react-router-dom";
 import MoveToBackButton from "../../common/MoveToBackButton";
 import DateTimeInput from "./DateTimeInput";
 import ReservationInfoInput from "./ReservationInfoInput";
+import { useState } from "react";
 
 export default function ReservationInputPage() {
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const storeId = searchParams.get("storeId");
+  const { storeId, storeName } = location.state || {};
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
-    <div>
+    <div className="style-page-scroll">
       <div style={{ position: "relative", zIndex: "10" }}>
         <MoveToBackButton />
       </div>
-      <DateTimeInput storeId={storeId} />
-      <ReservationInfoInput storeId={storeId} />
+      <DateTimeInput storeId={storeId} onDateChange={setSelectedDate} />
+      <ReservationInfoInput
+        storeId={storeId}
+        storeName={storeName}
+        selectedDate={selectedDate}
+      />
     </div>
   );
 }
