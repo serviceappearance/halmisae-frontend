@@ -53,6 +53,9 @@ export default function MainPage() {
               id={info.storeId}
               topPartValue={info.topPartValue}
               bottomPartValue={info.bottomPartValue}
+              imgUrl={
+                "https://cdn.pixabay.com/photo/2017/08/01/11/38/sea-2564601_1280.jpg" // info.imgUrl로 교체
+              }
             />
           </Link>
         ))}
