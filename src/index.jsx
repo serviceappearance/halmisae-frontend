@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+// import ReactDOM from "react-dom/client";
 import MainPage from "./components/main/MainPage";
 import MyPage from "./components/mypage/Mypage";
 import ReservationCheckPage from "./components/reservationCheck/ReservationCheckPage";
@@ -11,28 +11,45 @@ import ConfirmPage from "./components/sale/NoshowSale/ConfirmPage";
 import BookmarkListPage from "./components/mypage/BookmarkListPage";
 import UserHistoryPage from "./components/mypage/UserHistoryPage";
 import RatingPage from "./components/mypage/RatingPage";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ReactDOM from "react-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+const App = () => {
+  const location = useLocation();
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
+  return (
+    <div className="style-page">
+      <TransitionGroup>
+        <CSSTransition key={location.pathname} timeout={300} classNames="slide">
+          <div className="page">
+            <Routes location={location}>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/reservation" element={<ReservationCheckPage />} />
+              <Route path="/mypage" element={<MyPage />} />
+              <Route path="/store/:storeId" element={<SalePage />} />
+              <Route path="/reserve" element={<ReservationInputPage />} />
+              <Route path="/reserve/show" element={<InvoicePage />} />
+              <Route
+                path="/bargain-sale/complete"
+                element={<SaleConfirmPage />}
+              />
+              <Route path="/noshow-sale/complete" element={<ConfirmPage />} />
+              <Route path="/bookmarks" element={<BookmarkListPage />} />
+              <Route path="/history" element={<UserHistoryPage />} />
+              <Route path="/rating" element={<RatingPage />} />
+            </Routes>
+          </div>
+        </CSSTransition>
+      </TransitionGroup>
+    </div>
+  );
+};
+
+ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainPage />}></Route>
-        <Route path="/reservation" element={<ReservationCheckPage />}></Route>
-        <Route path="/mypage" element={<MyPage />}></Route>
-        <Route path="/store/:storeId" element={<SalePage />}></Route>
-        <Route path="/reserve" element={<ReservationInputPage />}></Route>
-        <Route path="/reserve/show" element={<InvoicePage />}></Route>
-        <Route
-          path="/bargain-sale/complete"
-          element={<SaleConfirmPage />}
-        ></Route>
-        <Route path="/noshow-sale/complete" element={<ConfirmPage />}></Route>
-        <Route path="/bookmarks" element={<BookmarkListPage />}></Route>
-        <Route path="/history" element={<UserHistoryPage />}></Route>
-        <Route path="/rating" element={<RatingPage />}></Route>
-      </Routes>
+      <App />
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
