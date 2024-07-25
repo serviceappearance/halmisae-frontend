@@ -1,4 +1,4 @@
-export default function TitleBoard({ text }) {
+export default function TitleBoard({ text, imgUrl }) {
   const titleBoardStyle = {
     display: "flex",
     width: "287px",
@@ -11,9 +11,11 @@ export default function TitleBoard({ text }) {
   };
   return (
     <div style={titleBoardStyle}>
-      <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45">
-        <circle cx="22.5" cy="22.5" r="22.5" fill="white" />
-      </svg>
+      <img
+        src={imgUrl} // imgUrl로 교체
+        alt=""
+        style={{ width: "45px", height: "45px", borderRadius: "30px" }}
+      />
       <div className="font-store-title">{text}</div>
     </div>
   );

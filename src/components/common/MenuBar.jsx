@@ -19,14 +19,14 @@ export default function MenuBar() {
   );
 }
 
-const icons = [<HomeIcon />, <CheckIcon />, <UserIcon />];
+const icons = [<HomeIcon />];
 const routes = ["/", "/reservation", "/mypage"];
 
 const menuStyle = {
   display: "grid",
   width: "320px",
   height: "44px",
-  gridTemplateColumns: "1fr 1fr 1fr",
+  gridTemplateColumns: "auto",
   backgroundColor: "#FFFDFD",
   position: "absolute",
   bottom: "0",
