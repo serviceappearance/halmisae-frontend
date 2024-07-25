@@ -10,9 +10,12 @@ export default function MenuSection({
 }) {
   return (
     <div style={sectionStyle}>
-      <div style={{ width: "67px", height: "67px", border: "1px solid black" }}>
-        {imgSrc}
-      </div>
+      <img
+        src={imgSrc}
+        alt=""
+        style={{ width: "67px", height: "67px", border: "1px solid black" }}
+      />
+
       <MenuInfo menuName={menuName} price={price} />
       <CountPill point={point} onCountChange={onCountChange} />
     </div>

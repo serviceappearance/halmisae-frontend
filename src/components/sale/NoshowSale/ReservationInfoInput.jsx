@@ -43,9 +43,6 @@ export default function ReservationInfoInput({
       prevMenuInfo.map((menu, i) => (i === index ? { ...menu, count } : menu))
     );
   };
-  const CountChangeNull = () => {
-    console.log("no count change");
-  };
 
   const handleUsageTimeChange = (time) => {
     setUsageTime(time);

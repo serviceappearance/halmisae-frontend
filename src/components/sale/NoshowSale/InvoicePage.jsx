@@ -65,7 +65,7 @@ export default function InvoicePage() {
       })
       .catch((error) => {
         console.error(error);
-        console.log("예약 실패");
+        console.log("예약");
       });
   };
 

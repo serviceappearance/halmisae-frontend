@@ -70,7 +70,7 @@ export default function SalePage() {
       className="style-page"
       style={{
         display: "grid",
-        gridTemplateRows: "105px 124px 40px 40px ",
+        gridTemplateRows: "105px 124px 250px 40px 40px ",
         position: "relative",
       }}
     >
@@ -89,6 +89,16 @@ export default function SalePage() {
       />
       {/* <AdditionalSection icon={<MapPinIcon />} address={saleInfo.address} />
       <AdditionalSection icon={null} address={"재료 및 알레르기 성분 정보"} /> */}
+      <img
+        src="https://i.namu.wiki/i/4LvjMNoCRJNjoJHyLj9_pbAqNHOOXZDnBogvcIKrpiqBf4qAAGQ3oGJQn6X7a_2IEaV-OSIFp-QvIf38oACKcA.webp"
+        alt=""
+        style={{
+          width: "250px",
+          height: "230px",
+          placeSelf: "center",
+          borderRadius: "20px",
+        }}
+      />
       <SaleSectionBottom
         rating={"4.5"}
         toggleModal={toggleModal}

@@ -11,6 +11,9 @@ export default function MenuList({ menuInfo, point, onCountChange }) {
             menuName={menu.menuName}
             price={menu.price}
             point={point}
+            imgSrc={
+              "https://cdn.newspenguin.com/news/photo/202104/4475_14264_4458.jpg" // menu.imgSrc로 교체
+            }
             onCountChange={(count) => onCountChange(index, count)}
           />
         ))}
