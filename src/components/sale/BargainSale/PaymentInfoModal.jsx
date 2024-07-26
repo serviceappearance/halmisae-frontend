@@ -46,19 +46,14 @@ export default function PaymentInfoModal({
       );
       console.log("예약 결제가 성공적으로 완료되었습니다:", response.data);
       navigate("/bargain-sale/complete");
-      // 현재 시간으로 예약 시각을 생성합니다.
       const reservationTime = new Date().toISOString();
-
-      // 가게명과 예약 시각을 조합하여 고유한 키를 생성합니다.
       const reservationKey = `reservation_${storeName}_${reservationTime}`;
-
-      // 예약 정보를 객체 형태로 저장합니다.
       const reservationData = {
         storeName: storeName,
         orderNumber: response.data.orderNumber,
+        reservationNumber: 0,
         reservationTime: reservationTime,
       };
-
       sessionStorage.setItem(reservationKey, JSON.stringify(reservationData));
     } catch (error) {
       console.error("예약 결제 중 오류가 발생했습니다:", error);
@@ -80,6 +75,8 @@ export default function PaymentInfoModal({
             width={"297px"}
             text={"예약 결제"}
             onClick={handleReservation}
+            // onClick={amount > 0 ? handleReservation : null}
+            // disabled={amount === 0}
           />
         </div>
       </div>
@@ -121,10 +118,11 @@ const AmountSet = ({ amount, minus, plus }) => {
     <div style={thisStyle}>
       <div className="font-alert-content">수량 설정</div>
       <AmountSetting amount={amount} minus={minus} plus={plus} />
-      <div className="font-alert-detail">
+      <div className="font-alert-detail">예약 감사합니다.</div>
+      {/* <div className="font-alert-detail">
         예약은 할미새의 약관에 동의하는 것으로 간주합니다
-      </div>
-      <div className="font-alert-detail">서비스 약관</div>
+      </div> */}
+      {/* <div className="font-alert-detail">서비스 약관</div> */}
     </div>
   );
 };

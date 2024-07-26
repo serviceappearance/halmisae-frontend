@@ -16,7 +16,7 @@ export default function DateTimeInput({ storeId, onDateChange }) {
   const dateInfo = `${clickedYear}년 ${clickedMonth}월 ${clickedDate}일 (${weekDays[clickedDay]})`;
 
   useEffect(() => {
-    onDateChange(value); // 날짜 변경 시 부모 컴포넌트로 변경 사항 전달
+    onDateChange(value);
   }, [value, onDateChange]);
 
   useEffect(() => {
@@ -66,15 +66,15 @@ export default function DateTimeInput({ storeId, onDateChange }) {
   );
 }
 
-const TimeBlockSection = () => {
-  return (
-    <div style={timeBlockSectionStyle}>
-      {timeList.map((time, index) => (
-        <TimeBlock key={index} time={time} />
-      ))}
-    </div>
-  );
-};
+// const TimeBlockSection = () => {
+//   return (
+//     <div style={timeBlockSectionStyle}>
+//       {timeList.map((time, index) => (
+//         <TimeBlock key={index} time={time} />
+//       ))}
+//     </div>
+//   );
+// };
 
 const reservedDateStyle = {
   margin: "15px 0 15px 0 ",

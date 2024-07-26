@@ -48,7 +48,7 @@ export default function InvoicePage() {
         quantity: menu.count,
       })),
     };
-
+    console.log(requestData);
     axios
       .post(
         "http://localhost:8080/v1/api/user/main/detail/reservation",
@@ -56,28 +56,21 @@ export default function InvoicePage() {
       )
       .then((response) => {
         console.log("예약 성공");
-
+        const reserveNum = response.data.reserveMenu[0].reserveNumber;
         const infoDetailValue = [
           storeName,
           selectedDate.toLocaleDateString(),
           `${usageTime}분`,
           `${usePeople}명`,
         ];
-
-        // 현재 시간으로 예약 시각을 생성합니다.
         const reservationTime = new Date().toISOString();
-
-        // 가게명과 예약 시각을 조합하여 고유한 키를 생성합니다.
         const reservationKey = `reservation_${storeName}_${reservationTime}`;
-
-        // 예약 정보를 객체 형태로 저장합니다.
         const reservationData = {
           storeName: storeName,
-          reservationNumber: response.data.reservationNumber,
+          orderNumber: 0,
+          reservationNumber: reserveNum,
           reservationTime: reservationTime,
         };
-
-        // sessionStorage에 저장합니다. (각 예약 정보를 고유한 키로 저장)
         sessionStorage.setItem(reservationKey, JSON.stringify(reservationData));
 
         navigate("/noshow-sale/complete", {
@@ -104,7 +97,7 @@ export default function InvoicePage() {
         storeName={storeName}
         selectedDate={selectedDate}
       />
-      <BigButton width={"297px"} text={"결제하기"} onClick={handlePayment} />
+      <BigButton width={"297px"} text={"예약하기"} onClick={handlePayment} />
     </div>
   );
 }

@@ -54,6 +54,13 @@ export default function ReservationInfoInput({
   };
 
   const handleReservation = () => {
+    const allMenuZeroCount = menuInfo.every((menu) => menu.count === 0);
+
+    if (allMenuZeroCount) {
+      alert("메뉴 수량이 0인 메뉴가 있습니다. 수량을 설정해 주세요.");
+      return;
+    }
+
     const reservationData = {
       menuInfo,
       usageTime,
@@ -63,6 +70,8 @@ export default function ReservationInfoInput({
     };
     navigate(`/reserve/show?storeId=${storeId}`, { state: reservationData });
   };
+
+  const isButtonDisabled = menuInfo.every((menu) => menu.count === 0);
 
   return (
     <div className="style-page-scrolled">
@@ -87,7 +96,12 @@ export default function ReservationInfoInput({
       />
       <div style={{ margin: "0 16px", position: "absolute", bottom: "20px" }}>
         <div onClick={handleReservation}>
-          <BigButton width={"287px"} text={"예약하기"} onClick={null} />
+          <BigButton
+            width={"287px"}
+            text={"예약하기"}
+            onClick={null}
+            disabled={isButtonDisabled}
+          />
         </div>
       </div>
     </div>
