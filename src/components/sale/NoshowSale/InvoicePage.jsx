@@ -55,7 +55,6 @@ export default function InvoicePage() {
         requestData
       )
       .then((response) => {
-        console.log(response.data);
         console.log("예약 성공");
 
         const infoDetailValue = [
@@ -64,6 +63,22 @@ export default function InvoicePage() {
           `${usageTime}분`,
           `${usePeople}명`,
         ];
+
+        // 현재 시간으로 예약 시각을 생성합니다.
+        const reservationTime = new Date().toISOString();
+
+        // 가게명과 예약 시각을 조합하여 고유한 키를 생성합니다.
+        const reservationKey = `reservation_${storeName}_${reservationTime}`;
+
+        // 예약 정보를 객체 형태로 저장합니다.
+        const reservationData = {
+          storeName: storeName,
+          reservationNumber: response.data.reservationNumber,
+          reservationTime: reservationTime,
+        };
+
+        // sessionStorage에 저장합니다. (각 예약 정보를 고유한 키로 저장)
+        sessionStorage.setItem(reservationKey, JSON.stringify(reservationData));
 
         navigate("/noshow-sale/complete", {
           state: {

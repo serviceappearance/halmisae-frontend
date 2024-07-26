@@ -13,7 +13,7 @@ export default function TitleBoard({ text, imgUrl }) {
     <div style={titleBoardStyle}>
       <img
         src={imgUrl} // imgUrl로 교체
-        alt=""
+        alt="원형 가게 이미지"
         style={{ width: "45px", height: "45px", borderRadius: "30px" }}
       />
       <div className="font-store-title">{text}</div>

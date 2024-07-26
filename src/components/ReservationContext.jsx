@@ -1,26 +1,30 @@
-import React, { createContext, useContext, useState } from "react";
+// ReservationContext.js
+import React, { createContext, useState, useContext } from "react";
 
 const ReservationContext = createContext();
 
-export const ReservationProvider = ({ children }) => {
-  const [menuInfo, setMenuInfo] = useState([]);
-  const [usageTime, setUsageTime] = useState(0);
-  const [usePeople, setUsePeople] = useState(1);
+export function ReservationProvider({ children }) {
+  const [reservationData, setReservationData] = useState({
+    orderNumber: null,
+    reservationNumber: null,
+  });
+
+  const updateReservationData = (data) => {
+    setReservationData((prevData) => ({
+      ...prevData,
+      ...data,
+    }));
+  };
 
   return (
     <ReservationContext.Provider
-      value={{
-        menuInfo,
-        setMenuInfo,
-        usageTime,
-        setUsageTime,
-        usePeople,
-        setUsePeople,
-      }}
+      value={{ reservationData, updateReservationData }}
     >
       {children}
     </ReservationContext.Provider>
   );
-};
+}
 
-export const useReservation = () => useContext(ReservationContext);
+export function useReservation() {
+  return useContext(ReservationContext);
+}

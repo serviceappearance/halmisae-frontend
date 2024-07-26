@@ -6,7 +6,7 @@ import axios from "axios";
 
 export default function ReservationCheckPage() {
   const [reservations, setReservations] = useState(reservationInfo);
-  const [error, setError] = useState(null); // 에러 상태 추가
+  const [error, setError] = useState(null);
 
   const handleCancel = async (index) => {
     const reservationToCancel = reservations[index];
@@ -14,7 +14,6 @@ export default function ReservationCheckPage() {
     try {
       await axios.post(`서버주소/${reservationToCancel.id}`);
 
-      // 상태 업데이트
       setReservations((prevReservations) =>
         prevReservations.filter((_, i) => i !== index)
       );
@@ -26,7 +25,6 @@ export default function ReservationCheckPage() {
   return (
     <div className="style-page">
       <PageHeader text={"나의 예약"} />
-      {/* 에러 메시지 표시 */}
       {reservations.map((r, index) => (
         <ReservationCard
           key={index}

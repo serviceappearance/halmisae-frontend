@@ -14,6 +14,7 @@ import RatingPage from "./components/mypage/RatingPage";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import ReservationNumberCheck from "./components/reservationCheck/ReservationNumberCheck";
 const App = () => {
   const location = useLocation();
 
@@ -24,7 +25,11 @@ const App = () => {
           <div className="page">
             <Routes location={location}>
               <Route path="/" element={<MainPage />} />
-              <Route path="/reservation" element={<ReservationCheckPage />} />
+              {/* <Route path="/reservation" element={<ReservationCheckPage />} /> */}
+              <Route
+                path="/reservation-number"
+                element={<ReservationNumberCheck />}
+              />
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/store/:storeId" element={<SalePage />} />
               <Route path="/reserve" element={<ReservationInputPage />} />

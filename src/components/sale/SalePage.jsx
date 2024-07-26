@@ -1,4 +1,7 @@
 import "../common.css";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { ReactComponent as MapPinIcon } from "../../assets/icons/map-pin.svg";
 import AdditionalSection from "./salePageComponent/AdditionalSection";
 import SaleInfoSection from "./salePageComponent/SaleInfoSection";
@@ -6,9 +9,9 @@ import SignBoard from "./salePageComponent/SignBoard";
 import SaleSectionBottom from "./salePageComponent/SaleSectionBottom";
 import AlertModal from "./BargainSale/AlertModal";
 import PaymentInfoModal from "./BargainSale/PaymentInfoModal";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 
 export default function SalePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,7 +49,6 @@ export default function SalePage() {
     };
     fetchSaleInfo();
   }, [storeId]);
-
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
     setCurrentModal("alert");
@@ -91,6 +93,31 @@ export default function SalePage() {
     return <div>Error loading sale info.</div>;
   }
 
+  const defaultIcon = new L.Icon({
+    iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+    shadowSize: [41, 41],
+  });
+
+  const MapComponent = ({ mapLocation, address }) => {
+    const position = [mapLocation.lat, mapLocation.lon];
+    return (
+      <MapContainer
+        center={position}
+        zoom={15}
+        style={{ height: "230px", width: "250px", borderRadius: "10px" }}
+      >
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <Marker position={position} icon={defaultIcon}>
+          <Popup>{address}</Popup>
+        </Marker>
+      </MapContainer>
+    );
+  };
+
   return (
     <div
       className="style-page"
@@ -115,21 +142,12 @@ export default function SalePage() {
       />
       {/* <AdditionalSection icon={<MapPinIcon />} address={saleInfo.address} />
       <AdditionalSection icon={null} address={"재료 및 알레르기 성분 정보"} /> */}
-      {/* 좌표 가져오는 지도로 교체 */}
-      <div>
-        <p>Latitude: {coordinates.lat}</p>
-        <p>Longitude: {coordinates.lon}</p>
+      <div style={{ placeSelf: "center" }}>
+        <MapComponent mapLocation={coordinates} address={saleInfo.address} />
+        <div className="font-body2" style={{ marginTop: "10px" }}>
+          {saleInfo.address}
+        </div>
       </div>
-      <img
-        src="https://i.namu.wiki/i/4LvjMNoCRJNjoJHyLj9_pbAqNHOOXZDnBogvcIKrpiqBf4qAAGQ3oGJQn6X7a_2IEaV-OSIFp-QvIf38oACKcA.webp"
-        alt=""
-        style={{
-          width: "250px",
-          height: "230px",
-          placeSelf: "center",
-          borderRadius: "20px",
-        }}
-      />
       <SaleSectionBottom
         rating={"4.5"}
         toggleModal={toggleModal}
