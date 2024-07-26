@@ -13,9 +13,32 @@
 .style-page-scroll {
   width: 320px;
   height: 568px;
-  border: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
   position: relative;
   overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+/* chrome, safari에서의 스크롤바 스타일 */
+.style-card-scroll::-webkit-scrollbar {
+  width: 1px;
+  height: 5px;
+}
+
+.style-card-scroll::-webkit-scrollbar-thumb {
+  background: #cccccc;
+  border-radius: 6px;
+}
+
+.style-card-scroll::-webkit-scrollbar-thumb:hover {
+  background: #c2c2c2;
+}
+
+/* firefox에서의 스크롤바 스타일 */
+.style-card-scroll {
+  scrollbar-width: 1px;
+  scrollbar-color: #cccccc;
 }
 
 .style-page-scrolled {
@@ -25,6 +48,7 @@
   border-right: 1px solid black;
   position: relative;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .style-card-list {
@@ -167,4 +191,12 @@
 
 .slide-right-exit-active {
   transform: translateX(-100%);
+}
+
+.style-page-calendar {
+  width: 320px;
+  height: 408px;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  position: relative;
 }
