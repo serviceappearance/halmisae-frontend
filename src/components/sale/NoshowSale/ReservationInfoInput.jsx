@@ -5,6 +5,7 @@ import TotalPrice from "../../common/TotalPrice";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import PageHeader from "../../common/PageHeader";
 
 export default function ReservationInfoInput({
   storeId,
@@ -84,7 +85,7 @@ export default function ReservationInfoInput({
         point={1}
         onCountChange={handleCountChange}
       />
-      <div style={{ margin: "0 16px" }}>
+      <div style={{ margin: "0 16px", position: "absolute", bottom: "20px" }}>
         <div onClick={handleReservation}>
           <BigButton width={"287px"} text={"예약하기"} onClick={null} />
         </div>
@@ -104,11 +105,14 @@ const subtitles = {
 
 const MenuTitleSection = () => {
   return (
-    <div style={titleSectionStyle}>
-      <div className="font-menu-list-title" style={menuTitleStyle}>
-        메뉴
-      </div>
+    <div style={{ borderTop: "1px solid black" }}>
+      <PageHeader text={"이용정보 입력"} />
     </div>
+    // <div style={titleSectionStyle}>
+    //   <div className="font-menu-list-title" style={menuTitleStyle}>
+    //     메뉴
+    //   </div>
+    // </div>
   );
 };
 

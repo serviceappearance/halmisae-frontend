@@ -28,7 +28,6 @@ export default function MainPage() {
             discounted: item.closingPrice,
             rating: null,
             distance: null,
-            address: "경기도 성남시 분당구",
           },
         }));
         setStoreInfo(transformedData);

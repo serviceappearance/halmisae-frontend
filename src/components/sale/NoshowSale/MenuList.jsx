@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SumPrice from "../salePageComponent/SumPrice";
 import MenuSection from "./MenuSection";
-export default function MenuList({ menuInfo, point, onCountChange }) {
+export default function MenuList({ menuInfo = [], point, onCountChange }) {
   return (
     <div className="style-menulist">
       <div>
@@ -18,7 +18,9 @@ export default function MenuList({ menuInfo, point, onCountChange }) {
           />
         ))}
       </div>
-      <SumPrice label={"총 금액"} menuInfo={menuInfo} />
+      <div style={{ borderTop: "1px solid gray" }}>
+        <SumPrice label={"총 금액"} menuInfo={menuInfo} />
+      </div>
     </div>
   );
 }

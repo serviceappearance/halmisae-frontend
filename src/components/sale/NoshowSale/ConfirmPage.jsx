@@ -1,13 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ReactComponent as CheckCircleIcon } from "../../../assets/icons/check-circle.svg";
 import BigButton from "../../common/BigButton";
 export default function ConfirmPage() {
+  const location = useLocation();
+  const infoDetailValue = location.state?.infoDetailValue || [];
   return (
     <div
       className="style-page font-body2"
       style={{ display: "grid", placeItems: "center" }}
     >
-      <ContentSection />
+      <ContentSection infoDetailValue={infoDetailValue} />
       <div style={{ margin: "106px 0 4px 0" }}>
         <Link to="/">
           <BigButton width={"297px"} text={"메인페이지로"} />
@@ -17,7 +19,7 @@ export default function ConfirmPage() {
   );
 }
 
-const ContentSection = () => {
+const ContentSection = ({ infoDetailValue }) => {
   const sectionStyle = {
     width: "183px",
     margin: "77px 0 0 0",
@@ -30,12 +32,12 @@ const ContentSection = () => {
     <div style={sectionStyle}>
       <CheckCircleIcon />
       <div style={messageStyle}>예약이 완료되었습니다</div>
-      <PaymentDetail />
+      <PaymentDetail infoDetailValue={infoDetailValue} />
     </div>
   );
 };
 
-const PaymentDetail = () => {
+const PaymentDetail = ({ infoDetailValue }) => {
   return (
     <div>
       {infoDetailValue.map((value, _) => (
@@ -45,4 +47,4 @@ const PaymentDetail = () => {
   );
 };
 
-const infoDetailValue = ["가게명정보", "2024. 10.08  10:00", "120분", "2명"];
+// const infoDetailValue = ["가게명정보", "2024. 10.08  10:00", "120분", "2명"];

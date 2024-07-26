@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BigButton from "../../common/BigButton";
 import MoveToBackButton from "../../common/MoveToBackButton";
 import SumPrice from "../salePageComponent/SumPrice";
@@ -7,6 +7,7 @@ import axios from "axios";
 
 export default function InvoicePage() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { storeId } = queryString.parse(location.search);
   const { menuInfo, usageTime, usePeople, storeName, selectedDate } =
     location.state || {
@@ -30,12 +31,6 @@ export default function InvoicePage() {
     return localISOTime + "Z";
   };
 
-  console.log(
-    menuInfo.map((menu) => ({
-      menuNumber: menu.menuNumber,
-      quantity: menu.count,
-    }))
-  );
   const handlePayment = () => {
     const requestData = {
       email: "user1@naver.com",
@@ -62,6 +57,19 @@ export default function InvoicePage() {
       .then((response) => {
         console.log(response.data);
         console.log("예약 성공");
+
+        const infoDetailValue = [
+          storeName,
+          selectedDate.toLocaleDateString(),
+          `${usageTime}분`,
+          `${usePeople}명`,
+        ];
+
+        navigate("/noshow-sale/complete", {
+          state: {
+            infoDetailValue: infoDetailValue,
+          },
+        });
       })
       .catch((error) => {
         console.error(error);

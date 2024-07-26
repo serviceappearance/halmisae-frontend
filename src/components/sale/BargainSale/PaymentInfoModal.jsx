@@ -5,6 +5,7 @@ import { ReactComponent as PlusIcon } from "../../../assets/icons/amount-plus.sv
 import BigButton from "../../common/BigButton";
 import TotalPrice from "../../common/TotalPrice";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function PaymentInfoModal({
   isOpen,
@@ -16,6 +17,7 @@ export default function PaymentInfoModal({
   foodLimit,
 }) {
   const [amount, setAmount] = useState(0);
+  const navigate = useNavigate();
 
   const minus = () => {
     if (amount > 0) {
@@ -43,7 +45,7 @@ export default function PaymentInfoModal({
         }
       );
       console.log("예약 결제가 성공적으로 완료되었습니다:", response.data);
-      // 성공적으로 요청이 완료되면 모달을 닫거나 추가 작업을 수행할 수 있습니다.
+      navigate("/bargain-sale/complete");
     } catch (error) {
       console.error("예약 결제 중 오류가 발생했습니다:", error);
     }

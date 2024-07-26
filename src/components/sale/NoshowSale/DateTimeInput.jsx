@@ -52,7 +52,7 @@ export default function DateTimeInput({ storeId, onDateChange }) {
   };
 
   return (
-    <div className="style-page-scrolled">
+    <div className="style-page-calendar">
       <div className="font-reserved-date" style={reservedDateStyle}>
         {dateInfo}
       </div>

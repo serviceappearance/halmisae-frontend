@@ -13,8 +13,10 @@ import { useParams } from "react-router-dom";
 export default function SalePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentModal, setCurrentModal] = useState("alert");
-  const [saleInfo, setSaleInfo] = useState(null);
+  const [saleInfo, setSaleInfo] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [coordinates, setCoordinates] = useState({ lat: "", lon: "" });
+
   const { storeId } = useParams();
 
   useEffect(() => {
@@ -25,6 +27,18 @@ export default function SalePage() {
         );
         setSaleInfo(response.data);
         setLoading(false);
+
+        if (response.data.address) {
+          const geoResponse = await axios.get(
+            `https://nominatim.openstreetmap.org/search?format=json&q=${response.data.address
+              .split(" ", 3)
+              .join(" ")}`
+          );
+          if (geoResponse.data.length > 0) {
+            const location = geoResponse.data[0];
+            setCoordinates({ lat: location.lat, lon: location.lon });
+          }
+        }
       } catch (error) {
         console.error("Failed to fetch sale info:", error);
         setLoading(false);
@@ -42,15 +56,27 @@ export default function SalePage() {
     setCurrentModal("payment");
   };
 
-  const formatTimeFromArray = (timeArray) => {
-    if (!timeArray || timeArray.length < 5) return "";
+  const formatTimeFromArray = (dateString) => {
+    if (!dateString) {
+      return "0000";
+    }
 
-    const [year, month, day, hour, minute] = timeArray;
+    const parts = dateString.split(" ");
 
-    const formattedHours = String(hour).padStart(2, "0");
-    const formattedMinutes = String(minute).padStart(2, "0");
+    if (parts.length < 2) {
+      return "0000";
+    }
 
-    return `${formattedHours}${formattedMinutes}`;
+    const timeParts = parts[1].split(":");
+
+    if (timeParts.length < 2) {
+      return "0000";
+    }
+
+    const hours = timeParts[0].padStart(2, "0");
+    const minutes = timeParts[1].padStart(2, "0");
+
+    return `${hours}${minutes}`;
   };
 
   const pickingTimeFormatted = saleInfo
@@ -89,6 +115,11 @@ export default function SalePage() {
       />
       {/* <AdditionalSection icon={<MapPinIcon />} address={saleInfo.address} />
       <AdditionalSection icon={null} address={"재료 및 알레르기 성분 정보"} /> */}
+      {/* 좌표 가져오는 지도로 교체 */}
+      <div>
+        <p>Latitude: {coordinates.lat}</p>
+        <p>Longitude: {coordinates.lon}</p>
+      </div>
       <img
         src="https://i.namu.wiki/i/4LvjMNoCRJNjoJHyLj9_pbAqNHOOXZDnBogvcIKrpiqBf4qAAGQ3oGJQn6X7a_2IEaV-OSIFp-QvIf38oACKcA.webp"
         alt=""
