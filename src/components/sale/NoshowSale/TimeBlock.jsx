@@ -1,4 +1,4 @@
-export default function TimeBlock({ time }) {
+export default function TimeBlock({ time, isSelected, onClick }) {
   const thisStyle = {
     display: "flex",
     width: "62px",
@@ -6,9 +6,10 @@ export default function TimeBlock({ time }) {
     justifyContent: "center",
     alignItems: "center",
     border: "0.1px solid black",
+    backgroundColor: isSelected ? "lightblue" : "white",
   };
   return (
-    <div className="font-time" style={thisStyle}>
+    <div className="font-time" style={thisStyle} onClick={onClick}>
       {time}
     </div>
   );

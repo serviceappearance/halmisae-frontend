@@ -11,10 +11,19 @@ export default function ReservationInfoInput({
   storeId,
   storeName,
   selectedDate,
+  selectedTime,
 }) {
   const [menuInfo, setMenuInfo] = useState([]);
-  const [usageTime, setUsageTime] = useState(0);
   const [usePeople, setUsePeople] = useState(1);
+  const [useTime, setUseTime] = useState(0);
+  const [usageTime, setUsageTime] = useState(0);
+  const [unitTime, setUnitTime] = useState(0);
+  const [preDiscount, setPreDiscount] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  const [subtitles, setSubtitles] = useState({
+    usageTime: "0분",
+    usePeople: "1명",
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,6 +42,13 @@ export default function ReservationInfoInput({
           }))
         );
         setUsageTime(data.usageTime);
+        setUnitTime(data.unitTime);
+        setPreDiscount(data.preOrderDiscount);
+        setDiscount(data.discount);
+        setSubtitles((prev) => ({
+          ...prev,
+          usageTime: `${data.usageTime}분`,
+        }));
       })
       .catch((error) => {
         console.error("데이터를 가져오는 중 오류 발생:", error);
@@ -45,42 +61,50 @@ export default function ReservationInfoInput({
     );
   };
 
-  const handleUsageTimeChange = (time) => {
-    setUsageTime(time);
+  const handleUseTimeChange = (time) => {
+    setUseTime(time);
   };
 
   const handlePeopleChange = (people) => {
     setUsePeople(people);
   };
-
   const handleReservation = () => {
-    const allMenuZeroCount = menuInfo.every((menu) => menu.count === 0);
+    const filteredMenuInfo = menuInfo.filter((menu) => menu.count > 0);
 
-    if (allMenuZeroCount) {
+    if (filteredMenuInfo.length === 0) {
       alert("메뉴 수량이 0인 메뉴가 있습니다. 수량을 설정해 주세요.");
+      return;
+    }
+    if (usePeople <= 0) {
+      alert("이용시간과 인원은 0보다 커야 합니다.");
       return;
     }
 
     const reservationData = {
-      menuInfo,
-      usageTime,
+      menuInfo: filteredMenuInfo,
+      useTime,
       usePeople,
       storeName,
       selectedDate,
+      selectedTime,
     };
+    console.log(reservationData);
     navigate(`/reserve/show?storeId=${storeId}`, { state: reservationData });
   };
 
-  const isButtonDisabled = menuInfo.every((menu) => menu.count === 0);
-
+  const isButtonDisabled =
+    menuInfo.every((menu) => menu.count === 0) ||
+    !selectedTime ||
+    useTime <= 0 ||
+    usePeople <= 0;
   return (
     <div className="style-page-scrolled">
       <MenuTitleSection />
       <InputSection
         title={"이용시간"}
-        subtitle={subtitles.useTime}
+        subtitle={subtitles.usageTime}
         point={10}
-        onCountChange={handleUsageTimeChange}
+        onCountChange={handleUseTimeChange}
         value={usageTime}
       />
       <InputSection
@@ -93,6 +117,11 @@ export default function ReservationInfoInput({
         menuInfo={menuInfo}
         point={1}
         onCountChange={handleCountChange}
+        usageTime={usageTime}
+        useTime={useTime}
+        unitTime={unitTime}
+        discount={discount}
+        preDiscount={preDiscount}
       />
       <div style={{ margin: "0 16px", position: "absolute", bottom: "20px" }}>
         <div onClick={handleReservation}>
@@ -108,12 +137,12 @@ export default function ReservationInfoInput({
   );
 }
 
-const toggleEvnet = () => {
+const toggleEvent = () => {
   console.log("show no show menu");
 };
 
 const subtitles = {
-  useTime: "120분",
+  usageTime: "100분",
   usePeople: "1명",
 };
 

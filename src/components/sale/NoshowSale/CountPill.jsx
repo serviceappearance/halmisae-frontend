@@ -16,8 +16,13 @@ export default function CountPill({ point, onCountChange, value }) {
   const plus = () => {
     if (count < limit) {
       const newCount = count + point;
-      setCount(newCount);
-      onCountChange(newCount);
+      if (newCount > limit) {
+        setCount(limit);
+        onCountChange(limit);
+      } else {
+        setCount(newCount);
+        onCountChange(newCount);
+      }
     }
   };
 

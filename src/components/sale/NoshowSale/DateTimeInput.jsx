@@ -4,10 +4,10 @@ import Calender from "react-calendar";
 import "../../Calendar.css";
 import axios from "axios";
 
-export default function DateTimeInput({ storeId, onDateChange }) {
+export default function DateTimeInput({ storeId, onDateChange, onTimeChange }) {
   const [value, onChange] = useState(new Date());
   const [storeHolidays, setStoreHolidays] = useState([]);
-
+  const [selectedTime, setSelectedTime] = useState("");
   const clickedYear = value.getFullYear();
   const clickedMonth = value.getMonth() + 1;
   const clickedDate = value.getDate();
@@ -17,7 +17,7 @@ export default function DateTimeInput({ storeId, onDateChange }) {
 
   useEffect(() => {
     onDateChange(value);
-  }, [value, onDateChange]);
+  }, [value, selectedTime, onDateChange]);
 
   useEffect(() => {
     axios
@@ -51,30 +51,46 @@ export default function DateTimeInput({ storeId, onDateChange }) {
     return false;
   };
 
+  const handleTimeChange = (time) => {
+    setSelectedTime(time);
+    onTimeChange(time);
+  };
   return (
     <div className="style-page-calendar">
       <div className="font-reserved-date" style={reservedDateStyle}>
         {dateInfo}
       </div>
-      <Calender
-        onChange={onChange}
-        value={value}
-        tileDisabled={disableSpecificDates}
-        calendarType="gregory"
+      <div style={{ width: "300px" }}>
+        <Calender
+          onChange={onChange}
+          value={value}
+          tileDisabled={disableSpecificDates}
+          calendarType="gregory"
+        />
+      </div>
+
+      <TimeBlockSection
+        selectedTime={selectedTime}
+        setSelectedTime={handleTimeChange}
       />
     </div>
   );
 }
 
-// const TimeBlockSection = () => {
-//   return (
-//     <div style={timeBlockSectionStyle}>
-//       {timeList.map((time, index) => (
-//         <TimeBlock key={index} time={time} />
-//       ))}
-//     </div>
-//   );
-// };
+const TimeBlockSection = ({ selectedTime, setSelectedTime }) => {
+  return (
+    <div style={timeBlockSectionStyle}>
+      {timeList.map((time, index) => (
+        <TimeBlock
+          key={index}
+          time={time}
+          isSelected={selectedTime === time}
+          onClick={() => setSelectedTime(time)}
+        />
+      ))}
+    </div>
+  );
+};
 
 const reservedDateStyle = {
   margin: "15px 0 15px 0 ",

@@ -74,9 +74,9 @@ export default function PaymentInfoModal({
           <BigButton
             width={"297px"}
             text={"예약 결제"}
-            onClick={handleReservation}
-            // onClick={amount > 0 ? handleReservation : null}
-            // disabled={amount === 0}
+            // onClick={handleReservation}
+            onClick={amount > 0 ? handleReservation : null}
+            disabled={amount === 0}
           />
         </div>
       </div>

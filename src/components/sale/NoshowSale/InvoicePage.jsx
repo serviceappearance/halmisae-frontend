@@ -9,80 +9,103 @@ export default function InvoicePage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { storeId } = queryString.parse(location.search);
-  const { menuInfo, usageTime, usePeople, storeName, selectedDate } =
-    location.state || {
-      menuInfo: [],
-      usageTime: 0,
-      usePeople: 1,
-      storeName: "",
-      selectedDate: new Date(),
-    };
+  const {
+    menuInfo,
+    usageTime,
+    usePeople,
+    storeName,
+    selectedDate,
+    selectedTime,
+  } = location.state || {
+    menuInfo: [],
+    usageTime: 0,
+    usePeople: 1,
+    storeName: "",
+    selectedDate: new Date(),
+    selectedTime: "", // 초기 값 설정 추가됨
+  };
 
   const invoiceStyle = {
     display: "grid",
     justifyContent: "center",
   };
 
-  const convertToISOString = (date) => {
-    const timezoneOffset = date.getTimezoneOffset() * 60000;
-    const localISOTime = new Date(date - timezoneOffset)
+  const convertToISOString = (date, time) => {
+    if (!time) {
+      throw new Error("Time is not defined");
+    }
+    const [hours, minutes] = time.split(":");
+    const combinedDate = new Date(date);
+    combinedDate.setHours(hours);
+    combinedDate.setMinutes(minutes);
+    const timezoneOffset = combinedDate.getTimezoneOffset() * 60000;
+    const localISOTime = new Date(combinedDate - timezoneOffset)
       .toISOString()
       .slice(0, -1);
     return localISOTime + "Z";
   };
 
   const handlePayment = () => {
-    const requestData = {
-      email: "user1@naver.com",
-      storeNumber: storeId,
-      visitTime: convertToISOString(selectedDate),
-      useTime: usageTime,
-      people: usePeople,
-      totalPrice: menuInfo.reduce(
-        (total, menu) => total + menu.price * menu.count,
-        0
-      ),
-      orderType: "RESERVATION",
-      reserveMenu: menuInfo.map((menu) => ({
-        menuNumber: menu.menuNumber,
-        quantity: menu.count,
-      })),
-    };
-    console.log(requestData);
-    axios
-      .post(
-        "http://localhost:8080/v1/api/user/main/detail/reservation",
-        requestData
-      )
-      .then((response) => {
-        console.log("예약 성공");
-        const reserveNum = response.data.reserveMenu[0].reserveNumber;
-        const infoDetailValue = [
-          storeName,
-          selectedDate.toLocaleDateString(),
-          `${usageTime}분`,
-          `${usePeople}명`,
-        ];
-        const reservationTime = new Date().toISOString();
-        const reservationKey = `reservation_${storeName}_${reservationTime}`;
-        const reservationData = {
-          storeName: storeName,
-          orderNumber: 0,
-          reservationNumber: reserveNum,
-          reservationTime: reservationTime,
-        };
-        sessionStorage.setItem(reservationKey, JSON.stringify(reservationData));
+    try {
+      const visitTime = convertToISOString(selectedDate, selectedTime);
+      const requestData = {
+        email: "user1@naver.com",
+        storeNumber: storeId,
+        visitTime: visitTime,
+        useTime: usageTime,
+        people: usePeople,
+        totalPrice: menuInfo.reduce(
+          (total, menu) => total + menu.price * menu.count,
+          0
+        ),
+        orderType: "RESERVATION",
+        reserveMenu: menuInfo.map((menu) => ({
+          menuNumber: menu.menuNumber,
+          quantity: menu.count,
+        })),
+      };
+      console.log(requestData);
+      axios
+        .post(
+          "http://localhost:8080/v1/api/user/main/detail/reservation",
+          requestData
+        )
+        .then((response) => {
+          console.log("예약 성공");
+          const reserveNum = response.data.reserveMenu[0].reserveNumber;
+          const infoDetailValue = [
+            storeName,
+            `${selectedDate.toLocaleDateString()} ${selectedTime}`,
+            `${usageTime}분`,
+            `${usePeople}명`,
+          ];
+          const reservationTime = new Date().toISOString();
+          const reservationKey = `reservation_${storeName}_${reservationTime}`;
+          const reservationData = {
+            storeName: storeName,
+            orderNumber: 0,
+            reservationNumber: reserveNum,
+            reservationTime: reservationTime,
+          };
+          sessionStorage.setItem(
+            reservationKey,
+            JSON.stringify(reservationData)
+          );
 
-        navigate("/noshow-sale/complete", {
-          state: {
-            infoDetailValue: infoDetailValue,
-          },
+          navigate("/noshow-sale/complete", {
+            state: {
+              infoDetailValue: infoDetailValue,
+            },
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+          console.log("예약 실패");
         });
-      })
-      .catch((error) => {
-        console.error(error);
-        console.log("예약");
-      });
+    } catch (error) {
+      console.error(error.message);
+      console.log("예약 실패");
+    }
   };
 
   return (
@@ -96,6 +119,7 @@ export default function InvoicePage() {
         usePeople={usePeople}
         storeName={storeName}
         selectedDate={selectedDate}
+        selectedTime={selectedTime}
       />
       <BigButton width={"297px"} text={"예약하기"} onClick={handlePayment} />
     </div>
@@ -108,6 +132,7 @@ const ReservationInfo = ({
   usePeople,
   storeName,
   selectedDate,
+  selectedTime,
 }) => {
   const infoSectionStyle = {
     width: "296px",
@@ -134,21 +159,22 @@ const ReservationInfo = ({
         usePeople={usePeople}
         storeName={storeName}
         selectedDate={selectedDate}
+        selectedTime={selectedTime}
       />
       <div style={{ margin: "169px 0 0 0" }}>
         <SumPrice label={"총 금액"} menuInfo={menuInfo} />
-        <SumPrice label={"예약금액"} menuInfo={menuInfo} />
       </div>
     </div>
   );
 };
 
 const InfoDetail = ({
-  menuInfo,
+  menuInfo = [],
   usageTime,
   usePeople,
   storeName,
   selectedDate,
+  selectedTime,
 }) => {
   const detailSectionStyle = {
     display: "grid",
@@ -158,7 +184,7 @@ const InfoDetail = ({
 
   const infoDetailValue = [
     `${storeName}`,
-    `${selectedDate.toLocaleDateString()}`,
+    `${selectedDate.toLocaleDateString()} ${selectedTime}`,
     `${usageTime}분`,
     `${usePeople}명`,
   ];

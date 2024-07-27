@@ -39,7 +39,7 @@ const CardTopPart = () => {
 
   return (
     <div style={topPartStyle}>
-      <NotificationIcon text={`잔여 : ${Notification}`} />
+      <NotificationIcon text={`잔여 ${Notification}`} />
       {/* <BookmarkIcon /> */}
     </div>
   );
