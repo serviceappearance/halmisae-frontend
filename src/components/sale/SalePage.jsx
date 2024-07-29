@@ -58,6 +58,7 @@ export default function SalePage() {
     setCurrentModal("payment");
   };
 
+  // 시간 포맷 설정
   const formatTime = (timeString) => {
     if (!timeString || timeString.length !== 4) {
       return "00:00";
@@ -94,6 +95,7 @@ export default function SalePage() {
       )}`
     : "";
 
+  // 로딩 설정
   if (loading) {
     return <div>Loading...</div>;
   }

@@ -33,7 +33,7 @@ export default function SaleInfoSection({
 
 const thisStyle = {
   display: "grid",
-  gridTemplateColumns: "3fr 1fr",
+  gridTemplateColumns: "2fr 2fr",
   padding: "9px 13px 4px 9px",
   gap: "12px",
 };

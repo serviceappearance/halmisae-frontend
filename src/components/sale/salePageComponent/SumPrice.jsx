@@ -18,7 +18,7 @@ export default function SumPrice({
 
   const finalPrice = totalMenuPrice - discountAmountIsNan - preDiscountIsNan;
 
-  const displayPrice = isNaN(finalPrice) ? 0 : finalPrice;
+  const displayPrice = isNaN(finalPrice) || finalPrice <= 0 ? 0 : finalPrice;
   return (
     <div className="font-payment" style={sumPriceStyle}>
       <div>{label}</div>
