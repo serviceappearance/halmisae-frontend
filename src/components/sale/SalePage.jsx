@@ -58,21 +58,28 @@ export default function SalePage() {
     setCurrentModal("payment");
   };
 
+  const formatTime = (timeString) => {
+    if (!timeString || timeString.length !== 4) {
+      return "00:00";
+    }
+    return `${timeString.slice(0, 2)}:${timeString.slice(2)}`;
+  };
+
   const formatTimeFromArray = (dateString) => {
     if (!dateString) {
-      return "0000";
+      return "00:00";
     }
 
     const parts = dateString.split(" ");
 
     if (parts.length < 2) {
-      return "0000";
+      return "00:00";
     }
 
     const timeParts = parts[1].split(":");
 
     if (timeParts.length < 2) {
-      return "0000";
+      return "00:00";
     }
 
     const hours = timeParts[0].padStart(2, "0");
@@ -82,7 +89,9 @@ export default function SalePage() {
   };
 
   const pickingTimeFormatted = saleInfo
-    ? `${formatTimeFromArray(saleInfo.pickupTime)} - ${saleInfo.closeTime}`
+    ? `${formatTimeFromArray(saleInfo.pickupTime)} -  ${formatTime(
+        saleInfo.closeTime
+      )}`
     : "";
 
   if (loading) {
@@ -135,13 +144,19 @@ export default function SalePage() {
       />
       <SaleInfoSection
         storeName={saleInfo.storeName}
-        opening={`${saleInfo.openTime} - ${saleInfo.closeTime}`}
-        breaking={`${saleInfo.breakStart} - ${saleInfo.breakEnd}`}
+        opening={`${formatTime(saleInfo.openTime)} - ${formatTime(
+          saleInfo.closeTime
+        )}`}
+        breaking={`${formatTime(saleInfo.breakStart)} - ${formatTime(
+          saleInfo.breakEnd
+        )}`}
         picking={pickingTimeFormatted}
         price={saleInfo.closingPrice}
       />
+
       {/* <AdditionalSection icon={<MapPinIcon />} address={saleInfo.address} />
       <AdditionalSection icon={null} address={"재료 및 알레르기 성분 정보"} /> */}
+
       <div style={{ placeSelf: "center" }}>
         <MapComponent mapLocation={coordinates} address={saleInfo.address} />
         <div className="font-body2" style={{ marginTop: "10px" }}>

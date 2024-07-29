@@ -97,13 +97,17 @@ export default function ReservationInfoInput({
     !selectedTime ||
     useTime <= 0 ||
     usePeople <= 0;
+
+  const secondSubTitleValue = { unitTime, discount };
+
   return (
     <div className="style-page-scrolled">
       <MenuTitleSection />
       <InputSection
         title={"이용시간"}
         subtitle={subtitles.usageTime}
-        point={10}
+        secondSubTitle={secondSubTitleValue}
+        point={unitTime}
         onCountChange={handleUseTimeChange}
         value={usageTime}
       />
@@ -111,6 +115,7 @@ export default function ReservationInfoInput({
         title={"인원"}
         subtitle={subtitles.usePeople}
         point={1}
+        value={usePeople}
         onCountChange={handlePeopleChange}
       />
       <MenuList
@@ -139,11 +144,6 @@ export default function ReservationInfoInput({
 
 const toggleEvent = () => {
   console.log("show no show menu");
-};
-
-const subtitles = {
-  usageTime: "100분",
-  usePeople: "1명",
 };
 
 const MenuTitleSection = () => {

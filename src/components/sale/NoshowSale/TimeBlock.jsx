@@ -1,12 +1,11 @@
-export default function TimeBlock({ time, isSelected, onClick }) {
+export default function TimeBlock({ time, isSelected, isDisabled, onClick }) {
   const thisStyle = {
-    display: "flex",
-    width: "62px",
-    height: "34px",
-    justifyContent: "center",
-    alignItems: "center",
-    border: "0.1px solid black",
-    backgroundColor: isSelected ? "lightblue" : "white",
+    padding: "10px",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+    backgroundColor: isDisabled ? "#d3d3d3" : isSelected ? "#4caf50" : "#fff",
+    color: isDisabled ? "#a9a9a9" : "#000",
+    textAlign: "center",
   };
   return (
     <div className="font-time" style={thisStyle} onClick={onClick}>

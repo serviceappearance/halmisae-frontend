@@ -25,7 +25,7 @@ export default function SaleInfoSection({
           position: "relative",
         }}
       >
-        <PriceDisplay price={"10,000"} discounted={price} />
+        <PriceDisplay price={"10,000"} discounted={`${price}원`} />
       </div>
     </div>
   );

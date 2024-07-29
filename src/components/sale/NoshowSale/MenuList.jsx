@@ -30,10 +30,10 @@ export default function MenuList({
         <SumPrice
           label={"총 금액"}
           menuInfo={menuInfo}
-          usageTime={usageTime} // props 추가
-          useTime={useTime} // props 추가
-          unitTime={unitTime} // props 추가
-          discount={discount} // props 추가
+          usageTime={usageTime}
+          useTime={useTime}
+          unitTime={unitTime}
+          discount={discount}
           preDiscount={preDiscount}
         />
       </div>

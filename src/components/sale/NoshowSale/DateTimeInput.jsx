@@ -7,6 +7,10 @@ import axios from "axios";
 export default function DateTimeInput({ storeId, onDateChange, onTimeChange }) {
   const [value, onChange] = useState(new Date());
   const [storeHolidays, setStoreHolidays] = useState([]);
+  const [openTime, setOpenTime] = useState("");
+  const [closeTime, setCloseTime] = useState("");
+  const [breakStart, setBreakStart] = useState("");
+  const [breakEnd, setBreakEnd] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const clickedYear = value.getFullYear();
   const clickedMonth = value.getMonth() + 1;
@@ -26,13 +30,19 @@ export default function DateTimeInput({ storeId, onDateChange, onTimeChange }) {
       )
       .then((response) => {
         setStoreHolidays(response.data.storeHoliday);
+        setOpenTime(response.data.openTime);
+        setCloseTime(response.data.closeTime);
+        setBreakStart(response.data.breakStart);
+        setBreakEnd(response.data.breakEnd);
       })
       .catch((error) => {
         console.error("Error fetching store holidays:", error);
       });
   }, []);
-
   const disableSpecificDates = ({ date, view }) => {
+    const today = new Date();
+
+    const isBeforeToday = date < today;
     if (view === "month") {
       const dayMap = {
         SUN: 0,
@@ -44,6 +54,7 @@ export default function DateTimeInput({ storeId, onDateChange, onTimeChange }) {
         SAT: 6,
       };
 
+      if (isBeforeToday) return true;
       return storeHolidays.includes(
         Object.keys(dayMap).find((key) => dayMap[key] === date.getDay())
       );
@@ -55,29 +66,96 @@ export default function DateTimeInput({ storeId, onDateChange, onTimeChange }) {
     setSelectedTime(time);
     onTimeChange(time);
   };
+
+  const generateTimeSlots = (openTime, closeTime, step) => {
+    let slots = [];
+    let startHour = parseInt(openTime.slice(0, 2));
+    let startMinute = parseInt(openTime.slice(2));
+    let endHour = parseInt(closeTime.slice(0, 2));
+    let endMinute = parseInt(closeTime.slice(2));
+
+    while (
+      startHour < endHour ||
+      (startHour === endHour && startMinute < endMinute)
+    ) {
+      let hour = startHour.toString().padStart(2, "0");
+      let minute = startMinute.toString().padStart(2, "0");
+      slots.push(`${hour}:${minute}`);
+
+      startMinute += step;
+      if (startMinute >= 60) {
+        startMinute -= 60;
+        startHour += 1;
+      }
+    }
+
+    return slots;
+  };
+
+  const timeList = generateTimeSlots(openTime, closeTime, 30);
+
   return (
     <div className="style-page-calendar">
       <div className="font-reserved-date" style={reservedDateStyle}>
         {dateInfo}
       </div>
-      <div style={{ width: "300px" }}>
-        <Calender
-          onChange={onChange}
-          value={value}
-          tileDisabled={disableSpecificDates}
-          calendarType="gregory"
-        />
-      </div>
+
+      <Calender
+        onChange={onChange}
+        value={value}
+        tileDisabled={disableSpecificDates}
+        calendarType="gregory"
+      />
 
       <TimeBlockSection
         selectedTime={selectedTime}
         setSelectedTime={handleTimeChange}
+        timeList={timeList}
+        breakStart={breakStart}
+        breakEnd={breakEnd}
       />
     </div>
   );
 }
 
-const TimeBlockSection = ({ selectedTime, setSelectedTime }) => {
+const TimeBlockSection = ({
+  selectedTime,
+  setSelectedTime,
+  timeList,
+  breakStart,
+  breakEnd,
+}) => {
+  const now = new Date();
+  const currentHour = now.getHours();
+  const currentMinute = now.getMinutes();
+
+  const isDisabled = (time) => {
+    const [hour, minute] = time.split(":").map(Number);
+
+    if (
+      hour < currentHour ||
+      (hour === currentHour && minute <= currentMinute)
+    ) {
+      return true;
+    }
+
+    const breakStartHour = Math.floor(breakStart / 100);
+    const breakStartMinute = breakStart % 100;
+    const breakEndHour = Math.floor(breakEnd / 100);
+    const breakEndMinute = breakEnd % 100;
+
+    const isAfterBreakStart =
+      hour > breakStartHour ||
+      (hour === breakStartHour && minute >= breakStartMinute);
+    const isBeforeBreakEnd =
+      hour < breakEndHour || (hour === breakEndHour && minute < breakEndMinute);
+
+    if (isAfterBreakStart && isBeforeBreakEnd) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <div style={timeBlockSectionStyle}>
       {timeList.map((time, index) => (
@@ -85,7 +163,8 @@ const TimeBlockSection = ({ selectedTime, setSelectedTime }) => {
           key={index}
           time={time}
           isSelected={selectedTime === time}
-          onClick={() => setSelectedTime(time)}
+          isDisabled={isDisabled(time)}
+          onClick={() => !isDisabled(time) && setSelectedTime(time)}
         />
       ))}
     </div>
@@ -100,24 +179,5 @@ const timeBlockSectionStyle = {
   display: "grid",
   gridTemplateColumns: "1fr 1fr 1fr 1fr",
   gap: "11px",
-  margin: "25px 15px",
+  margin: "15px 15px",
 };
-
-const timeList = [
-  "10:00",
-  "10:30",
-  "11:00",
-  "11:30",
-  "12:00",
-  "12:30",
-  "13:00",
-  "13:30",
-  "14:00",
-  "14:30",
-  "15:00",
-  "15:30",
-  "16:00",
-  "16:30",
-  "17:00",
-  "17:30",
-];

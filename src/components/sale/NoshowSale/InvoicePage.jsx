@@ -11,6 +11,7 @@ export default function InvoicePage() {
   const { storeId } = queryString.parse(location.search);
   const {
     menuInfo,
+    useTime,
     usageTime,
     usePeople,
     storeName,
@@ -18,11 +19,12 @@ export default function InvoicePage() {
     selectedTime,
   } = location.state || {
     menuInfo: [],
+    useTime,
     usageTime: 0,
     usePeople: 1,
     storeName: "",
     selectedDate: new Date(),
-    selectedTime: "", // 초기 값 설정 추가됨
+    selectedTime: "",
   };
 
   const invoiceStyle = {
@@ -52,7 +54,7 @@ export default function InvoicePage() {
         email: "user1@naver.com",
         storeNumber: storeId,
         visitTime: visitTime,
-        useTime: usageTime,
+        useTime: useTime,
         people: usePeople,
         totalPrice: menuInfo.reduce(
           (total, menu) => total + menu.price * menu.count,
@@ -72,11 +74,12 @@ export default function InvoicePage() {
         )
         .then((response) => {
           console.log("예약 성공");
+          console.log(response.data);
           const reserveNum = response.data.reserveMenu[0].reserveNumber;
           const infoDetailValue = [
             storeName,
             `${selectedDate.toLocaleDateString()} ${selectedTime}`,
-            `${usageTime}분`,
+            `${useTime}분`,
             `${usePeople}명`,
           ];
           const reservationTime = new Date().toISOString();
@@ -115,6 +118,7 @@ export default function InvoicePage() {
       </div>
       <ReservationInfo
         menuInfo={menuInfo}
+        useTime={useTime}
         usageTime={usageTime}
         usePeople={usePeople}
         storeName={storeName}
@@ -128,6 +132,7 @@ export default function InvoicePage() {
 
 const ReservationInfo = ({
   menuInfo,
+  useTime,
   usageTime,
   usePeople,
   storeName,
@@ -155,6 +160,7 @@ const ReservationInfo = ({
       </div>
       <InfoDetail
         menuInfo={menuInfo}
+        useTime={useTime}
         usageTime={usageTime}
         usePeople={usePeople}
         storeName={storeName}
@@ -170,6 +176,7 @@ const ReservationInfo = ({
 
 const InfoDetail = ({
   menuInfo = [],
+  useTime,
   usageTime,
   usePeople,
   storeName,
@@ -185,7 +192,7 @@ const InfoDetail = ({
   const infoDetailValue = [
     `${storeName}`,
     `${selectedDate.toLocaleDateString()} ${selectedTime}`,
-    `${usageTime}분`,
+    `${useTime}분`,
     `${usePeople}명`,
   ];
   return (
