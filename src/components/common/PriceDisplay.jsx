@@ -1,6 +1,6 @@
 export default function PriceDisplay({ price, discounted }) {
   const thisStyle = {
-    width: "59px",
+    width: "fit-content",
     height: "33px",
     position: "absolute",
     right: "7px",
@@ -8,7 +8,7 @@ export default function PriceDisplay({ price, discounted }) {
   };
   return (
     <div style={thisStyle}>
-      <div className="font-price">가격</div>
+      <div className="font-price">잔여제품 가격</div>
       <div className="font-price-discounted">{discounted}</div>
     </div>
   );

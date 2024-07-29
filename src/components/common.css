@@ -193,7 +193,7 @@
 
 .style-page-calendar {
   width: 320px;
-  height: 568px;
+  height: "fit-content";
   border-left: 1px solid black;
   border-right: 1px solid black;
   position: relative;

@@ -6,7 +6,7 @@ export default function BigButton({ width, text, onClick, disabled }) {
     justifyContent: "center",
     alignItems: "center",
     borderRadius: "10px",
-    background: disabled ? "#d3d3d3" : "#0A625C", // 비활성화된 상태일 때 색상 변경
+    background: disabled ? "#d3d3d3" : "#0A625C",
   };
   const handleClick = (event) => {
     if (!disabled && onClick) {
