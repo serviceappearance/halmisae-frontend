@@ -4,6 +4,7 @@ import MoveToBackButton from "../../common/MoveToBackButton";
 import SumPrice from "../salePageComponent/SumPrice";
 import queryString from "query-string";
 import axios from "axios";
+import TotalPrice from "../../common/TotalPrice";
 
 export default function InvoicePage() {
   const location = useLocation();
@@ -17,6 +18,9 @@ export default function InvoicePage() {
     storeName,
     selectedDate,
     selectedTime,
+    unitTime,
+    discount,
+    preDiscount,
   } = location.state || {
     menuInfo: [],
     useTime,
@@ -25,6 +29,9 @@ export default function InvoicePage() {
     storeName: "",
     selectedDate: new Date(),
     selectedTime: "",
+    unitTime: 0,
+    discount: 0,
+    preDiscount: 0,
   };
 
   const invoiceStyle = {
@@ -124,6 +131,9 @@ export default function InvoicePage() {
         storeName={storeName}
         selectedDate={selectedDate}
         selectedTime={selectedTime}
+        unitTime={unitTime}
+        discount={discount}
+        preDiscount={preDiscount}
       />
       <BigButton width={"297px"} text={"예약하기"} onClick={handlePayment} />
     </div>
@@ -138,6 +148,9 @@ const ReservationInfo = ({
   storeName,
   selectedDate,
   selectedTime,
+  unitTime,
+  discount,
+  preDiscount,
 }) => {
   const infoSectionStyle = {
     width: "296px",
@@ -153,6 +166,7 @@ const ReservationInfo = ({
     borderTop: "0.1px solid black",
     borderBottom: "0.5px solid #C7C7C7",
   };
+
   return (
     <div style={infoSectionStyle}>
       <div className="font-body2" style={titleStyle}>
@@ -167,8 +181,16 @@ const ReservationInfo = ({
         selectedDate={selectedDate}
         selectedTime={selectedTime}
       />
-      <div style={{ margin: "169px 0 0 0" }}>
-        <SumPrice label={"총 금액"} menuInfo={menuInfo} />
+      <div style={{ margin: "169px 0 0 0", borderTop: "1px solid black" }}>
+        <SumPrice
+          label={"총 금액"}
+          menuInfo={menuInfo}
+          usageTime={usageTime}
+          useTime={useTime}
+          unitTime={unitTime}
+          discount={discount}
+          preDiscount={preDiscount}
+        />
       </div>
     </div>
   );
@@ -246,10 +268,3 @@ const MenuInfoBlock = ({ menuName, quantity, amount }) => {
 };
 
 const infoDetailLabel = ["가게명", "예약날짜", "이용시간", "예약인원"];
-
-// const menuInfo = [
-//   { name: "메뉴1", quantity: 1, amount: "10000" },
-//   { name: "메뉴1", quantity: 1, amount: "10000" },
-//   { name: "메뉴1", quantity: 1, amount: "10000" },
-//   { name: "메뉴1", quantity: 1, amount: "10000" },
-// ];

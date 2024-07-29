@@ -38,12 +38,13 @@ export default function ReservationInfoInput({
             menuNumber: item.menuNumber,
             menuName: item.menuName,
             price: item.price,
+            imgSrc: item.image,
             count: 0,
           }))
         );
         setUsageTime(data.usageTime);
         setUnitTime(data.unitTime);
-        setPreDiscount(data.preOrderDiscount);
+        setPreDiscount(data.preorderDiscount);
         setDiscount(data.discount);
         setSubtitles((prev) => ({
           ...prev,
@@ -87,8 +88,11 @@ export default function ReservationInfoInput({
       storeName,
       selectedDate,
       selectedTime,
+      unitTime,
+      discount,
+      preDiscount,
+      usageTime,
     };
-    console.log(reservationData);
     navigate(`/reserve/show?storeId=${storeId}`, { state: reservationData });
   };
 
@@ -129,14 +133,12 @@ export default function ReservationInfoInput({
         preDiscount={preDiscount}
       />
       <div style={{ margin: "0 16px", position: "absolute", bottom: "20px" }}>
-        <div onClick={handleReservation}>
-          <BigButton
-            width={"287px"}
-            text={"예약하기"}
-            onClick={null}
-            disabled={isButtonDisabled}
-          />
-        </div>
+        <BigButton
+          width={"287px"}
+          text={"예약하기"}
+          onClick={handleReservation}
+          disabled={isButtonDisabled}
+        />
       </div>
     </div>
   );
