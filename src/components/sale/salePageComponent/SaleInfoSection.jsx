@@ -13,8 +13,8 @@ export default function SaleInfoSection({
   return (
     <div style={thisStyle} className="font-sale-info">
       <div>
-        <SaleSubArea icon={<MapPinIcon />} text={storeName} alert={null} />
         {/* <SaleSubArea icon={<StarIcon />} text={"4.5"} alert={null} /> */}
+        <SaleSubArea icon={<MapPinIcon />} text={storeName} alert={null} />
         <SaleSubArea icon={<ClockIcon />} text={`영업시간: ${opening}`} />
         <SaleSubArea icon={<ClockIcon />} text={`휴게시간: ${breaking}`} />
         <SaleSubArea icon={<ClockIcon />} text={`픽업가능시간: ${picking}`} />

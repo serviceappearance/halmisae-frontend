@@ -68,32 +68,32 @@ export default function DateTimeInput({ storeId, onDateChange, onTimeChange }) {
     onTimeChange(time);
   };
 
-  const generateTimeSlots = (openTime, closeTime, step) => {
-    let slots = [];
-    let startHour = parseInt(openTime.slice(0, 2));
-    let startMinute = parseInt(openTime.slice(2));
-    let endHour = parseInt(closeTime.slice(0, 2));
-    let endMinute = parseInt(closeTime.slice(2));
+  // const generateTimeSlots = (openTime, closeTime, step) => {
+  //   let slots = [];
+  //   let startHour = parseInt(openTime.slice(0, 2));
+  //   let startMinute = parseInt(openTime.slice(2));
+  //   let endHour = parseInt(closeTime.slice(0, 2));
+  //   let endMinute = parseInt(closeTime.slice(2));
 
-    while (
-      startHour < endHour ||
-      (startHour === endHour && startMinute < endMinute)
-    ) {
-      let hour = startHour.toString().padStart(2, "0");
-      let minute = startMinute.toString().padStart(2, "0");
-      slots.push(`${hour}:${minute}`);
+  //   while (
+  //     startHour < endHour ||
+  //     (startHour === endHour && startMinute < endMinute)
+  //   ) {
+  //     let hour = startHour.toString().padStart(2, "0");
+  //     let minute = startMinute.toString().padStart(2, "0");
+  //     slots.push(`${hour}:${minute}`);
 
-      startMinute += step;
-      if (startMinute >= 60) {
-        startMinute -= 60;
-        startHour += 1;
-      }
-    }
+  //     startMinute += step;
+  //     if (startMinute >= 60) {
+  //       startMinute -= 60;
+  //       startHour += 1;
+  //     }
+  //   }
 
-    return slots;
-  };
+  //   return slots;
+  // };
 
-  const timeList = generateTimeSlots(openTime, closeTime, 30);
+  // const timeList = generateTimeSlots(openTime, closeTime, 30);
 
   return (
     <div className="style-page-calendar">
@@ -182,3 +182,25 @@ const timeBlockSectionStyle = {
   gap: "11px",
   margin: "15px 15px",
 };
+
+const timeList = [
+  "09:00",
+  "09:30",
+  "10:00",
+  "10:30",
+  "11:00",
+  "11:30",
+  "12:00",
+  "12:30",
+  "13:00",
+  "13:30",
+  "14:00",
+  "14:30",
+  "15:00",
+  "15:30",
+  "16:00",
+  "16:30",
+  "17:00",
+  "17:30",
+  "18:00",
+];

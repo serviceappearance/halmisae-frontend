@@ -116,10 +116,11 @@ export default function SalePage() {
   };
 
   const pickingTimeFormatted = saleInfo
-    ? `${formatTimeFromArray(saleInfo.pickupTime)} -  ${formatTime(
-        saleInfo.closeTime
-      )}`
-    : "";
+    ? `${saleInfo.pickupTime} - ${saleInfo.closeTime}`
+    : // `${formatTimeFromArray(
+      //     saleInfo.pickupTime
+      //   )} -  ${formatTime(saleInfo.closeTime)}`
+      "";
 
   // 로딩 설정
   if (loading) {
@@ -173,12 +174,14 @@ export default function SalePage() {
       />
       <SaleInfoSection
         storeName={saleInfo.storeName}
-        opening={`${formatTime(saleInfo.openTime)} - ${formatTime(
-          saleInfo.closeTime
-        )}`}
-        breaking={`${formatTime(saleInfo.breakStart)} - ${formatTime(
-          saleInfo.breakEnd
-        )}`}
+        opening={`${saleInfo.openTime} - ${saleInfo.closeTime}`}
+        // {`${formatTime(saleInfo.openTime)} - ${formatTime(
+        //   saleInfo.closeTime
+        // )}`}
+        breaking={`${saleInfo.breakStart} - ${saleInfo.breakEnd}`}
+        // {`${formatTime(saleInfo.breakStart)} - ${formatTime(
+        //   saleInfo.breakEnd
+        // )}`}
         picking={pickingTimeFormatted}
         price={saleInfo.closingPrice}
         isBeforeOpening={isBeforeOpening}
