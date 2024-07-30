@@ -49,6 +49,9 @@ jobs:
           docker tag web-server ${ECR_REGISTRY_ID}.dkr.ecr.ap-northeast-2.amazonaws.com/web-server:latest
           docker push ${ECR_REGISTRY_ID}.dkr.ecr.ap-northeast-2.amazonaws.com/web-server:latest
 
+      - name: Debug ECR URL
+        run: echo "${{ secrets.ECR_REGISTRY_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com/web-server:latest"
+
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -58,7 +61,7 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script_stop: true
           script: |
-            docker stop web-server || true
-            docker rm web-server || true
+            # docker stop web-server || true
+            # docker rm web-server || true
             docker pull ${ECR_REGISTRY_ID}.dkr.ecr.ap-northeast-2.amazonaws.com/web-server:latest || true
             docker run -d --name web-server -p 80:80 ${ECR_REGISTRY_ID}.dkr.ecr.ap-northeast-2.amazonaws.com/web-server:latest
