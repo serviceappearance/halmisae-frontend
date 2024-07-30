@@ -11,8 +11,8 @@ export default function ConfirmPage() {
     >
       <ContentSection infoDetailValue={infoDetailValue} />
       <div style={{ margin: "106px 0 4px 0" }}>
-        <Link to="/">
-          <BigButton width={"297px"} text={"메인페이지로"} />
+        <Link to="/reservation-number">
+          <BigButton width={"297px"} text={"예약 확인하기"} />
         </Link>
       </div>
     </div>

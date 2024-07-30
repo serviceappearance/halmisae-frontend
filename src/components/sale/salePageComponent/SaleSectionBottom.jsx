@@ -4,6 +4,7 @@ export default function SaleSectionBottom({
   toggleModal,
   storeId,
   storeName,
+  isBeforeOpening,
 }) {
   return (
     <div style={bottomSectionStyle}>
@@ -20,6 +21,7 @@ export default function SaleSectionBottom({
         toggleModal={toggleModal}
         storeId={storeId}
         storeName={storeName}
+        isBeforeOpening={isBeforeOpening}
       />
     </div>
   );

@@ -22,14 +22,14 @@ export default function SaleConfirmPage() {
       </div>
 
       <Link
-        to="/"
+        to="/reservation-number"
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <BigButton width={"297px"} text={"메인페이지로"} />
+        <BigButton width={"297px"} text={"예약 확인하기"} />
       </Link>
     </div>
   );

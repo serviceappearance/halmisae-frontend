@@ -16,9 +16,10 @@ import L from "leaflet";
 export default function SalePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentModal, setCurrentModal] = useState("alert");
-  const [saleInfo, setSaleInfo] = useState(0);
+  const [saleInfo, setSaleInfo] = useState("");
   const [loading, setLoading] = useState(true);
   const [coordinates, setCoordinates] = useState({ lat: "", lon: "" });
+  const [isBeforeOpening, setIsBeforeOpening] = useState(false);
 
   const { storeId } = useParams();
 
@@ -31,10 +32,11 @@ export default function SalePage() {
         setSaleInfo(response.data);
         setLoading(false);
 
+        // 주소
         if (response.data.address) {
           const geoResponse = await axios.get(
             `https://nominatim.openstreetmap.org/search?format=json&q=${response.data.address
-              .split(" ", 3)
+              .split(" ", 5)
               .join(" ")}`
           );
           if (geoResponse.data.length > 0) {
@@ -42,6 +44,15 @@ export default function SalePage() {
             setCoordinates({ lat: location.lat, lon: location.lon });
           }
         }
+
+        const now = new Date();
+        const openTime = new Date(
+          `2024-07-30T${response.data.openTime.slice(
+            0,
+            2
+          )}:${response.data.openTime.slice(2, 4)}:00`
+        );
+        setIsBeforeOpening(now < openTime);
       } catch (error) {
         console.error("Failed to fetch sale info:", error);
         setLoading(false);
@@ -49,6 +60,7 @@ export default function SalePage() {
     };
     fetchSaleInfo();
   }, [storeId]);
+
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
     setCurrentModal("alert");
@@ -71,6 +83,16 @@ export default function SalePage() {
       return "00:00";
     }
 
+    if (dateString.length === 4 && !isNaN(dateString)) {
+      const hours = dateString.slice(0, 2);
+      const minutes = dateString.slice(2, 4);
+
+      if (hours === "24") {
+        return "00:00";
+      }
+      return `${hours}:${minutes}`;
+    }
+
     const parts = dateString.split(" ");
 
     if (parts.length < 2) {
@@ -85,6 +107,10 @@ export default function SalePage() {
 
     const hours = timeParts[0].padStart(2, "0");
     const minutes = timeParts[1].padStart(2, "0");
+
+    if (hours === "24") {
+      return "00:00";
+    }
 
     return `${hours}${minutes}`;
   };
@@ -141,7 +167,8 @@ export default function SalePage() {
       <SignBoard
         storeName={saleInfo.storeName}
         imgUrl={
-          "https://cdn.pixabay.com/photo/2018/05/25/18/04/nature-3429700_1280.jpg"
+          saleInfo.image
+          // "https://cdn.pixabay.com/photo/2018/06/19/09/34/bread-3484107_1280.jpg"
         } // info.imgUrl로 교체
       />
       <SaleInfoSection
@@ -154,6 +181,7 @@ export default function SalePage() {
         )}`}
         picking={pickingTimeFormatted}
         price={saleInfo.closingPrice}
+        isBeforeOpening={isBeforeOpening}
       />
 
       {/* <AdditionalSection icon={<MapPinIcon />} address={saleInfo.address} />
@@ -163,6 +191,7 @@ export default function SalePage() {
         <MapComponent mapLocation={coordinates} address={saleInfo.address} />
         <div className="font-body2" style={{ marginTop: "10px" }}>
           {saleInfo.address}
+          {` ${saleInfo.addressDetail}`}
         </div>
       </div>
       <SaleSectionBottom
@@ -170,6 +199,7 @@ export default function SalePage() {
         toggleModal={toggleModal}
         storeId={storeId}
         storeName={saleInfo.storeName}
+        isBeforeOpening={isBeforeOpening}
       />
       <div
         className={`overlay ${isModalOpen ? "open" : ""}`}

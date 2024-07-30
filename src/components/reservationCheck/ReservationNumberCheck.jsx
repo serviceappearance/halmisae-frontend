@@ -34,7 +34,15 @@ export default function ReservationNumberCheck() {
     <div className="style-page-scroll">
       <PageHeader text={"예약번호 확인"} />
       {reservationNumbers.map((num, index) => (
-        <div className="font-body1" style={boardStyle} key={index}>
+        <div
+          className="font-body1"
+          style={{
+            ...boardStyle,
+            paddingBottom:
+              index === reservationNumbers.length - 1 ? "40px" : "0",
+          }}
+          key={index}
+        >
           {num.storeName} | 예약번호: {num.reservationNumber} | 주문번호:{" "}
           {num.orderNumber}
         </div>
@@ -45,9 +53,3 @@ export default function ReservationNumberCheck() {
     </div>
   );
 }
-
-const reservationNumbers = [
-  { storeName: "asdfadsf", number: "asdfasdf" },
-  { storeName: "asdfadsf", number: "asdfasdf" },
-  { storeName: "asdfadsf", number: "asdfasdf" },
-];

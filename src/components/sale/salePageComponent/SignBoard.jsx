@@ -18,9 +18,9 @@ export default function SignBoard({ storeName, imgUrl }) {
       {/* <BookmarkIcon /> */}
       <TitleBoard
         text={storeName}
-        imgUrl={
-          "https://cdn.pixabay.com/photo/2018/05/25/18/04/nature-3429700_1280.jpg"
-        }
+        // imgUrl={
+        //   "https://cdn.pixabay.com/photo/2023/12/13/17/54/bun-8447394_1280.jpg" // imgUrl로 교체
+        // }
       />
     </div>
   );

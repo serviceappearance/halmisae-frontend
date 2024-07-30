@@ -9,11 +9,16 @@ export default function MenuSection({
   onCountChange,
 }) {
   return (
-    <div style={sectionStyle}>
+    <div className="style-menu-section">
       <img
         src={imgSrc}
-        alt=""
-        style={{ width: "67px", height: "67px", border: "1px solid black" }}
+        alt="메뉴이미지"
+        style={{
+          width: "60px",
+          height: "60px",
+          border: "1px solid black",
+          borderRadius: "7px",
+        }}
       />
 
       <MenuInfo menuName={menuName} price={price} />
