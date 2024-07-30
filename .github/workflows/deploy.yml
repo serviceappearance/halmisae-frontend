@@ -53,7 +53,14 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script_stop: true
           script: |
-            docker stop web-server || true
-            docker rm web-server || true
-            docker pull ${{ steps.login-ecr.outputs.registry }}/web-server:latest
-            docker run -d --name web-server -p 80:80 ${{ steps.login-ecr.outputs.registry }}/web-server:latest
+            # Install Docker
+            curl -fsSL https://get.docker.com -o get-docker.sh
+            sh get-docker.sh
+            sudo usermod -aG docker $USER
+            newgrp docker
+            # Stop and remove existing container
+            docker stop custom-repo-name || true
+            docker rm custom-repo-name || true
+            # Pull and run new container
+            docker pull ${{ steps.login-ecr.outputs.registry }}/custom-repo-name:latest
+            docker run -d --name custom-repo-name -p 80:80 ${{ steps.login-ecr.outputs.registry }}/custom-repo-name:latest
