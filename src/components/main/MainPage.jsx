@@ -20,6 +20,7 @@ export default function MainPage() {
         );
         const transformedData = response.data.map((item) => ({
           storeId: item.storeNumber,
+          imgSrc: item.image,
           topPartValue: {
             Notification: item.closingFoodCount,
           },
@@ -42,6 +43,7 @@ export default function MainPage() {
   const filteredStoreInfo = storeInfo.filter((info) =>
     info.bottomPartValue.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  console.log(filteredStoreInfo);
   return (
     <div className="style-page">
       <SearchBar onSearch={setSearchQuery} />
@@ -54,7 +56,8 @@ export default function MainPage() {
               topPartValue={info.topPartValue}
               bottomPartValue={info.bottomPartValue}
               imgUrl={
-                "https://cdn.pixabay.com/photo/2017/08/01/11/38/sea-2564601_1280.jpg" // info.imgUrl로 교체
+                info.imgSrc
+                // "https://cdn.pixabay.com/photo/2017/10/18/16/23/bread-2864665_1280.jpg" // info.imgUrl로 교체
               }
             />
           </Link>

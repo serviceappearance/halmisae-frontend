@@ -71,7 +71,7 @@ const topPartStyle = {
 };
 const bottomPartStyle = {
   width: "287px",
-  height: "82px",
+  height: "85px",
   borderRadius: "0px 0px 10px 10px",
   backgroundColor: "#FFF",
   position: "relative",
