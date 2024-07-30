@@ -55,9 +55,12 @@ jobs:
           script: |
             # AWS CLI 최신 버전 설치
             sudo apt-get update
-            sudo apt-get install -y unzip
+            sudo apt-get install -y unzip curl
+
+            # AWS CLI 다운로드 및 설치
             curl "https://d1uj6qtbmh3dt5.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
+            ls -l awscliv2.zip # 파일이 다운로드 되었는지 확인
+            unzip awscliv2.zip || { echo "Failed to unzip awscliv2.zip"; exit 1; }
             sudo ./aws/install
 
             # ECR 로그인
