@@ -59,10 +59,10 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           port: ${{ secrets.EC2_PORT }}
-          ECR_REGISTRY_ID: ${{ secrets.ECR_REGISTRY_ID }}
+
           script_stop: true
           script: |
             # docker stop web-server || true
             # docker rm web-server || true
-            docker pull ${ECR_REGISTRY_ID}.dkr.ecr.ap-northeast-2.amazonaws.com/web-server:latest || true
-            docker run -d --name web-server -p 80:80 ${ECR_REGISTRY_ID}.dkr.ecr.ap-northeast-2.amazonaws.com/web-server:latest
+            docker pull ${{secrets.ECR_REGISTRY_ID}}.dkr.ecr.ap-northeast-2.amazonaws.com/web-server:latest || true
+            docker run -d --name web-server -p 80:80 ${{secrets.ECR_REGISTRY_ID}}.dkr.ecr.ap-northeast-2.amazonaws.com/web-server:latest
