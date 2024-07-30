@@ -23,20 +23,24 @@ jobs:
           npm ci
           npm run build --if-present
           npm run test
-
       - name: Build Docker image
         run: |
           docker build -t web-server .
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ap-northeast-2
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Log in to AWS ECR Public
-        id: login-ecr-public
-        run: |
-          echo ${{ secrets.AWS_ACCESS_KEY_ID }} | docker login public.ecr.aws --username AWS --password-stdin
+      - name: Log in to AWS ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
 
       - name: Tag and push Docker image
         run: |
-          docker tag web-server public.ecr.aws/${{ secrets.AWS_ACCOUNT_ID }}/web-server:latest
-          docker push public.ecr.aws/${{ secrets.AWS_ACCOUNT_ID }}/web-server:latest
+          docker tag web-server ${{ steps.login-ecr.outputs.registry }}/web-server:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/web-server:latest
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
@@ -47,7 +51,7 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script_stop: true
           script: |
-            # docker stop web-server || true
-            # docker rm web-server || true
-            docker pull public.ecr.aws/${{ secrets.AWS_ACCOUNT_ID }}/web-server:latest
-            docker run -d --name web-server -p 80:80 public.ecr.aws/${{ secrets.AWS_ACCOUNT_ID }}/web-server:latest
+            docker stop web-server || true
+            docker rm web-server || true
+            docker pull ${{ steps.login-ecr.outputs.registry }}/web-server:latest
+            docker run -d --name web-server -p 80:80 ${{ steps.login-ecr.outputs.registry }}/web-server:latest
