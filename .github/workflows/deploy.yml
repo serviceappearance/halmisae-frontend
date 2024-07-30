@@ -53,7 +53,11 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script_stop: true
           script: |
-            echo $(aws ecr get-login-password --region ap-northeast-2) | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
+            # AWS CLI 설치
+            sudo apt-get update
+            sudo apt-get install -y awscli
+            # ECR 로그인
+            aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
             docker stop web-server || true
             docker rm web-server || true
             docker pull ${{ steps.login-ecr.outputs.registry }}/web-server:latest
