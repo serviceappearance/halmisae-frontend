@@ -29,12 +29,13 @@ export default function SaleSectionBottom({
 
 const bottomSectionStyle = {
   width: "320px",
-  // margin: "70px 0 0 0",
   position: "absolute",
   bottom: 0,
+  // margin: "70px 0 0 0",
 };
-const customerRatingStyle = {
-  width: "320px",
-  padding: "10px 0px",
-  gap: "13px",
-};
+
+// const customerRatingStyle = {
+//   width: "320px",
+//   padding: "10px 0px",
+//   gap: "13px",
+// };

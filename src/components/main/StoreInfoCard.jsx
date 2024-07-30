@@ -1,5 +1,5 @@
+// import BookmarkIcon from "./BookmarkIcon";
 import "../font.css";
-import BookmarkIcon from "./BookmarkIcon";
 import NotificationIcon from "../common/NotificationIcon";
 import Comment from "./Card/Comment";
 import RatingAndDistance from "./Card/RatingAndDistance";

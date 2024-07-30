@@ -1,7 +1,7 @@
+// import TotalPrice from "../../common/TotalPrice";
 import InputSection from "./InputSection";
 import BigButton from "../../common/BigButton";
 import MenuList from "./MenuList";
-import TotalPrice from "../../common/TotalPrice";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

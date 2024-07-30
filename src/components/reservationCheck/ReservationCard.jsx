@@ -3,8 +3,6 @@ import { ReactComponent as ClockIcon } from "../../assets/icons/clock-mini.svg";
 import { ReactComponent as UserIcon } from "../../assets/icons/user-mini.svg";
 import { ReactComponent as DollarIcon } from "../../assets/icons/dollar.svg";
 import MiniButton from "../common/MiniButton";
-import { Link } from "react-router-dom";
-import { createContext, useContext } from "react";
 
 export default function ReservationCard({ imgSrc, info, onCancel }) {
   const cardStyle = {

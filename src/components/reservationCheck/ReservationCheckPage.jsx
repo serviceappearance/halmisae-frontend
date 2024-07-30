@@ -6,7 +6,7 @@ import axios from "axios";
 
 export default function ReservationCheckPage() {
   const [reservations, setReservations] = useState(reservationInfo);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
 
   const handleCancel = async (index) => {
     const reservationToCancel = reservations[index];

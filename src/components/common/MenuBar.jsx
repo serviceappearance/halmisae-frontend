@@ -1,7 +1,7 @@
+// import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
+// import { ReactComponent as ClockIcon } from "../../assets/icons/clock.svg";
+// import { ReactComponent as CheckIcon } from "../../assets/icons/check.svg";
 import { ReactComponent as HomeIcon } from "../../assets/icons/home.svg";
-import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
-import { ReactComponent as ClockIcon } from "../../assets/icons/clock.svg";
-import { ReactComponent as CheckIcon } from "../../assets/icons/check.svg";
 import { ReactComponent as UserIcon } from "../../assets/icons/user.svg";
 import { Link, useLocation } from "react-router-dom";
 

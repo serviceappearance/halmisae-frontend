@@ -1,10 +1,10 @@
+// import TotalPrice from "../../common/TotalPrice";
 import { useLocation, useNavigate } from "react-router-dom";
 import BigButton from "../../common/BigButton";
 import MoveToBackButton from "../../common/MoveToBackButton";
 import SumPrice from "../salePageComponent/SumPrice";
 import queryString from "query-string";
 import axios from "axios";
-import TotalPrice from "../../common/TotalPrice";
 
 export default function InvoicePage() {
   const location = useLocation();

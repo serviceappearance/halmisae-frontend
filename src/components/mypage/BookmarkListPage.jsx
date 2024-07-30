@@ -1,4 +1,4 @@
-import CategoryBar from "../main/CategoryBar";
+// import CategoryBar from "../main/CategoryBar";
 import StoreInfoCard from "../main/StoreInfoCard";
 import MenuBar from "../common/MenuBar";
 import PageHeader from "../common/PageHeader";

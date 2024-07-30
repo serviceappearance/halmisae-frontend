@@ -1,8 +1,8 @@
+// import { ReactComponent as BookmarkIcon } from "../../assets/icons/bookmark.svg";
+// import { ReactComponent as UserIcon } from "../../assets/icons/user-mypage.svg";
 import MenuBar from "../common/MenuBar";
 import PageHeader from "../common/PageHeader";
-import { ReactComponent as BookmarkIcon } from "../../assets/icons/bookmark.svg";
 import { ReactComponent as StarIcon } from "../../assets/icons/star-mypage.svg";
-import { ReactComponent as UserIcon } from "../../assets/icons/user-mypage.svg";
 import { ReactComponent as LogoutIcon } from "../../assets/icons/logout.svg";
 import { Link } from "react-router-dom";
 

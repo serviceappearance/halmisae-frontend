@@ -1,8 +1,8 @@
-import React from "react";
 // import ReactDOM from "react-dom/client";
+// import ReservationCheckPage from "./components/reservationCheck/ReservationCheckPage";
+import React from "react";
 import MainPage from "./components/main/MainPage";
 import MyPage from "./components/mypage/Mypage";
-import ReservationCheckPage from "./components/reservationCheck/ReservationCheckPage";
 import SalePage from "./components/sale/SalePage";
 import ReservationInputPage from "./components/sale/NoshowSale/ReservationInputPage";
 import InvoicePage from "./components/sale/NoshowSale/InvoicePage";

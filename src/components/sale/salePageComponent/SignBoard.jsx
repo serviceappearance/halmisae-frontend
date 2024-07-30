@@ -1,6 +1,6 @@
+// import BookmarkIcon from "../../main/BookmarkIcon";
 import MoveToBackButton from "../../common/MoveToBackButton";
 import TitleBoard from "../../common/TitleBoard";
-import BookmarkIcon from "../../main/BookmarkIcon";
 
 export default function SignBoard({ storeName, imgUrl }) {
   const signBoardStyle = {

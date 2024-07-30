@@ -1,6 +1,6 @@
+// import { ReactComponent as StarIcon } from "../../../assets/icons/star.svg";
 import PriceDisplay from "../../common/PriceDisplay";
 import { ReactComponent as MapPinIcon } from "../../../assets/icons/map-pin.svg";
-import { ReactComponent as StarIcon } from "../../../assets/icons/star.svg";
 import { ReactComponent as ClockIcon } from "../../../assets/icons/clock-small.svg";
 import SaleSubArea from "./SaleSubArea";
 export default function SaleInfoSection({

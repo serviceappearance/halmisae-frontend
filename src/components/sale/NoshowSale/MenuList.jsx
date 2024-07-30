@@ -1,4 +1,3 @@
-import { useState } from "react";
 import SumPrice from "../salePageComponent/SumPrice";
 import MenuSection from "./MenuSection";
 export default function MenuList({

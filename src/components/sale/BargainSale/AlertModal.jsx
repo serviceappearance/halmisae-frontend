@@ -1,7 +1,7 @@
+// import PaymentInfoModal from "../BargainSale/PaymentInfoModal";
 import BigButton from "../../common/BigButton";
 import { ReactComponent as BagIcon } from "../../../assets/icons/shopping-bag.svg";
 import { Link } from "react-router-dom";
-import PaymentInfoModal from "../BargainSale/PaymentInfoModal";
 export default function AlertModal({ isOpen, toggleModal, onConfirm }) {
   return (
     <div className={`style-modal ${isOpen ? "open" : ""}`}>

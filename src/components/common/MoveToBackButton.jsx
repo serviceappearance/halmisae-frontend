@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as BackIcon } from "../../assets/icons/move-to-back.svg";
-import { useState } from "react";
 
 export default function MoveToBackButton() {
   const navigate = useNavigate();

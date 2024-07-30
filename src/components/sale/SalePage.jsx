@@ -1,9 +1,9 @@
+// import { ReactComponent as MapPinIcon } from "../../assets/icons/map-pin.svg";
+// import AdditionalSection from "./salePageComponent/AdditionalSection";
 import "../common.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { ReactComponent as MapPinIcon } from "../../assets/icons/map-pin.svg";
-import AdditionalSection from "./salePageComponent/AdditionalSection";
 import SaleInfoSection from "./salePageComponent/SaleInfoSection";
 import SignBoard from "./salePageComponent/SignBoard";
 import SaleSectionBottom from "./salePageComponent/SaleSectionBottom";

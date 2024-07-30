@@ -1,4 +1,3 @@
-import { useState } from "react";
 import CountPill from "./CountPill";
 
 export default function MenuSection({

@@ -1,9 +1,9 @@
+// import FilterCategoryIcon from "../common/FilterCategoryIcon";
+// import CategoryBar from "./CategoryBar";
 import { Link } from "react-router-dom";
 import "../common.css";
-import FilterCategoryIcon from "../common/FilterCategoryIcon";
 import MenuBar from "../common/MenuBar";
 import SearchBar from "../common/SearchBar";
-import CategoryBar from "./CategoryBar";
 import StoreInfoCard from "./StoreInfoCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
