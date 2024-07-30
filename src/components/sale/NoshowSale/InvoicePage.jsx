@@ -23,7 +23,7 @@ export default function InvoicePage() {
     preDiscount,
   } = location.state || {
     menuInfo: [],
-    useTime,
+    // useTime,
     usageTime: 0,
     usePeople: 1,
     storeName: "",
