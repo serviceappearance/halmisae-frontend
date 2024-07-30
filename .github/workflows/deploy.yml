@@ -55,10 +55,8 @@ jobs:
           script: |
             # AWS CLI 설치
             sudo apt-get update
-            sudo apt-get install -y python3-pip
-            pip3 install awscli
             # ECR 로그인
-            aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
+            docker login -u AWS -p $(aws ecr get-login-password --region asia-east-1) web-server.dkr.ecr.asia-east-1.amazonaws.com
             docker stop web-server || true
             docker rm web-server || true
             docker pull ${{ steps.login-ecr.outputs.registry }}/web-server:latest
