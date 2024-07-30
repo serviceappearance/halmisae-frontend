@@ -53,10 +53,7 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script_stop: true
           script: |
-            # Pull the latest Docker image from ECR
+            docker stop web-server || true 
+            docker rm web-server || true
             docker pull ${{ steps.login-ecr.outputs.registry }}/web-server:latest
-
-            # Run the new Docker container
-            docker run -d --name my-app-container \
-              -p 80:80 \
-              ${{ steps.login-ecr.outputs.registry }}/web-server:latest
+            docker run -d --name web-server -p 80:80 ${{ steps.login-ecr.outputs.registry }}/web-server:latest
