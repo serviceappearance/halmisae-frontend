@@ -40,6 +40,11 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script_stop: true
           script: |
+            # 애플리케이션이 위치한 디렉터리 확인 및 생성
+            if [ ! -d /home/ubuntu/my-app ]; then
+              mkdir -p /home/ubuntu/my-app
+            fi
+
             # 애플리케이션이 위치한 디렉터리로 이동
             cd /home/ubuntu/my-app
 
