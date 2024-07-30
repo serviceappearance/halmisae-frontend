@@ -22,7 +22,7 @@ jobs:
         run: |
           npm install
           npm run build
-        working-directory: ./path-to-your-react-app
+        working-directory: ./halmisae-frontend
 
       - name: Build Docker image
         run: |
