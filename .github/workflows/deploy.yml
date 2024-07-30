@@ -48,8 +48,13 @@ jobs:
             # 애플리케이션이 위치한 디렉터리로 이동
             cd /home/ubuntu/my-app
 
-            # 최신 코드 가져오기
-            git pull origin main
+            # Git 저장소가 존재하지 않으면 클론
+            if [ ! -d .git ]; then
+              git clone https://github.com/your-repository/my-app.git .
+            else
+              # Git 저장소가 존재하면 최신 코드 가져오기
+              git pull origin main
+            fi
 
             # 의존성 설치 및 빌드
             npm ci
