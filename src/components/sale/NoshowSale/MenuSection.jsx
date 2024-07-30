@@ -39,10 +39,10 @@ const MenuInfo = ({ menuName, price }) => {
   );
 };
 
-const sectionStyle = {
-  width: "287px",
-  height: "67px",
-  display: "grid",
-  gridTemplateColumns: "67px 135px 86px",
-  alignItems: "center",
-};
+// const sectionStyle = {
+//   width: "287px",
+//   height: "67px",
+//   display: "grid",
+//   gridTemplateColumns: "67px 135px 86px",
+//   alignItems: "center",
+// };

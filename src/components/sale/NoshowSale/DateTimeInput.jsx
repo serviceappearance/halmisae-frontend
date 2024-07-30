@@ -38,7 +38,7 @@ export default function DateTimeInput({ storeId, onDateChange, onTimeChange }) {
       .catch((error) => {
         console.error("Error fetching store holidays:", error);
       });
-  }, []);
+  }, [storeId]);
 
   const disableSpecificDates = ({ date, view }) => {
     const today = new Date();

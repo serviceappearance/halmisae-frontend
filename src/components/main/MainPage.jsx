@@ -134,4 +134,4 @@ export default function MainPage() {
 //   },
 // ];
 
-const category = ["전체", "noShow", "마감할인", "찜"];
+// const category = ["전체", "noShow", "마감할인", "찜"];

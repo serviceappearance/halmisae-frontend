@@ -199,7 +199,7 @@ const ReservationInfo = ({
 const InfoDetail = ({
   menuInfo = [],
   useTime,
-  usageTime,
+  // usageTime,
   usePeople,
   storeName,
   selectedDate,

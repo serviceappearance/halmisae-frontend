@@ -54,7 +54,7 @@ export default function ReservationInfoInput({
       .catch((error) => {
         console.error("데이터를 가져오는 중 오류 발생:", error);
       });
-  }, []);
+  }, [storeId]);
 
   const handleCountChange = (index, count) => {
     setMenuInfo((prevMenuInfo) =>
@@ -144,10 +144,6 @@ export default function ReservationInfoInput({
   );
 }
 
-const toggleEvent = () => {
-  console.log("show no show menu");
-};
-
 const MenuTitleSection = () => {
   return (
     <div style={{ borderTop: "1px solid black" }}>
@@ -161,34 +157,34 @@ const MenuTitleSection = () => {
   );
 };
 
-const NoShowFoodToggle = ({ toggleHandler }) => {
-  const toggleStyle = {
-    display: "flex",
-    width: "51px",
-    height: "14px",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: "10px",
-    background: "#0A625C",
-  };
-  return (
-    <div className="font-toggle" style={toggleStyle} onClick={toggleHandler}>
-      noShow 상품 보기
-    </div>
-  );
-};
+// const NoShowFoodToggle = ({ toggleHandler }) => {
+//   const toggleStyle = {
+//     display: "flex",
+//     width: "51px",
+//     height: "14px",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     borderRadius: "10px",
+//     background: "#0A625C",
+//   };
+//   return (
+//     <div className="font-toggle" style={toggleStyle} onClick={toggleHandler}>
+//       noShow 상품 보기
+//     </div>
+//   );
+// };
 
-const titleSectionStyle = {
-  display: "flex",
-  width: "287px",
-  height: "38px",
-  padding: "0 0 0 4px",
-  margin: "0 16px",
-  alignItems: "center",
-  gap: "5px",
-};
+// const titleSectionStyle = {
+//   display: "flex",
+//   width: "287px",
+//   height: "38px",
+//   padding: "0 0 0 4px",
+//   margin: "0 16px",
+//   alignItems: "center",
+//   gap: "5px",
+// };
 
-const menuTitleStyle = {
-  width: "25px",
-  height: "16px",
-};
+// const menuTitleStyle = {
+//   width: "25px",
+//   height: "16px",
+// };
