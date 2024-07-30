@@ -20,9 +20,9 @@ export default function MainPage() {
         );
         const transformedData = response.data.map((item) => ({
           storeId: item.storeNumber,
-          imgSrc: item.image,
           topPartValue: {
             Notification: item.closingFoodCount,
+            imgSrc: item.image,
           },
           bottomPartValue: {
             title: item.storeName,

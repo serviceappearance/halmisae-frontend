@@ -9,17 +9,11 @@ import { createContext, useContext } from "react";
 const StoreInfoTopContext = createContext({});
 const StoreInfoBottomContext = createContext({});
 
-export default function StoreInfoCard({
-  id,
-  topPartValue,
-  bottomPartValue,
-  imgUrl,
-}) {
+export default function StoreInfoCard({ id, topPartValue, bottomPartValue }) {
   const cardStyle = {
     width: "287px",
     height: "162px",
     borderRadius: "10px",
-    backgroundImage: `url(${imgUrl})`,
     boxShadow: "0px 2px 4px 0px rgba(0, 0, 0, 0.25)",
   };
   return (
@@ -35,8 +29,14 @@ export default function StoreInfoCard({
 }
 
 const CardTopPart = () => {
-  const { Notification } = useContext(StoreInfoTopContext);
-
+  const { Notification, imgSrc } = useContext(StoreInfoTopContext);
+  const topPartStyle = {
+    width: "289px",
+    height: "79px",
+    borderRadius: "10px 10px 0px 0px",
+    position: "relative",
+    backgroundImage: `url(${imgSrc})`,
+  };
   return (
     <div style={topPartStyle}>
       <NotificationIcon text={`잔여 ${Notification}`} />
@@ -63,12 +63,6 @@ const CardBottomPart = () => {
   );
 };
 
-const topPartStyle = {
-  width: "289px",
-  height: "79px",
-  borderRadius: "10px 10px 0px 0px",
-  position: "relative",
-};
 const bottomPartStyle = {
   width: "287px",
   height: "85px",
