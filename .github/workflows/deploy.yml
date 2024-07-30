@@ -59,8 +59,8 @@ jobs:
             sudo usermod -aG docker $USER
             newgrp docker
             # Stop and remove existing container
-            docker stop custom-repo-name || true
-            docker rm custom-repo-name || true
+            sudo docker stop custom-repo-name || true
+            sudo docker rm custom-repo-name || true
             # Pull and run new container
-            docker pull ${{ steps.login-ecr.outputs.registry }}/custom-repo-name:latest
-            docker run -d --name custom-repo-name -p 80:80 ${{ steps.login-ecr.outputs.registry }}/custom-repo-name:latest
+            sudo docker pull ${{ steps.login-ecr.outputs.registry }}/custom-repo-name:latest
+            sudo docker run -d --name custom-repo-name -p 80:80 ${{ steps.login-ecr.outputs.registry }}/custom-repo-name:latest
