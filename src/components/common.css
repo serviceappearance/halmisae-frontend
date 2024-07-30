@@ -198,3 +198,17 @@
   border-right: 1px solid black;
   position: relative;
 }
+
+.style-menu-section {
+  width: 287px;
+  height: 67px;
+  display: grid;
+  grid-template-columns: 67px 135px 86px;
+  align-items: center;
+  border-radius: 7px;
+  transition: background-color 0.3s ease;
+}
+
+.style-menu-section:hover {
+  background-color: #eeeeee;
+}

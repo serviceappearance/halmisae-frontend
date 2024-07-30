@@ -3,14 +3,24 @@ import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
 import { ReactComponent as ClockIcon } from "../../assets/icons/clock.svg";
 import { ReactComponent as CheckIcon } from "../../assets/icons/check.svg";
 import { ReactComponent as UserIcon } from "../../assets/icons/user.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function MenuBar() {
+  const location = useLocation();
+
+  const getBarStyle = (path) => ({
+    display: "flex",
+    height: "44px",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: location.pathname === path ? "#f0f0f0" : "white",
+  });
+
   return (
     <div style={menuStyle}>
       {icons.map((icon, index) => (
         <Link key={index} to={routes[index]}>
-          <div key={index} style={barStyle}>
+          <div key={index} style={getBarStyle(routes[index])}>
             {icon}
           </div>
         </Link>
@@ -31,12 +41,4 @@ const menuStyle = {
   position: "absolute",
   bottom: "0",
   borderTop: "1px solid black",
-};
-
-const barStyle = {
-  display: "flex",
-  height: "44px",
-  justifyContent: "center",
-  alignItems: "center",
-  backgroundColor: "white",
 };
