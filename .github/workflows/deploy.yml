@@ -53,8 +53,7 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script_stop: true
           script: |
-            aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin aws_account_id.dkr.ecr.region.amazonaws.com
-            docker stop web-server || true 
+            docker stop web-server || true
             docker rm web-server || true
             docker pull ${{ steps.login-ecr.outputs.registry }}/web-server:latest
             docker run -d --name web-server -p 80:80 ${{ steps.login-ecr.outputs.registry }}/web-server:latest
