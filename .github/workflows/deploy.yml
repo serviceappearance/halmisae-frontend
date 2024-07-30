@@ -1,4 +1,4 @@
-name: CI/CD 배포
+name: 컨테이너 기반 배포하기
 
 on:
   push:
@@ -10,28 +10,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 코드 체크아웃
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Node.js 설정
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "18"
 
-      - name: 의존성 설치 및 빌드
+      - name: Install dependencies, build and test
         run: |
           npm ci
           npm run build --if-present
-          npm run test
-
-      - name: AWS 자격 증명 구성
+          npm test
+      - name: Build Docker image
+        run: |
+          docker build -t react-app .
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: ap-northeast-2
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: EC2에 배포
+      - name: Log in to AWS ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Tag and push Docker image
+        run: |
+          docker tag react-app ${{ steps.login-ecr.outputs.registry }}/react-app:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/react-app:latest
+      - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -40,35 +50,7 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script_stop: true
           script: |
-            # 애플리케이션이 위치한 디렉터리 확인 및 생성
-            if [ ! -d /home/ubuntu/my-app ]; then
-              mkdir -p /home/ubuntu/my-app
-            fi
-
-            # 애플리케이션이 위치한 디렉터리로 이동
-            cd /home/ubuntu/my-app
-
-            # Git 저장소가 존재하지 않으면 클론
-            if [ ! -d .git ]; then
-              git clone https://github.com/halmisae/frontend.git .
-            else
-              # Git 저장소가 존재하면 최신 코드 가져오기
-              git pull origin main
-            fi
-
-            # 의존성 설치 및 빌드
-            npm ci
-            npm run build --if-present
-            npm run test
-
-            # 빌드 결과물 디렉터리로 이동
-            cd build
-
-            # 기존 웹 서버 파일 제거
-            sudo rm -rf /var/www/html/*
-
-            # 빌드 결과물 복사
-            sudo cp -r * /var/www/html/
-
-            # 웹 서버 재시작 (Nginx를 예로 들면)
-            sudo systemctl restart nginx
+            docker stop react-app || true
+            docker rm react-app || true
+            docker pull ${{ steps.login-ecr.outputs.registry }}/react-app:latest
+            docker run -d --name react-app -p 80:80 ${{ steps.login-ecr.outputs.registry }}/react-app:latest
