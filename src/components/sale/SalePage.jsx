@@ -36,7 +36,7 @@ export default function SalePage() {
         if (response.data.address) {
           const geoResponse = await axios.get(
             `https://nominatim.openstreetmap.org/search?format=json&q=${response.data.address
-              .split(" ", 5)
+              .split(" ", 4)
               .join(" ")}`
           );
           if (geoResponse.data.length > 0) {
@@ -76,10 +76,16 @@ export default function SalePage() {
 
   // 시간 포맷 설정
   const formatTime = (timeString) => {
-    if (!timeString || timeString.length !== 4) {
-      return "00:00";
+    if (!timeString) {
+      return "영업 전";
     }
-    return `${timeString.slice(0, 2)}:${timeString.slice(2)}`;
+
+    // 주어진 시간 문자열을 Date 객체로 변환
+    const date = new Date(timeString);
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+
+    return `${hours}:${minutes}`;
   };
 
   // const formatTime = (timeString) => {
@@ -125,9 +131,9 @@ export default function SalePage() {
 
   //   return `${hours}${minutes}`;
   // };
-
+  console.log(saleInfo.pickupTime);
   const pickingTimeFormatted = saleInfo
-    ? `${formatTime(saleInfo.pickupTime)} - ${formatTime(saleInfo.closeTime)}`
+    ? `${formatTime(saleInfo.pickupTime)} - ${saleInfo.closeTime}`
     : // `${formatTimeFromArray(
       //     saleInfo.pickupTime
       //   )} -  ${formatTime(saleInfo.closeTime)}`
@@ -172,7 +178,7 @@ export default function SalePage() {
       className="style-page"
       style={{
         display: "grid",
-        gridTemplateRows: "105px 124px 250px 40px 40px ",
+        gridTemplateRows: "105px 124px 220px 40px 40px ",
         position: "relative",
       }}
     >
@@ -201,10 +207,10 @@ export default function SalePage() {
       {/* <AdditionalSection icon={<MapPinIcon />} address={saleInfo.address} />
       <AdditionalSection icon={null} address={"재료 및 알레르기 성분 정보"} /> */}
 
-      <div style={{ placeSelf: "center" }}>
+      <div style={{ padding: "0 40px" }}>
         <MapComponent mapLocation={coordinates} address={saleInfo.address} />
         <div className="font-body2" style={{ marginTop: "10px" }}>
-          {saleInfo.address}
+          <span>{saleInfo.address.split("(")[0]}</span>
           {` ${saleInfo.addressDetail}`}
         </div>
       </div>

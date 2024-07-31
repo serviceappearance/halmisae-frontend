@@ -12,7 +12,7 @@ export default function CountPill({ point, onCountChange, value }) {
   const limit = 10000;
 
   const minus = () => {
-    if (count > value / 2) {
+    if (count > 0) {
       const newCount = count - point;
       setCount(newCount);
       onCountChange(newCount);
