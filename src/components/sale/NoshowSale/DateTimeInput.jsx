@@ -5,10 +5,10 @@ import "../../Calendar.css";
 import axios from "axios";
 
 export default function DateTimeInput({ storeId, onDateChange, onTimeChange }) {
+  // const [openTime, setOpenTime] = useState("");
+  // const [closeTime, setCloseTime] = useState("");
   const [value, onChange] = useState(new Date());
   const [storeHolidays, setStoreHolidays] = useState([]);
-  const [openTime, setOpenTime] = useState("");
-  const [closeTime, setCloseTime] = useState("");
   const [breakStart, setBreakStart] = useState("");
   const [breakEnd, setBreakEnd] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
@@ -30,15 +30,15 @@ export default function DateTimeInput({ storeId, onDateChange, onTimeChange }) {
       )
       .then((response) => {
         setStoreHolidays(response.data.storeHoliday);
-        setOpenTime(response.data.openTime);
-        setCloseTime(response.data.closeTime);
+        // setOpenTime(response.data.openTime);
+        // setCloseTime(response.data.closeTime);
         setBreakStart(response.data.breakStart);
         setBreakEnd(response.data.breakEnd);
       })
       .catch((error) => {
         console.error("Error fetching store holidays:", error);
       });
-  }, []);
+  }, [storeId]);
 
   const disableSpecificDates = ({ date, view }) => {
     const today = new Date();

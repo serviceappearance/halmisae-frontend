@@ -55,7 +55,7 @@ export default function ReservationInfoInput({
       .catch((error) => {
         console.error("데이터를 가져오는 중 오류 발생:", error);
       });
-  }, []);
+  }, [storeId]);
 
   const handleCountChange = (index, count) => {
     setMenuInfo((prevMenuInfo) =>
