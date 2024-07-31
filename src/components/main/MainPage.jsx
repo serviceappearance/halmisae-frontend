@@ -43,7 +43,7 @@ export default function MainPage() {
   const filteredStoreInfo = storeInfo.filter((info) =>
     info.bottomPartValue.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  console.log(filteredStoreInfo);
+
   return (
     <div className="style-page">
       <SearchBar onSearch={setSearchQuery} />

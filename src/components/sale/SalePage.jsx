@@ -46,8 +46,12 @@ export default function SalePage() {
         }
 
         const now = new Date();
+        const nowMonth =
+          now.getMonth() >= 10 ? now.getMonth() + 1 : `0${now.getMonth() + 1}`;
+        const openDate = `${now.getFullYear()}-${`${nowMonth}`}-${now.getDate()}`;
+
         const openTime = new Date(
-          `2024-07-30T${response.data.openTime.slice(
+          `${openDate}T${response.data.openTime.slice(
             0,
             2
           )}:${response.data.openTime.slice(2, 4)}:00`
@@ -71,11 +75,11 @@ export default function SalePage() {
   };
 
   // 시간 포맷 설정
-
-  const formatTime = (dateString) => {
-    if (!dateString) {
+  const formatTime = (timeString) => {
+    if (!timeString || timeString.length !== 4) {
       return "00:00";
     }
+    return `${timeString.slice(0, 2)}:${timeString.slice(2)}`;
   };
 
   // const formatTime = (timeString) => {
@@ -123,7 +127,7 @@ export default function SalePage() {
   // };
 
   const pickingTimeFormatted = saleInfo
-    ? `${formatTime(saleInfo.pickupTime)} - ${saleInfo.closeTime}`
+    ? `${formatTime(saleInfo.pickupTime)} - ${formatTime(saleInfo.closeTime)}`
     : // `${formatTimeFromArray(
       //     saleInfo.pickupTime
       //   )} -  ${formatTime(saleInfo.closeTime)}`

@@ -42,6 +42,7 @@ export default function ReservationInfoInput({
             count: 0,
           }))
         );
+        setUseTime(data.usageTime);
         setUsageTime(data.usageTime);
         setUnitTime(data.unitTime);
         setPreDiscount(data.preorderDiscount);
@@ -99,7 +100,6 @@ export default function ReservationInfoInput({
   const isButtonDisabled =
     menuInfo.every((menu) => menu.count === 0) ||
     !selectedTime ||
-    useTime <= 0 ||
     usePeople <= 0;
 
   const secondSubTitleValue = { unitTime, discount };

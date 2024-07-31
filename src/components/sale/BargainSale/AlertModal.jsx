@@ -22,13 +22,11 @@ export default function AlertModal({ isOpen, toggleModal, onConfirm }) {
       </div>
       <div style={buttonSectionStyle}>
         <BigButton width={"297px"} text={"확인했습니다"} onClick={onConfirm} />
-        <Link to="/store">
-          <BigButton
-            width={"297px"}
-            text={"이전 페이지로"}
-            onClick={toggleModal}
-          />
-        </Link>
+        <BigButton
+          width={"297px"}
+          text={"가게 정보보기"}
+          onClick={toggleModal}
+        />
       </div>
     </div>
   );
