@@ -10,6 +10,7 @@ export default function SignBoard({ storeName, imgUrl }) {
     justifyContent: "center",
     alignItems: "center",
     backgroundImage: `url(${imgUrl})`,
+    backgroundSize: "cover",
     position: "relative",
   };
   return (

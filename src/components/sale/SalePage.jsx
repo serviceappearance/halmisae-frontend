@@ -131,7 +131,7 @@ export default function SalePage() {
 
   //   return `${hours}${minutes}`;
   // };
-  console.log(saleInfo.pickupTime);
+
   const pickingTimeFormatted = saleInfo
     ? `${formatTime(saleInfo.pickupTime)} - ${saleInfo.closeTime}`
     : // `${formatTimeFromArray(

@@ -36,6 +36,7 @@ const CardTopPart = () => {
     borderRadius: "10px 10px 0px 0px",
     position: "relative",
     backgroundImage: `url(${imgSrc})`,
+    backgroundSize: "cover",
   };
   return (
     <div style={topPartStyle}>
