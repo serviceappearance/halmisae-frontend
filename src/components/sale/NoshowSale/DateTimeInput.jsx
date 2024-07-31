@@ -69,33 +69,6 @@ export default function DateTimeInput({ storeId, onDateChange, onTimeChange }) {
     onTimeChange(time);
   };
 
-  // const generateTimeSlots = (openTime, closeTime, step) => {
-  //   let slots = [];
-  //   let startHour = parseInt(openTime.slice(0, 2));
-  //   let startMinute = parseInt(openTime.slice(2));
-  //   let endHour = parseInt(closeTime.slice(0, 2));
-  //   let endMinute = parseInt(closeTime.slice(2));
-
-  //   while (
-  //     startHour < endHour ||
-  //     (startHour === endHour && startMinute < endMinute)
-  //   ) {
-  //     let hour = startHour.toString().padStart(2, "0");
-  //     let minute = startMinute.toString().padStart(2, "0");
-  //     slots.push(`${hour}:${minute}`);
-
-  //     startMinute += step;
-  //     if (startMinute >= 60) {
-  //       startMinute -= 60;
-  //       startHour += 1;
-  //     }
-  //   }
-
-  //   return slots;
-  // };
-
-  // const timeList = generateTimeSlots(openTime, closeTime, 30);
-
   return (
     <div className="style-page-calendar">
       <div className="font-reserved-date" style={reservedDateStyle}>
