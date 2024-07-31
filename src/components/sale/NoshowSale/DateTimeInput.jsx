@@ -43,7 +43,8 @@ export default function DateTimeInput({ storeId, onDateChange, onTimeChange }) {
   const disableSpecificDates = ({ date, view }) => {
     const today = new Date();
 
-    const isBeforeToday = date < today;
+    const isBeforeToday =
+      date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
     if (view === "month") {
       const dayMap = {
         SUN: 0,

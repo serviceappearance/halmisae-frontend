@@ -11,7 +11,8 @@ export default function SumPrice({
     return sum + menu.price * (menu.count || 0);
   }, 0);
 
-  const discountAmount = ((usageTime - useTime) / unitTime) * discount;
+  const discountAmount =
+    useTime > 0 ? ((usageTime - useTime) / unitTime) * discount : 0;
 
   const discountAmountIsNan = isNaN(discountAmount) ? 0 : discountAmount;
   const preDiscountIsNan = isNaN(preDiscount) ? 0 : preDiscount;

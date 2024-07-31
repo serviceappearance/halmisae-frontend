@@ -71,52 +71,59 @@ export default function SalePage() {
   };
 
   // 시간 포맷 설정
-  const formatTime = (timeString) => {
-    if (!timeString || timeString.length !== 4) {
-      return "00:00";
-    }
-    return `${timeString.slice(0, 2)}:${timeString.slice(2)}`;
-  };
 
-  const formatTimeFromArray = (dateString) => {
+  const formatTime = (dateString) => {
     if (!dateString) {
       return "00:00";
     }
-
-    if (dateString.length === 4 && !isNaN(dateString)) {
-      const hours = dateString.slice(0, 2);
-      const minutes = dateString.slice(2, 4);
-
-      if (hours === "24") {
-        return "00:00";
-      }
-      return `${hours}:${minutes}`;
-    }
-
-    const parts = dateString.split(" ");
-
-    if (parts.length < 2) {
-      return "00:00";
-    }
-
-    const timeParts = parts[1].split(":");
-
-    if (timeParts.length < 2) {
-      return "00:00";
-    }
-
-    const hours = timeParts[0].padStart(2, "0");
-    const minutes = timeParts[1].padStart(2, "0");
-
-    if (hours === "24") {
-      return "00:00";
-    }
-
-    return `${hours}${minutes}`;
   };
 
+  // const formatTime = (timeString) => {
+  //   if (!timeString || timeString.length !== 4) {
+  //     return "00:00";
+  //   }
+  //   return `${timeString.slice(0, 2)}:${timeString.slice(2)}`;
+  // };
+
+  // const formatTimeFromArray = (dateString) => {
+  //   if (!dateString) {
+  //     return "00:00";
+  //   }
+
+  //   if (dateString.length === 4 && !isNaN(dateString)) {
+  //     const hours = dateString.slice(0, 2);
+  //     const minutes = dateString.slice(2, 4);
+
+  //     if (hours === "24") {
+  //       return "00:00";
+  //     }
+  //     return `${hours}:${minutes}`;
+  //   }
+
+  //   const parts = dateString.split(" ");
+
+  //   if (parts.length < 2) {
+  //     return "00:00";
+  //   }
+
+  //   const timeParts = parts[1].split(":");
+
+  //   if (timeParts.length < 2) {
+  //     return "00:00";
+  //   }
+
+  //   const hours = timeParts[0].padStart(2, "0");
+  //   const minutes = timeParts[1].padStart(2, "0");
+
+  //   if (hours === "24") {
+  //     return "00:00";
+  //   }
+
+  //   return `${hours}${minutes}`;
+  // };
+
   const pickingTimeFormatted = saleInfo
-    ? `${saleInfo.pickupTime} - ${saleInfo.closeTime}`
+    ? `${formatTime(saleInfo.pickupTime)} - ${saleInfo.closeTime}`
     : // `${formatTimeFromArray(
       //     saleInfo.pickupTime
       //   )} -  ${formatTime(saleInfo.closeTime)}`
