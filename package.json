@@ -1,8 +1,9 @@
 {
-  "name": "halmisae-frontend",
+  "name": "temaproject-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.16.4",
@@ -11,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@tosspayments/tosspayments-sdk": "^2.2.3",
     "axios": "^1.7.2",
+    "firebase": "^10.12.5",
     "leaflet": "^1.9.4",
     "query-string": "^9.1.0",
     "react": "^18.3.1",
@@ -20,13 +22,12 @@
     "react-router-dom": "^6.25.1",
     "react-scripts": "5.0.1",
     "react-transition-group": "^4.4.5",
-    "web-vitals": "^2.1.4",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.0"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "PORT=3000 react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --passWithNoTests",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
