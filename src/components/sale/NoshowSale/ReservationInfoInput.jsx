@@ -3,9 +3,16 @@ import InputSection from "./InputSection";
 import BigButton from "../../common/BigButton";
 import MenuList from "./MenuList";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../../common/PageHeader";
+import {
+  db,
+  collection,
+  getDocs,
+  query,
+  where,
+  addDoc,
+} from "../../firebaseConfig";
 
 export default function ReservationInfoInput({
   storeId,
@@ -27,34 +34,41 @@ export default function ReservationInfoInput({
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8080/v1/api/user/main/detail/reservation?storeNumber=${storeId}`
-      )
-      .then((response) => {
-        const data = response.data;
-        setMenuInfo(
-          data.menu.map((item) => ({
-            menuNumber: item.menuNumber,
-            menuName: item.menuName,
-            price: item.price,
-            imgSrc: item.image,
-            count: 0,
-          }))
-        );
-        setUseTime(data.usageTime);
-        setUsageTime(data.usageTime);
-        setUnitTime(data.unitTime);
-        setPreDiscount(data.preorderDiscount);
-        setDiscount(data.discount);
-        setSubtitles((prev) => ({
-          ...prev,
-          usageTime: `${data.usageTime}분`,
-        }));
-      })
-      .catch((error) => {
-        console.error("데이터를 가져오는 중 오류 발생:", error);
-      });
+    async function fetchData() {
+      try {
+        const storesRef = collection(db, "stores");
+        const q = query(storesRef, where("storeNumber", "==", storeId));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const doc = querySnapshot.docs[0].data();
+
+          setMenuInfo(
+            doc.menu.map((item) => ({
+              menuNumber: item.menuNumber,
+              menuName: item.menuName,
+              price: item.price,
+              imgSrc: item.image,
+              count: 0,
+            }))
+          );
+          setUseTime(doc.usageTime);
+          setUsageTime(doc.usageTime);
+          setUnitTime(doc.unitTime);
+          setPreDiscount(doc.preorderDiscount);
+          setDiscount(doc.discount);
+          setSubtitles((prev) => ({
+            ...prev,
+            usageTime: `${doc.usageTime}분`,
+          }));
+        } else {
+          console.error("No store found with the given storeId.");
+        }
+      } catch (error) {
+        console.error("Error fetching store data from Firestore:", error);
+      }
+    }
+    fetchData();
   }, [storeId]);
 
   const handleCountChange = (index, count) => {
@@ -70,7 +84,7 @@ export default function ReservationInfoInput({
   const handlePeopleChange = (people) => {
     setUsePeople(people);
   };
-  const handleReservation = () => {
+  const handleReservation = async () => {
     const filteredMenuInfo = menuInfo.filter((menu) => menu.count > 0);
 
     if (filteredMenuInfo.length === 0) {
@@ -94,7 +108,13 @@ export default function ReservationInfoInput({
       preDiscount,
       usageTime,
     };
-    navigate(`/reserve/show?storeId=${storeId}`, { state: reservationData });
+    try {
+      await addDoc(collection(db, "reservations"), reservationData);
+      console.log("Reservation data saved to Firestore");
+      navigate(`/reserve/show?storeId=${storeId}`, { state: reservationData });
+    } catch (error) {
+      console.error("Error saving reservation data:", error);
+    }
   };
 
   const isButtonDisabled =

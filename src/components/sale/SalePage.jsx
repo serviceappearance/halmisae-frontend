@@ -1,7 +1,4 @@
-// import { ReactComponent as MapPinIcon } from "../../assets/icons/map-pin.svg";
-// import AdditionalSection from "./salePageComponent/AdditionalSection";
 import "../common.css";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import SaleInfoSection from "./salePageComponent/SaleInfoSection";
@@ -12,6 +9,8 @@ import PaymentInfoModal from "./BargainSale/PaymentInfoModal";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { db } from "../firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function SalePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,37 +25,46 @@ export default function SalePage() {
   useEffect(() => {
     const fetchSaleInfo = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/v1/api/user/main/detail?storeNumber=${storeId}`
-        );
-        setSaleInfo(response.data);
-        setLoading(false);
+        const docRef = doc(db, "stores", storeId);
+        const docSnap = await getDoc(docRef);
 
-        // 주소
-        if (response.data.address) {
-          const geoResponse = await axios.get(
-            `https://nominatim.openstreetmap.org/search?format=json&q=${response.data.address
-              .split(" ", 4)
-              .join(" ")}`
-          );
-          if (geoResponse.data.length > 0) {
-            const location = geoResponse.data[0];
-            setCoordinates({ lat: location.lat, lon: location.lon });
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setSaleInfo(data);
+          setLoading(false);
+
+          // 주소
+          if (data.address) {
+            const geoResponse = await fetch(
+              `https://nominatim.openstreetmap.org/search?format=json&q=${data.address
+                .split(" ", 4)
+                .join(" ")}`
+            );
+            const geoData = await geoResponse.json();
+            if (geoData.length > 0) {
+              const location = geoData[0];
+              setCoordinates({ lat: location.lat, lon: location.lon });
+            }
           }
+
+          const now = new Date();
+          const nowMonth =
+            now.getMonth() >= 10
+              ? now.getMonth() + 1
+              : `0${now.getMonth() + 1}`;
+          const openDate = `${now.getFullYear()}-${`${nowMonth}`}-${now.getDate()}`;
+
+          const openTime = new Date(
+            `${openDate}T${data.openTime.slice(0, 2)}:${data.openTime.slice(
+              2,
+              4
+            )}:00`
+          );
+          setIsBeforeOpening(now < openTime);
+        } else {
+          console.error("No such document!");
+          setLoading(false);
         }
-
-        const now = new Date();
-        const nowMonth =
-          now.getMonth() >= 10 ? now.getMonth() + 1 : `0${now.getMonth() + 1}`;
-        const openDate = `${now.getFullYear()}-${`${nowMonth}`}-${now.getDate()}`;
-
-        const openTime = new Date(
-          `${openDate}T${response.data.openTime.slice(
-            0,
-            2
-          )}:${response.data.openTime.slice(2, 4)}:00`
-        );
-        setIsBeforeOpening(now < openTime);
       } catch (error) {
         console.error("Failed to fetch sale info:", error);
         setLoading(false);
@@ -80,7 +88,6 @@ export default function SalePage() {
       return "영업 전";
     }
 
-    // 주어진 시간 문자열을 Date 객체로 변환
     const date = new Date(timeString);
     const hours = date.getHours().toString().padStart(2, "0");
     const minutes = date.getMinutes().toString().padStart(2, "0");
@@ -88,58 +95,10 @@ export default function SalePage() {
     return `${hours}:${minutes}`;
   };
 
-  // const formatTime = (timeString) => {
-  //   if (!timeString || timeString.length !== 4) {
-  //     return "00:00";
-  //   }
-  //   return `${timeString.slice(0, 2)}:${timeString.slice(2)}`;
-  // };
-
-  // const formatTimeFromArray = (dateString) => {
-  //   if (!dateString) {
-  //     return "00:00";
-  //   }
-
-  //   if (dateString.length === 4 && !isNaN(dateString)) {
-  //     const hours = dateString.slice(0, 2);
-  //     const minutes = dateString.slice(2, 4);
-
-  //     if (hours === "24") {
-  //       return "00:00";
-  //     }
-  //     return `${hours}:${minutes}`;
-  //   }
-
-  //   const parts = dateString.split(" ");
-
-  //   if (parts.length < 2) {
-  //     return "00:00";
-  //   }
-
-  //   const timeParts = parts[1].split(":");
-
-  //   if (timeParts.length < 2) {
-  //     return "00:00";
-  //   }
-
-  //   const hours = timeParts[0].padStart(2, "0");
-  //   const minutes = timeParts[1].padStart(2, "0");
-
-  //   if (hours === "24") {
-  //     return "00:00";
-  //   }
-
-  //   return `${hours}${minutes}`;
-  // };
-
   const pickingTimeFormatted = saleInfo
     ? `${formatTime(saleInfo.pickupTime)} - ${saleInfo.closeTime}`
-    : // `${formatTimeFromArray(
-      //     saleInfo.pickupTime
-      //   )} -  ${formatTime(saleInfo.closeTime)}`
-      "";
+    : "";
 
-  // 로딩 설정
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -182,30 +141,15 @@ export default function SalePage() {
         position: "relative",
       }}
     >
-      <SignBoard
-        storeName={saleInfo.storeName}
-        imgUrl={
-          saleInfo.image
-          // "https://cdn.pixabay.com/photo/2018/06/19/09/34/bread-3484107_1280.jpg"
-        } // info.imgUrl로 교체
-      />
+      <SignBoard storeName={saleInfo.storeName} imgUrl={saleInfo.image} />
       <SaleInfoSection
         storeName={saleInfo.storeName}
         opening={`${saleInfo.openTime} - ${saleInfo.closeTime}`}
-        // {`${formatTime(saleInfo.openTime)} - ${formatTime(
-        //   saleInfo.closeTime
-        // )}`}
         breaking={`${saleInfo.breakStart} - ${saleInfo.breakEnd}`}
-        // {`${formatTime(saleInfo.breakStart)} - ${formatTime(
-        //   saleInfo.breakEnd
-        // )}`}
         picking={pickingTimeFormatted}
         price={saleInfo.closingPrice}
         isBeforeOpening={isBeforeOpening}
       />
-
-      {/* <AdditionalSection icon={<MapPinIcon />} address={saleInfo.address} />
-      <AdditionalSection icon={null} address={"재료 및 알레르기 성분 정보"} /> */}
 
       <div style={{ padding: "0 40px" }}>
         <MapComponent mapLocation={coordinates} address={saleInfo.address} />

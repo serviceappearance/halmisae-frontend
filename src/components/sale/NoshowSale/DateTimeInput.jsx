@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import TimeBlock from "./TimeBlock";
 import Calender from "react-calendar";
 import "../../Calendar.css";
-import axios from "axios";
+import { db } from "../../firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function DateTimeInput({ storeId, onDateChange, onTimeChange }) {
   // const [openTime, setOpenTime] = useState("");
@@ -24,20 +25,25 @@ export default function DateTimeInput({ storeId, onDateChange, onTimeChange }) {
   }, [value, selectedTime, onDateChange]);
 
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8080/v1/api/user/main/detail/reservation?storeNumber=${storeId}`
-      )
-      .then((response) => {
-        setStoreHolidays(response.data.storeHoliday);
-        // setOpenTime(response.data.openTime);
-        // setCloseTime(response.data.closeTime);
-        setBreakStart(response.data.breakStart);
-        setBreakEnd(response.data.breakEnd);
-      })
-      .catch((error) => {
-        console.error("Error fetching store holidays:", error);
-      });
+    const fetchStoreData = async () => {
+      try {
+        const docRef = doc(db, "stores", storeId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setStoreHolidays(data.storeHoliday || []);
+          setBreakStart(data.breakStart || "");
+          setBreakEnd(data.breakEnd || "");
+        } else {
+          console.log("No such document!");
+        }
+      } catch (error) {
+        console.error("Error fetching store data:", error);
+      }
+    };
+
+    fetchStoreData();
   }, [storeId]);
 
   const disableSpecificDates = ({ date, view }) => {
@@ -177,4 +183,9 @@ const timeList = [
   "17:00",
   "17:30",
   "18:00",
+  "19:00",
+  "20:00",
+  "21:00",
+  "22:00",
+  "23:00",
 ];

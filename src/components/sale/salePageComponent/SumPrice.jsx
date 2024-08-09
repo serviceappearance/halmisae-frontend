@@ -12,7 +12,9 @@ export default function SumPrice({
   }, 0);
 
   const discountAmount =
-    useTime > 0 ? ((usageTime - useTime) / unitTime) * discount : 0;
+    useTime > 0 && useTime >= usageTime
+      ? ((usageTime - useTime) / unitTime) * discount
+      : 0;
 
   const discountAmountIsNan = isNaN(discountAmount) ? 0 : discountAmount;
   const preDiscountIsNan = isNaN(preDiscount) ? 0 : preDiscount;

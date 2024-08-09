@@ -4,7 +4,8 @@ import BigButton from "../../common/BigButton";
 import MoveToBackButton from "../../common/MoveToBackButton";
 import SumPrice from "../salePageComponent/SumPrice";
 import queryString from "query-string";
-import axios from "axios";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
 
 export default function InvoicePage() {
   const location = useLocation();
@@ -54,9 +55,25 @@ export default function InvoicePage() {
     return localISOTime + "Z";
   };
 
-  const handlePayment = () => {
+  const saveReservationData = async (reservationData) => {
+    try {
+      const reservationRef = doc(
+        db,
+        "reservations",
+        reservationData.orderNumber.toString()
+      );
+      await setDoc(reservationRef, reservationData);
+      console.log("Reservation data saved successfully");
+    } catch (error) {
+      console.error("Error saving reservation data:", error);
+    }
+  };
+
+  const handlePayment = async () => {
     try {
       const visitTime = convertToISOString(selectedDate, selectedTime);
+      const orderNumber = "-";
+      const reserveNum = generateReserveNumber();
       const requestData = {
         email: "user1@naver.com",
         storeNumber: storeId,
@@ -72,50 +89,44 @@ export default function InvoicePage() {
           menuNumber: menu.menuNumber,
           quantity: menu.count,
         })),
+        orderNumber: "-",
+        reserveNum: reserveNum,
       };
-      console.log(requestData);
-      axios
-        .post(
-          "http://localhost:8080/v1/api/user/main/detail/reservation",
-          requestData
-        )
-        .then((response) => {
-          console.log("예약 성공");
-          console.log(response.data);
-          const reserveNum = response.data.reserveMenu[0].reserveNumber;
-          const infoDetailValue = [
-            storeName,
-            `${selectedDate.toLocaleDateString()} ${selectedTime}`,
-            `${useTime}분`,
-            `${usePeople}명`,
-          ];
-          const reservationTime = new Date().toISOString();
-          const reservationKey = `reservation_${storeName}_${reservationTime}`;
-          const reservationData = {
-            storeName: storeName,
-            orderNumber: 0,
-            reservationNumber: reserveNum,
-            reservationTime: reservationTime,
-          };
-          sessionStorage.setItem(
-            reservationKey,
-            JSON.stringify(reservationData)
-          );
 
-          navigate("/noshow-sale/complete", {
-            state: {
-              infoDetailValue: infoDetailValue,
-            },
-          });
-        })
-        .catch((error) => {
-          console.error(error);
-          console.log("예약 실패");
-        });
+      // Firestore에 예약 정보 저장
+      await saveReservationData(requestData);
+
+      console.log("예약 성공");
+
+      const infoDetailValue = [
+        storeName,
+        `${selectedDate.toLocaleDateString()} ${selectedTime}`,
+        `${useTime}분`,
+        `${usePeople}명`,
+      ];
+      const reservationTime = new Date().toISOString();
+      const reservationKey = `reservation_${storeName}_${reservationTime}`;
+      const reservationData = {
+        storeName: storeName,
+        orderNumber: orderNumber,
+        reservationNumber: reserveNum,
+        reservationTime: reservationTime,
+      };
+      sessionStorage.setItem(reservationKey, JSON.stringify(reservationData));
+
+      navigate("/noshow-sale/complete", {
+        state: {
+          infoDetailValue: infoDetailValue,
+        },
+      });
     } catch (error) {
       console.error(error.message);
       console.log("예약 실패");
     }
+  };
+
+  const generateReserveNumber = () => {
+    return Math.floor(Math.random() * 1000000);
   };
 
   return (

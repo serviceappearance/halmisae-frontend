@@ -4,8 +4,9 @@ import { ReactComponent as MinusIcon } from "../../../assets/icons/amount-minus.
 import { ReactComponent as PlusIcon } from "../../../assets/icons/amount-plus.svg";
 import BigButton from "../../common/BigButton";
 import TotalPrice from "../../common/TotalPrice";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
 
 export default function PaymentInfoModal({
   isOpen,
@@ -33,31 +34,49 @@ export default function PaymentInfoModal({
 
   const totalPrice = amount * price;
   const email = "email";
+
+  const saveReservationData = async (reservationData) => {
+    try {
+      const reservationRef = doc(
+        db,
+        "reservations",
+        reservationData.orderNumber.toString()
+      );
+      await setDoc(reservationRef, reservationData);
+      console.log("Reservation data saved successfully");
+    } catch (error) {
+      console.error("Error saving reservation data:", error);
+    }
+  };
   const handleReservation = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:8080/v1/api/user/main/detail/closingOrder",
-        {
-          quantity: amount,
-          totalPrice: totalPrice,
-          email: email,
-          storeNumber: storeNumber,
-        }
-      );
-      console.log("예약 결제가 성공적으로 완료되었습니다:", response.data);
-      navigate("/bargain-sale/complete");
-      const reservationTime = new Date().toISOString();
-      const reservationKey = `reservation_${storeName}_${reservationTime}`;
+      // 예약 데이터
       const reservationData = {
-        storeName: storeName,
-        orderNumber: response.data.orderNumber,
-        reservationNumber: 0,
-        reservationTime: reservationTime,
+        storeName,
+        quantity: amount,
+        totalPrice,
+        email,
+        storeNumber,
+        reservationTime: new Date().toISOString(),
+        orderNumber: generateOrderNumber(),
       };
+
+      // Firestore에 예약 정보 저장
+      await saveReservationData(reservationData);
+
+      console.log("예약 결제가 성공적으로 완료되었습니다");
+      navigate("/bargain-sale/complete");
+
+      // 세션 스토리지에 예약 정보 저장
+      const reservationKey = `reservation_${storeName}_${reservationData.reservationTime}`;
       sessionStorage.setItem(reservationKey, JSON.stringify(reservationData));
     } catch (error) {
       console.error("예약 결제 중 오류가 발생했습니다:", error);
     }
+  };
+
+  const generateOrderNumber = () => {
+    return Math.floor(Math.random() * 1000000);
   };
 
   return (
