@@ -16,11 +16,14 @@
 
 ## 기능소개
 
+### 재고 식품 예약
+
 <details>
-<summary>### 재고 식품 예약</summary>
+<summary>화면 이미지</summary>
   
 <img src="readme-img/재고%20구매.png" width="250px">
 </details>
+
 ```
 수량 설정
 +, - 버튼을 눌러 예약할 수량을 예약 가게별로 설정한 재고 식품 금액만큼 주문금액이 증가/감소
@@ -31,7 +34,11 @@
 
 ### 좌석 예약
 
+<details>
+<summary>날짜 선택 화면 이미지</summary>
+  
 <img src="../teamproject-frontend/readme-img/날짜 입력.png" >
+</details>
 
 ```
 가게 정보 페이지에서 예약하기 버튼을 누르면 표시되는 페이지
@@ -42,8 +49,11 @@
 예약시간 선택
 가게에서 설정한 휴식 시간을 제외한 시간 중 선택
 ```
-
+<details>
+<summary>이용 정보 입력 화면 이미지</summary>
+  
 <img src="../teamproject-frontend/readme-img/메뉴 선택.png" >
+</details>
 
 ```
 이용시간 입력
@@ -60,7 +70,11 @@
 예약 내역 확인 페이지로 이동
 ```
 
+<details>
+
+<summary>예약내역 확인 화면 이미지</summary>
 <img src="../teamproject-frontend/readme-img/예약 영수증.png" >
+</details>
 
 ```
 예약 내역
