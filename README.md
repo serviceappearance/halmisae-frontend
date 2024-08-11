@@ -18,6 +18,10 @@
 
 ## 기능소개
 
+[요구사항명세서](https://docs.google.com/spreadsheets/d/12HDh-J5e2HBW2OwzMB3k8ohW8ONsa6bBMtyKRkdrIZA/edit?usp=sharing)
+
+[화면설계](https://www.figma.com/design/QwVnCaheYzUERUBlr4Kmwe/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84?node-id=0-1&t=5T1C9i6Mf4rlxGdQ-1)
+
 ### 재고 식품 예약
 
 <details>
