@@ -22,6 +22,8 @@
 
 [화면설계](https://www.figma.com/design/QwVnCaheYzUERUBlr4Kmwe/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84?node-id=0-1&t=5T1C9i6Mf4rlxGdQ-1)
 
+[사이트](https://sale-project-18f1d.web.app/)
+
 ### 재고 식품 예약
 
 <details>
