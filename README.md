@@ -19,7 +19,7 @@
 ### 재고 식품 예약
 
 <details>
-<summary>화면 이미지</summary>
+> <summary>화면 이미지</summary>
   
 <img src="readme-img/재고%20구매.png" width="250px">
 </details>
@@ -37,7 +37,7 @@
 <details>
 <summary>날짜 선택 화면 이미지</summary>
   
-<img src="../teamproject-frontend/readme-img/날짜 입력.png" >
+<img src="readme-img/날짜 입력.png" >
 </details>
 
 ```
@@ -52,7 +52,7 @@
 <details>
 <summary>이용 정보 입력 화면 이미지</summary>
   
-<img src="../teamproject-frontend/readme-img/메뉴 선택.png" >
+<img src="readme-img/메뉴 선택.png" >
 </details>
 
 ```
@@ -73,7 +73,7 @@
 <details>
 
 <summary>예약내역 확인 화면 이미지</summary>
-<img src="../teamproject-frontend/readme-img/예약 영수증.png" >
+<img src="readme-img/예약 영수증.png" >
 </details>
 
 ```
