@@ -18,7 +18,7 @@
 
 ### 재고 식품 예약
 
-<img src="../teamproject-frontend/readme-img/재고%20구매.png" >
+<img src="readme-img/재고%20구매.png" >
 
 ```
 수량 설정
